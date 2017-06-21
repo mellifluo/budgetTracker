@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/ale/informatica/lam/android/code/BudgetTracker/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a707b9a9bff6230c87c24a046de9034fcba81391">
+        <dex dex="/home/ale/informatica/lam/android/code/BudgetTracker/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_3c8138bb1da1d45f501de6fd6b27e22d2a2a2bb5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/ale/informatica/lam/android/code/BudgetTracker/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/home/ale/informatica/lam/android/code/BudgetTracker/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_82cefc3fd73fafe61585645aeed486407a28551b/classes.dex" />
+    </item>
+
+</items>
