@@ -13,7 +13,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_EXPENSE_NAME = "nomeSpesa";
 	public static final String COLUMN_AMOUNT = "importoSpesa";
-	
+
 	private static final String DATABASE_NAME = "budget.db";
 	private static final int DATABASE_VERSION = 2;
 
@@ -41,24 +41,28 @@ public class DBHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	
+	public void removeAll() {
+		getWritableDatabase().delete(DBHelper.TABLE_BUDGET, null, null);
+	}
+
+
 	public long insertNewExpense(String nameExpanse, String amountExpanse) {
 		ContentValues cv = new ContentValues();
 		cv.put(COLUMN_EXPENSE_NAME, nameExpanse);
 		cv.put(COLUMN_AMOUNT, amountExpanse);
-		
+
 		long code = getWritableDatabase().insert(TABLE_BUDGET, null, cv);
 		return code;
 	}
-	
+
 	public Cursor getGrades() {
 		return getWritableDatabase().query(TABLE_BUDGET, null, null, null, null, null, null);
 	}
-	
+
 	public void deleteStudent(int id) {
 		getWritableDatabase().delete(TABLE_BUDGET, COLUMN_ID + "=?", new String[] { String.valueOf(id) });
 	}
-	
+
 	public Cursor get30() {
 		return getWritableDatabase().query(TABLE_BUDGET, null, COLUMN_AMOUNT + "=?", new String[] { "30" }, null, null, null);
 	}

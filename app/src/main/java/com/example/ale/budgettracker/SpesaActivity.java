@@ -97,11 +97,9 @@ public class SpesaActivity extends AppCompatActivity {
         }
         else {
             DBHelper dbh = new DBHelper(this);
-            long code = 1;
-            //long code = dbh.insertNewExpense(nomeSpesa.toString(), importoSpesa.toString());
+            long code = dbh.insertNewExpense(nomeSpesa.getText().toString(), importoSpesa.toString());
             if (code != -1)
-                //Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
-                Toast.makeText(this, nomeSpesa.getText().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
             finish();
         }
     }
