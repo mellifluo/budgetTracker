@@ -15,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_AMOUNT = "importoSpesa";
 
 	private static final String DATABASE_NAME = "budget.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	// Database creation sql statement
 	private static final String DATABASE_CREATE = "create table "
@@ -55,10 +55,11 @@ public class DBHelper extends SQLiteOpenHelper {
 		return code;
 	}
 
-	public Cursor getGrades() {
+	public Cursor getBudget() {
 		return getWritableDatabase().query(TABLE_BUDGET, null, null, null, null, null, null);
 	}
 
+	/*tengo perché sia mai che mi servano
 	public void deleteStudent(int id) {
 		getWritableDatabase().delete(TABLE_BUDGET, COLUMN_ID + "=?", new String[] { String.valueOf(id) });
 	}
@@ -66,4 +67,5 @@ public class DBHelper extends SQLiteOpenHelper {
 	public Cursor get30() {
 		return getWritableDatabase().query(TABLE_BUDGET, null, COLUMN_AMOUNT + "=?", new String[] { "30" }, null, null, null);
 	}
+	*/
 }

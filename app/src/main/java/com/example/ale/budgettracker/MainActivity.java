@@ -5,6 +5,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -23,23 +26,41 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ArrayList<String> listItems=new ArrayList<String>();
-    ArrayAdapter<String> adapter;
+    private List<Spesa> listItems;
+    private ArrayAdapter<String> adapter;
+    private RecyclerView rv;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     private static DBHelper dbh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ListView mylist = (ListView) findViewById(R.id.list_view);
+        RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        rv.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        rv.setLayoutManager(mLayoutManager);
+
+        listItems = new ArrayList<>();
+        listItems.add(new Spesa("Bella vita", "0"));
+
+        rvAdapter adapter = new rvAdapter(listItems);
+        rv.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,16 +80,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        adapter=new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
-                listItems);
-        mylist.setAdapter(adapter);
-
         dbh = new DBHelper(this);
 
     }
 
-    public void addItems(String item) {
+    public void addItems(Spesa item) {
         listItems.add(item);
         adapter.notifyDataSetChanged();
     }
@@ -77,14 +93,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-
-        Cursor cursor = dbh.getGrades();
+        Cursor cursor = dbh.getBudget();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             boolean haveToContinue = false;
             if (!haveToContinue) {
-
-                addItems(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME)));
+                String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
+                String amountNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AMOUNT));
+                Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa);
+                addItems(newSpesa);
             }
             cursor.moveToNext();
         }
