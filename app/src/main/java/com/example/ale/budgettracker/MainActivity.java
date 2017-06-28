@@ -32,10 +32,10 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private List<Spesa> listItems;
-    private ArrayAdapter<String> adapter;
     private RecyclerView rv;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private rvAdapter adapter;
 
     private static DBHelper dbh;
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         listItems = new ArrayList<>();
         listItems.add(new Spesa("Bella vita", "0"));
 
-        rvAdapter adapter = new rvAdapter(listItems);
+        adapter = new rvAdapter(listItems);
         rv.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

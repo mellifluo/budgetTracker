@@ -19,7 +19,7 @@
     </Preference>
 
     <Preference android:title="Reset Data"
-        android:id="@+id/Reset_Data">
+        android:key="Reset_Data">
     </Preference>
 
 </PreferenceScreen>

@@ -260,12 +260,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_data_sync);
             setHasOptionsMenu(true);
-            Preference reset = (Preference) findPreference("Reset_Data");
+            Preference reset = findPreference("Reset_Data");
             reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     dbh.removeAll();
-                    resumeMain = true;
                     return true;
                 }
             });
