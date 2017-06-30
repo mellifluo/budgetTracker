@@ -9,6 +9,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -37,14 +39,15 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
     private rvAdapter adapter;
 
+
     private static DBHelper dbh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
 
@@ -57,7 +60,6 @@ public class MainActivity extends AppCompatActivity
         rv.setLayoutManager(mLayoutManager);
 
         listItems = new ArrayList<>();
-        listItems.add(new Spesa("Bella vita", "0"));
 
         adapter = new rvAdapter(listItems);
         rv.setAdapter(adapter);
@@ -71,11 +73,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        final DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawer.openDrawer(Gravity.LEFT);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -84,27 +83,23 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void addItems(Spesa item) {
-        listItems.add(item);
-        adapter.notifyDataSetChanged();
-    }
-
-
     @Override
     protected void onResume() {
         super.onResume();
         Cursor cursor = dbh.getBudget();
         cursor.moveToFirst();
+        listItems.clear();
         while (!cursor.isAfterLast()) {
             boolean haveToContinue = false;
             if (!haveToContinue) {
                 String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
                 String amountNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AMOUNT));
                 Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa);
-                addItems(newSpesa);
+                listItems.add(newSpesa);
             }
             cursor.moveToNext();
         }
+        adapter.notifyDataSetChanged();
         cursor.close();
     }
 
