@@ -30,6 +30,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.id.toggle;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,16 +40,14 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private rvAdapter adapter;
-
-
     private static DBHelper dbh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
 
@@ -64,6 +64,11 @@ public class MainActivity extends AppCompatActivity
         adapter = new rvAdapter(listItems);
         rv.setAdapter(adapter);
 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,13 +78,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        final DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-        drawer.openDrawer(Gravity.LEFT);
+        dbh = new DBHelper(this);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        dbh = new DBHelper(this);
 
     }
 
@@ -87,6 +89,9 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         Cursor cursor = dbh.getBudget();
+        if (cursor.getCount() == 0){
+            startActivity(new Intent(MainActivity.this, firstActivity.class));
+        }
         cursor.moveToFirst();
         listItems.clear();
         while (!cursor.isAfterLast()) {
@@ -101,6 +106,17 @@ public class MainActivity extends AppCompatActivity
         }
         adapter.notifyDataSetChanged();
         cursor.close();
+
+        long totalBudget = dbh.getTotal();
+        String totalBudgetToView = (String.valueOf(totalBudget));
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.textView);
+        totalBudgetToView = totalBudgetToView +"€";
+        navUsername.setText(totalBudgetToView);
+
+        TextView asd = (TextView) findViewById(R.id.textView2);
+        asd.setText(totalBudgetToView);
     }
 
 

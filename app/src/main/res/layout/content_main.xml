@@ -6,7 +6,8 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:padding="16dp"
         tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        tools:layout_editor_absoluteX="8dp"
+        >
 
 
 
@@ -30,6 +31,7 @@
                     android:layout_alignParentTop="true"
                     android:text="Bella zi"
                     android:textSize="30sp"
+
                     />
 
                 <TextView

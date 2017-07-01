@@ -56,8 +56,9 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
 
     @Override
     public void onBindViewHolder(SpesaViewHolder SpesaViewHolder, int i) {
+        String amount = Spese.get(i).amount + "€";
         SpesaViewHolder.nameSpesa.setText(Spese.get(i).name);
-        SpesaViewHolder.amountSpesa.setText(Spese.get(i).amount);
+        SpesaViewHolder.amountSpesa.setText(amount);
     }
 
     @Override

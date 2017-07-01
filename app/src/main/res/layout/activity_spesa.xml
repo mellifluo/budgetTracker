@@ -58,7 +58,7 @@
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="Aggiungi"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberSigned"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
