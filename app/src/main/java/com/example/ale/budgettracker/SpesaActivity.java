@@ -31,7 +31,7 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login via name/amount.
  */
 public class SpesaActivity extends AppCompatActivity {
 
@@ -48,11 +48,28 @@ public class SpesaActivity extends AppCompatActivity {
 
         importoSpesa = (EditText) findViewById(R.id.prezzo);
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.aggiungi_spesa_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            String modifiedName = extras.getString("nameSpesa");
+            nomeSpesa.setText(modifiedName);
+            String modifiedAmount = extras.getString("amountSpesa");
+            importoSpesa.setText(modifiedAmount);
+        }
+
+        Button mnameSignInButton = (Button) findViewById(R.id.aggiungi_spesa_button);
+        mnameSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+
+        Button mnameRemoveButton = (Button) findViewById(R.id.rimuovi_spesa_button);
+        mnameRemoveButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeAttempt();
             }
         });
 
@@ -63,45 +80,57 @@ public class SpesaActivity extends AppCompatActivity {
         nomeSpesa.setError(null);
         importoSpesa.setError(null);
 
-        // Store values at the time of the login attempt.
-        String email = nomeSpesa.getText().toString();
-        String password = importoSpesa.getText().toString();
+        String name = nomeSpesa.getText().toString();
+        String amount = importoSpesa.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && password.length() > 10) {
+        // Check for a valid amount, if the user entered one.
+        if (!TextUtils.isEmpty(amount) && amount.length() > 10) {
             importoSpesa.setError("Penso tu abbia esagerato, sborone");
             focusView = importoSpesa;
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+        // Check for a valid name.
+        if (TextUtils.isEmpty(name)) {
             nomeSpesa.setError("Metti il nome della spesa");
             focusView = nomeSpesa;
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(amount)) {
             importoSpesa.setError("Metti quanto ti è costata");
             focusView = importoSpesa;
             cancel = true;
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         }
         else {
             DBHelper dbh = new DBHelper(this);
-            long code = dbh.insertNewExpense(nomeSpesa.getText().toString(), importoSpesa.getText().toString());
-            if (code != -1)
-                Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
-            finish();
+            if (dbh.getExpanse(nomeSpesa.getText().toString()).getCount() == 0) {
+                long code = dbh.insertNewExpense(nomeSpesa.getText().toString(), importoSpesa.getText().toString());
+                if (code != -1)
+                    Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
+                else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
+                finish();
+            }
+            else {
+                dbh.modifyExpanse(nomeSpesa.getText().toString(), importoSpesa.getText().toString());
+                finish();
+            }
+
         }
+    }
+
+    private void removeAttempt(){
+        DBHelper dbh = new DBHelper(this);
+        String name = nomeSpesa.getText().toString();
+        dbh.removeExpanse(name);
+        finish();
     }
 
 }

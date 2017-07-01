@@ -10,7 +10,6 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper {
 
 	public static final String TABLE_BUDGET = "budget";
-	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_EXPENSE_NAME = "nomeSpesa";
 	public static final String COLUMN_AMOUNT = "importoSpesa";
 
@@ -19,8 +18,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	// Database creation sql statement
 	private static final String DATABASE_CREATE = "create table "
-			+ TABLE_BUDGET + "( " + COLUMN_ID + " integer primary key autoincrement, "
-			+ COLUMN_EXPENSE_NAME	+ " text not null, "
+			+ TABLE_BUDGET + "( "
+			+ COLUMN_EXPENSE_NAME	+ " text not null primary key, "
 			+ COLUMN_AMOUNT + " integer not null);";
 
 	public DBHelper(Context context) {
@@ -58,6 +57,25 @@ public class DBHelper extends SQLiteOpenHelper {
 	public Cursor getBudget() {
 		return getWritableDatabase().query(TABLE_BUDGET, null, null, null, null, null, null);
 	}
+
+	public Cursor getExpanse(String exp) {
+        return getWritableDatabase().query(TABLE_BUDGET, null, COLUMN_EXPENSE_NAME + " = ?", new String[] {exp}, null, null, null);
+    }
+
+    public long modifyExpanse(String exp, String am) {
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_EXPENSE_NAME, exp);
+        cv.put(COLUMN_AMOUNT, am);
+
+        String selection = COLUMN_EXPENSE_NAME + " LIKE ?";
+        String[] selectionArgs = { exp };
+
+        return getWritableDatabase().update(TABLE_BUDGET, cv, selection, selectionArgs );
+    }
+
+    public long removeExpanse(String exp){
+        return getWritableDatabase().delete(TABLE_BUDGET, COLUMN_EXPENSE_NAME + "=?", new String[] {exp});
+    }
 
 	/*tengo perché sia mai che mi servano
 	public void deleteStudent(int id) {

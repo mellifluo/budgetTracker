@@ -1,5 +1,6 @@
 package com.example.ale.budgettracker;
 
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,14 +15,24 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
     public static class SpesaViewHolder extends RecyclerView.ViewHolder {
 
         public CardView cv;
-        public TextView SpesaName;
-        public TextView SpesaAge;
+        public TextView nameSpesa;
+        public TextView amountSpesa;
 
         SpesaViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-            SpesaName = (TextView)itemView.findViewById(R.id.name_expanse);
-            SpesaAge = (TextView)itemView.findViewById(R.id.amount_expanse);
+            nameSpesa = (TextView)itemView.findViewById(R.id.name_expanse);
+            amountSpesa = (TextView)itemView.findViewById(R.id.amount_expanse);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent modifySpesa = new Intent(v.getContext(), SpesaActivity.class);
+                    modifySpesa.putExtra("nameSpesa", nameSpesa.getText().toString());
+                    modifySpesa.putExtra("amountSpesa", amountSpesa.getText().toString());
+                    v.getContext().startActivity(modifySpesa);
+
+                }
+            });
         }
     }
 
@@ -45,8 +56,8 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
 
     @Override
     public void onBindViewHolder(SpesaViewHolder SpesaViewHolder, int i) {
-        SpesaViewHolder.SpesaName.setText(Spese.get(i).name);
-        SpesaViewHolder.SpesaAge.setText(Spese.get(i).amount);
+        SpesaViewHolder.nameSpesa.setText(Spese.get(i).name);
+        SpesaViewHolder.amountSpesa.setText(Spese.get(i).amount);
     }
 
     @Override
