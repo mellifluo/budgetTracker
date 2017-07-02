@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ale.budgettracker.firstActivity">
+
+
+        <TextView
+            android:id="@+id/portafoglio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facciamo prima i conti in tasca:"
+            android:padding="20dp"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/postportafoglio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quanti soldi hai a disposizione?"
+            android:padding="20sp"
+            android:textSize="20dp"
+            android:layout_below="@+id/portafoglio"/>
+
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/postportafoglio">
+
+        <EditText
+            android:id="@+id/budgetIniziale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:hint="Importo"
+            android:inputType="numberSigned"
+            android:maxLines="1"
+            />
+
+        <Button
+            android:id="@+id/aggiungi_budget"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Aggiungi"
+            android:textStyle="bold" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+
+</RelativeLayout>

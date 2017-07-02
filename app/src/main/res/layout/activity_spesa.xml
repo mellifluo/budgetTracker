@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:hint="€€€€€€"
+                    android:hint="Importo"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="Aggiungi"
                     android:imeOptions="actionUnspecified"
