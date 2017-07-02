@@ -24,11 +24,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <LinearLayout
             android:id="@+id/aggiungi_spesa_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aggiunta di una spesa occasionale:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:padding="10dp"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -41,6 +49,8 @@
                     android:hint="Nome spesa"
                     android:gravity="center_horizontal"
                     android:inputType="text"
+                    android:nextFocusForward="@+id/prezzo"
+                    android:imeOptions="actionNext"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
@@ -63,24 +73,70 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/aggiungi_spesa_button"
-                style="?android:textAppearanceSmall"
+            <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Aggiungi"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/data_spesa_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:layout_marginTop="16dp"
+                    android:text="Data"
+                    android:layout_marginRight="2dp"
+                    android:onClick="setDate"
+                    android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/posizione_spesa_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="2dp"
+                    android:text="Posizione"
+                    android:textStyle="bold" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-            <Button
-                android:id="@+id/rimuovi_spesa_button"
-                style="?android:textAppearanceSmall"
+                <Button
+                    android:id="@+id/aggiungi_spesa_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="16dp"
+                    android:text="Aggiungi/modifica"
+                    android:textStyle="bold" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+
+            <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Rimuovi"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/rimuovi_spesa_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="16dp"
+                    android:text="Rimuovi"
+                    android:textStyle="bold" />
+
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
 
         </LinearLayout>
     </ScrollView>

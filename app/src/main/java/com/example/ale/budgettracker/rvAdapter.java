@@ -17,12 +17,14 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
         public CardView cv;
         public TextView nameSpesa;
         public TextView amountSpesa;
+        public TextView dateSpesa;
 
         SpesaViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             nameSpesa = (TextView)itemView.findViewById(R.id.name_expanse);
             amountSpesa = (TextView)itemView.findViewById(R.id.amount_expanse);
+            dateSpesa = (TextView)itemView.findViewById(R.id.date_expanse);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -57,8 +59,10 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
     @Override
     public void onBindViewHolder(SpesaViewHolder SpesaViewHolder, int i) {
         String amount = Spese.get(i).amount + "€";
+        String date = Spese.get(i).day + "/" + Spese.get(i).month + "/" + Spese.get(i).year;
         SpesaViewHolder.nameSpesa.setText(Spese.get(i).name);
         SpesaViewHolder.amountSpesa.setText(amount);
+        SpesaViewHolder.dateSpesa.setText(date);
     }
 
     @Override

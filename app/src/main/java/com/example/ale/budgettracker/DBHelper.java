@@ -13,18 +13,20 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_EXPENSE_NAME = "nomeSpesa";
     public static final String COLUMN_AMOUNT = "importoSpesa";
     public static final String REMAINING_BUDGET = "budgetRemaining";
-    public static final String DATE_EXPANSE = "dateExpanse";
+    public static final String YEAR_EXPANSE = "yearExpanse";
+    public static final String MONTH_EXPANSE = "monthExpanse";
+    public static final String DAY_EXPANSE = "dayExpanse";
     public static final String CATEGORY = "category";
 
 	private static final String DATABASE_NAME = "budget.db";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 5;
 
 	// Database creation sql statement
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_BUDGET + "( "
-            + CATEGORY + " text not null, "
-            + DATE_EXPANSE + " text not null, "
-            + REMAINING_BUDGET + " text not null, "
+            + YEAR_EXPANSE + " text not null, "
+            + MONTH_EXPANSE + " text not null, "
+            + DAY_EXPANSE + " text not null, "
 			+ COLUMN_EXPENSE_NAME	+ " text not null primary key, "
 			+ COLUMN_AMOUNT + " text not null);";
 
@@ -47,14 +49,18 @@ public class DBHelper extends SQLiteOpenHelper {
 	}
 
 	public void removeAll() {
-		getWritableDatabase().delete(DBHelper.TABLE_BUDGET, null, null);
+        getWritableDatabase().delete(DBHelper.TABLE_BUDGET, null, null);
 	}
 
 
-	public long insertNewExpense(String nameExpanse, String amountExpanse) {
+	public long insertNewExpense(String nameExpanse, String amountExpanse, String yearExpanse, 
+								 String monthExpanse, String dayExpanse) {
 		ContentValues cv = new ContentValues();
-		cv.put(COLUMN_EXPENSE_NAME, nameExpanse);
-		cv.put(COLUMN_AMOUNT, amountExpanse);
+        cv.put(YEAR_EXPANSE, yearExpanse);
+        cv.put(MONTH_EXPANSE, monthExpanse);
+        cv.put(DAY_EXPANSE, dayExpanse);
+        cv.put(COLUMN_EXPENSE_NAME, nameExpanse);
+        cv.put(COLUMN_AMOUNT, amountExpanse);
 
 		long code = getWritableDatabase().insert(TABLE_BUDGET, null, cv);
 		return code;
@@ -68,13 +74,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return getWritableDatabase().query(TABLE_BUDGET, null, COLUMN_EXPENSE_NAME + " = ?", new String[] {exp}, null, null, null);
     }
 
-    public long modifyExpanse(String exp, String am) {
+    public long modifyExpanse(String exp, String am, String yearExpanse,
+                              String monthExpanse, String dayExpanse) {
         ContentValues cv = new ContentValues();
+        cv.put(YEAR_EXPANSE, yearExpanse);
+        cv.put(MONTH_EXPANSE, monthExpanse);
+        cv.put(DAY_EXPANSE, dayExpanse);
         cv.put(COLUMN_EXPENSE_NAME, exp);
         cv.put(COLUMN_AMOUNT, am);
 
         String selection = COLUMN_EXPENSE_NAME + " LIKE ?";
-        String[] selectionArgs = { exp };
+        String[] selectionArgs = { exp, am, yearExpanse, monthExpanse, dayExpanse };
 
         return getWritableDatabase().update(TABLE_BUDGET, cv, selection, selectionArgs );
     }

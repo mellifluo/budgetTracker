@@ -10,9 +10,15 @@ import java.util.List;
 class Spesa {
     String name;
     String amount;
+    String year;
+    String month;
+    String day;
 
-    Spesa(String name, String amount) {
+    Spesa(String name, String amount, String year, String month, String day) {
         this.name = name;
         this.amount = amount;
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
 }

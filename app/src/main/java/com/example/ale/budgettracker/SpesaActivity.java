@@ -3,6 +3,9 @@ package com.example.ale.budgettracker;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -21,11 +24,13 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -38,6 +43,12 @@ public class SpesaActivity extends AppCompatActivity {
     // UI references.
     private AutoCompleteTextView nomeSpesa;
     private EditText importoSpesa;
+    private DatePicker datePicker;
+    private Calendar calendar;
+    private TextView dateView;
+    private int year, month, day = 40;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +60,18 @@ public class SpesaActivity extends AppCompatActivity {
         importoSpesa = (EditText) findViewById(R.id.prezzo);
 
 
+        Button mnameRemoveButton = (Button) findViewById(R.id.rimuovi_spesa_button);
+        mnameRemoveButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeAttempt();
+            }
+        });
+        mnameRemoveButton.setVisibility(View.INVISIBLE);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null){
+            mnameRemoveButton.setVisibility(View.VISIBLE);
             String modifiedName = extras.getString("nameSpesa");
             nomeSpesa.setText(modifiedName);
             String modifiedAmount = extras.getString("amountSpesa");
@@ -65,14 +86,18 @@ public class SpesaActivity extends AppCompatActivity {
             }
         });
 
-        Button mnameRemoveButton = (Button) findViewById(R.id.rimuovi_spesa_button);
-        mnameRemoveButton.setOnClickListener(new OnClickListener() {
+        Button buttonPosition = (Button) findViewById(R.id.posizione_spesa_button);
+        buttonPosition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeAttempt();
+                startActivity(new Intent(SpesaActivity.this, MapsActivity.class));
             }
         });
 
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+
+        month = calendar.get(Calendar.MONTH)+1;
     }
     private void attemptLogin() {
 
@@ -106,25 +131,63 @@ public class SpesaActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        if (day == 40) {
+            Toast.makeText(this, "Inserisci una data valida!", Toast.LENGTH_LONG);
+            focusView = datePicker;
+            cancel = true;
+        }
+
         if (cancel) {
             focusView.requestFocus();
         }
         else {
             DBHelper dbh = new DBHelper(this);
             if (dbh.getExpanse(nomeSpesa.getText().toString()).getCount() == 0) {
-                long code = dbh.insertNewExpense(nomeSpesa.getText().toString(), importoSpesa.getText().toString());
+                long code = dbh.insertNewExpense(nomeSpesa.getText().toString(), importoSpesa.getText().toString(),
+                        String.valueOf(year), String.valueOf(month), String.valueOf(day));
                 if (code != -1)
                     Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
                 else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
                 finish();
             }
             else {
-                dbh.modifyExpanse(nomeSpesa.getText().toString(), importoSpesa.getText().toString());
+                dbh.modifyExpanse(nomeSpesa.getText().toString(), importoSpesa.getText().toString(),
+                        String.valueOf(year), String.valueOf(month), String.valueOf(day));
                 finish();
             }
 
         }
     }
+
+
+    @SuppressWarnings("deprecation")
+    public void setDate(View view) {
+        showDialog(999);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        // TODO Auto-generated method stub
+        if (id == 999) {
+            return new DatePickerDialog(this,
+                    myDateListener, year, month, day);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener myDateListener = new
+            DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker arg0,
+                                      int arg1, int arg2, int arg3) {
+                    year = arg1;
+                    month = arg2+1;
+                    day = arg3;
+                }
+            };
+
+
+
 
     private void removeAttempt(){
         DBHelper dbh = new DBHelper(this);

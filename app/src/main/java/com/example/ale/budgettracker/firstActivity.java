@@ -8,9 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class firstActivity extends AppCompatActivity {
 
     private EditText importoSpesa;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,13 @@ public class firstActivity extends AppCompatActivity {
         }
         else {
             DBHelper dbh = new DBHelper(this);
-            long code = dbh.insertNewExpense("Budget iniziale", importoSpesa.getText().toString());
+            String year = "2017";
+            String month = "1";
+            String day = "1";
+            long code = dbh.insertNewExpense("Budget iniziale", importoSpesa.getText().toString(),
+                    year,
+                    month,
+                    day);
             if (code != -1)
                 Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
             else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
