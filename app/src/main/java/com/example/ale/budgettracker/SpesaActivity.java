@@ -46,7 +46,7 @@ public class SpesaActivity extends AppCompatActivity {
     private DatePicker datePicker;
     private Calendar calendar;
     private TextView dateView;
-    private int year, month, day = 40;
+    private int year, month, day;
 
 
 
@@ -75,6 +75,7 @@ public class SpesaActivity extends AppCompatActivity {
             String modifiedName = extras.getString("nameSpesa");
             nomeSpesa.setText(modifiedName);
             String modifiedAmount = extras.getString("amountSpesa");
+            modifiedAmount = removeLastChar(modifiedAmount);
             importoSpesa.setText(modifiedAmount);
         }
 
@@ -96,8 +97,8 @@ public class SpesaActivity extends AppCompatActivity {
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
-
-        month = calendar.get(Calendar.MONTH)+1;
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
     }
     private void attemptLogin() {
 
@@ -131,12 +132,6 @@ public class SpesaActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (day == 40) {
-            Toast.makeText(this, "Inserisci una data valida!", Toast.LENGTH_LONG);
-            focusView = datePicker;
-            cancel = true;
-        }
-
         if (cancel) {
             focusView.requestFocus();
         }
@@ -144,7 +139,7 @@ public class SpesaActivity extends AppCompatActivity {
             DBHelper dbh = new DBHelper(this);
             if (dbh.getExpanse(nomeSpesa.getText().toString()).getCount() == 0) {
                 long code = dbh.insertNewExpense(nomeSpesa.getText().toString(), importoSpesa.getText().toString(),
-                        String.valueOf(year), String.valueOf(month), String.valueOf(day));
+                        String.valueOf(year), String.valueOf(month+1), String.valueOf(day));
                 if (code != -1)
                     Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
                 else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
@@ -152,7 +147,7 @@ public class SpesaActivity extends AppCompatActivity {
             }
             else {
                 dbh.modifyExpanse(nomeSpesa.getText().toString(), importoSpesa.getText().toString(),
-                        String.valueOf(year), String.valueOf(month), String.valueOf(day));
+                        String.valueOf(year), String.valueOf(month+1), String.valueOf(day));
                 finish();
             }
 
@@ -181,13 +176,15 @@ public class SpesaActivity extends AppCompatActivity {
                 public void onDateSet(DatePicker arg0,
                                       int arg1, int arg2, int arg3) {
                     year = arg1;
-                    month = arg2+1;
+                    month = arg2;
                     day = arg3;
                 }
             };
 
 
-
+    private String removeLastChar(String str) {
+        return str.substring(0, str.length() - 1);
+    }
 
     private void removeAttempt(){
         DBHelper dbh = new DBHelper(this);

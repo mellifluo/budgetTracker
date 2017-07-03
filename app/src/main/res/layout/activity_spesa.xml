@@ -8,7 +8,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ale.budgettracker.SpesaActivity">
+    android:background="@color/colorPrimary"
+    tools:context="com.example.ale.budgettracker.SpesaActivity"
+    >
 
     <!-- Login progress -->
     <ProgressBar
@@ -33,7 +35,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Aggiunta di una spesa occasionale:"
+                android:text="Aggiunta di una spesa o guadagno occasionale:"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:padding="10dp"/>
@@ -46,7 +48,7 @@
                     android:id="@+id/nome_spesa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nome spesa"
+                    android:hint="Nome spesa/entrata"
                     android:gravity="center_horizontal"
                     android:inputType="text"
                     android:nextFocusForward="@+id/prezzo"
@@ -85,13 +87,18 @@
                     android:layout_weight="0.9"
                     android:layout_marginTop="16dp"
                     android:text="Data"
-                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent"
                     android:onClick="setDate"
+                    android:shadowColor="#A8A8A8"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"
                     android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/posizione_spesa_button"
                     style="?android:textAppearanceSmall"
+                    android:background="@color/colorAccent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
@@ -114,6 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginTop="16dp"
+                    android:background="@color/colorAccent"
                     android:text="Aggiungi/modifica"
                     android:textStyle="bold" />
 
@@ -128,6 +136,7 @@
                     android:id="@+id/rimuovi_spesa_button"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
+                    android:background="@color/colorAccent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginTop="16dp"

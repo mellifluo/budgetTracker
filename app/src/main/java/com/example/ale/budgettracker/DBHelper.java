@@ -84,7 +84,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_AMOUNT, am);
 
         String selection = COLUMN_EXPENSE_NAME + " LIKE ?";
-        String[] selectionArgs = { exp, am, yearExpanse, monthExpanse, dayExpanse };
+        String[] selectionArgs = { exp };
 
         return getWritableDatabase().update(TABLE_BUDGET, cv, selection, selectionArgs );
     }

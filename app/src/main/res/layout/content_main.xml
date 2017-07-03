@@ -5,9 +5,8 @@
         android:id="@+id/list_item"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:padding="16dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"
-        >
+        android:background="@color/colorPrimary"
+    >
 
 
 
@@ -15,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cv"
-            android:background="@color/cardview_dark_background"
             xmlns:android="http://schemas.android.com/apk/res/android">
 
 

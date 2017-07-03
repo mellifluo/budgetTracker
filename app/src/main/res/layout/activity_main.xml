@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:elegantTextHeight="true"
-                android:textSize="40dp"
+                android:textSize="50dp"
                 android:textAlignment="center"
                 android:gravity="center"
                 />
@@ -75,6 +75,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:backgroundTint="@color/colorPrimary"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 

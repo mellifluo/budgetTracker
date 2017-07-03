@@ -1,6 +1,7 @@
 package com.example.ale.budgettracker;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,11 +29,13 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent modifySpesa = new Intent(v.getContext(), SpesaActivity.class);
-                    modifySpesa.putExtra("nameSpesa", nameSpesa.getText().toString());
-                    modifySpesa.putExtra("amountSpesa", amountSpesa.getText().toString());
-                    v.getContext().startActivity(modifySpesa);
-
+                    String nome = nameSpesa.getText().toString();
+                    if (!nome.equals("Budget iniziale")) {
+                        Intent modifySpesa = new Intent(v.getContext(), SpesaActivity.class);
+                        modifySpesa.putExtra("nameSpesa", nome);
+                        modifySpesa.putExtra("amountSpesa", amountSpesa.getText().toString());
+                        v.getContext().startActivity(modifySpesa);
+                    }
                 }
             });
         }
@@ -60,7 +63,18 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
     public void onBindViewHolder(SpesaViewHolder SpesaViewHolder, int i) {
         String amount = Spese.get(i).amount + "€";
         String date = Spese.get(i).day + "/" + Spese.get(i).month + "/" + Spese.get(i).year;
-        SpesaViewHolder.nameSpesa.setText(Spese.get(i).name);
+        String nome = Spese.get(i).name;
+        if (Integer.valueOf(Spese.get(i).amount) < 0) {
+            int color = Color.parseColor("#FF4081");
+            SpesaViewHolder.cv.setCardBackgroundColor(color);
+        }
+        else SpesaViewHolder.cv.setCardBackgroundColor(Color.GREEN);
+        if (nome.equals("Budget iniziale")){
+            int color = Color.parseColor("#3F51B5");
+            SpesaViewHolder.cv.setCardBackgroundColor(color);
+            SpesaViewHolder.dateSpesa.setText("");
+        }
+        SpesaViewHolder.nameSpesa.setText(nome);
         SpesaViewHolder.amountSpesa.setText(amount);
         SpesaViewHolder.dateSpesa.setText(date);
     }
