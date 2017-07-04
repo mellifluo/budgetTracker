@@ -3,6 +3,15 @@
 
     <item
         is-multidex="false"
+        jar="/home/ale/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v2.0.9/4244e2998018aa492389e8e30a77b7987959608e/MPAndroidChart-v2.0.9.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4244e2998018aa492389e8e30a77b7987959608e">
+        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/MPAndroidChart-v2.0.9_828b7c9574450170dc61f6be2a20031469e66b75.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/ale/.android/build-cache/a5a878928de7b3b201c425eb892d5973ee4eaecd/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"

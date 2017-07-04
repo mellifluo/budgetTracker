@@ -64,6 +64,9 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
         String amount = Spese.get(i).amount + "€";
         String date = Spese.get(i).day + "/" + Spese.get(i).month + "/" + Spese.get(i).year;
         String nome = Spese.get(i).name;
+        SpesaViewHolder.nameSpesa.setText(nome);
+        SpesaViewHolder.amountSpesa.setText(amount);
+        SpesaViewHolder.dateSpesa.setText(date);
         if (Integer.valueOf(Spese.get(i).amount) < 0) {
             int color = Color.parseColor("#FF4081");
             SpesaViewHolder.cv.setCardBackgroundColor(color);
@@ -74,9 +77,6 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
             SpesaViewHolder.cv.setCardBackgroundColor(color);
             SpesaViewHolder.dateSpesa.setText("");
         }
-        SpesaViewHolder.nameSpesa.setText(nome);
-        SpesaViewHolder.amountSpesa.setText(amount);
-        SpesaViewHolder.dateSpesa.setText(date);
     }
 
     @Override

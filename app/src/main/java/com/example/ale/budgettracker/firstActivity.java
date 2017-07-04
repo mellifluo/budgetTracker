@@ -13,6 +13,7 @@ import java.util.Calendar;
 public class firstActivity extends AppCompatActivity {
 
     private EditText importoSpesa;
+    private Calendar calendar;
 
 
     @Override
@@ -58,9 +59,10 @@ public class firstActivity extends AppCompatActivity {
         }
         else {
             DBHelper dbh = new DBHelper(this);
-            String year = "2017";
-            String month = "1";
-            String day = "1";
+            calendar = Calendar.getInstance();
+            String year = String.valueOf(calendar.get(Calendar.YEAR));
+            String month = String.valueOf(calendar.get(Calendar.MONTH)+1);
+            String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
             long code = dbh.insertNewExpense("Budget iniziale", importoSpesa.getText().toString(),
                     year,
                     month,

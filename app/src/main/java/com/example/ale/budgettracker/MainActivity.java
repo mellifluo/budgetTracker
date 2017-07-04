@@ -27,10 +27,18 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import static android.R.id.toggle;
+import static java.lang.Math.abs;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -102,9 +110,14 @@ public class MainActivity extends AppCompatActivity
                 String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));
                 String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
                 String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
-                Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
-                        dayNewSpesa);
-                listItems.add(newSpesa);
+                Calendar calendarNow = Calendar.getInstance();
+                Calendar calendar = new GregorianCalendar(Integer.valueOf(yearNewSpesa),
+                        Integer.valueOf(monthNewSpesa)-1, Integer.valueOf(dayNewSpesa)+1);
+                if (calendar.compareTo(calendarNow)>=0)  {
+                    Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
+                            dayNewSpesa);
+                    listItems.add(newSpesa);
+                }
             }
             cursor.moveToNext();
         }
@@ -167,6 +180,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            startActivity(new Intent(MainActivity.this, LineChartActivity.class));
 
         } else if (id == R.id.nav_slideshow) {
 
