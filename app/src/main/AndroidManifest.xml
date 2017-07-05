@@ -68,7 +68,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ale.budgettracker.SpesaActivity" />
         </activity>
-        <activity android:name=".LineChartActivity"></activity>
+        <activity android:name=".LineChartActivity" />
+        <activity android:name=".SelectChart" />
+        <activity android:name=".MonthsChartActivity"></activity>
     </application>
 
 </manifest>

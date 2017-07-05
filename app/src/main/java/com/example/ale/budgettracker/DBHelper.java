@@ -74,6 +74,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return getWritableDatabase().query(TABLE_BUDGET, null, COLUMN_EXPENSE_NAME + " = ?", new String[] {exp}, null, null, null);
     }
 
+	public Cursor getYear(String year) {
+		return getWritableDatabase().query(TABLE_BUDGET, null, YEAR_EXPANSE + " = ?", new String[] {year}, null, null, null);
+	}
+
     public long modifyExpanse(String exp, String am, String yearExpanse,
                               String monthExpanse, String dayExpanse) {
         ContentValues cv = new ContentValues();
@@ -95,6 +99,55 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public long getTotal() {
 		Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from " + TABLE_BUDGET, null);
+		if (amountColumn.moveToFirst()){
+			return amountColumn.getLong(0);
+		}
+		else return 0;
+	}
+
+	public long getTotalInAYear(String year) {
+		Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from" +
+				" " + TABLE_BUDGET + "where " + YEAR_EXPANSE + " = " + year , null);
+		if (amountColumn.moveToFirst()){
+			return amountColumn.getLong(0);
+		}
+		else return 0;
+	}
+
+	public long getTotalInAMonth(String year, String month) {
+		Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
+				+ TABLE_BUDGET + " where " + YEAR_EXPANSE + " = " + year + " and " + MONTH_EXPANSE +
+				" = " + month, null);
+		if (amountColumn.moveToFirst()){
+			return amountColumn.getLong(0);
+		}
+		else return 0;
+	}
+
+    public long getLossInAMonth(String year, String month) {
+        Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
+                + TABLE_BUDGET + " where " + YEAR_EXPANSE + " = " + year + " and " + MONTH_EXPANSE +
+                " = " + month + " and " + COLUMN_AMOUNT + " like " + " '-%'", null);
+        if (amountColumn.moveToFirst()){
+            return amountColumn.getLong(0);
+        }
+        else return 0;
+    }
+
+	public long getPosInAMonth(String year, String month) {
+		Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
+				+ TABLE_BUDGET + " where " + YEAR_EXPANSE + " = " + year + " and " + MONTH_EXPANSE +
+				" = " + month + " and " + COLUMN_AMOUNT + " not like " + " '-%'", null);
+		if (amountColumn.moveToFirst()){
+			return amountColumn.getLong(0);
+		}
+		else return 0;
+	}
+
+	public long getAmInADay(String year, String month, String day) {
+		Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
+				+ TABLE_BUDGET + " where " + YEAR_EXPANSE + " = " + year + " and " + MONTH_EXPANSE +
+				" = " + month + " and " + DAY_EXPANSE + day, null);
 		if (amountColumn.moveToFirst()){
 			return amountColumn.getLong(0);
 		}

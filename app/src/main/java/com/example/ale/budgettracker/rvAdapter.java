@@ -72,7 +72,7 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
             SpesaViewHolder.cv.setCardBackgroundColor(color);
         }
         else SpesaViewHolder.cv.setCardBackgroundColor(Color.GREEN);
-        if (nome.equals("Budget iniziale")){
+        if (nome.equals("Budget mensile")){
             int color = Color.parseColor("#3F51B5");
             SpesaViewHolder.cv.setCardBackgroundColor(color);
             SpesaViewHolder.dateSpesa.setText("");

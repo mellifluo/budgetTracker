@@ -21,6 +21,27 @@
     </string>
     <string name="title_activity_settings">Settings</string>
 
+    <string-array name="array_anni">
+        <item>Inserisci</item>
+        <item>2017</item>
+    </string-array>
+
+    <string-array name="array_mesi">
+        <item>Inserisci</item>
+        <item>Gennaio</item>
+        <item>Febbario</item>
+        <item>Marzo</item>
+        <item>Aprile</item>
+        <item>Maggio</item>
+        <item>Giugno</item>
+        <item>Luglio</item>
+        <item>Agosto</item>
+        <item>Settembre</item>
+        <item>Ottobre</item>
+        <item>Novembre</item>
+        <item>Dicembre</item>
+    </string-array>
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
@@ -58,6 +79,7 @@
         <item>6 hours</item>
         <item>Never</item>
     </string-array>
+
     <string-array name="pref_sync_frequency_values">
         <item>15</item>
         <item>30</item>

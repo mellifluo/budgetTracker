@@ -70,7 +70,7 @@
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="Aggiungi"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="numberSigned"
+                    android:inputType="number"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>

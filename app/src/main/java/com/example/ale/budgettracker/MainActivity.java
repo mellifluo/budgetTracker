@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
                 Calendar calendarNow = Calendar.getInstance();
                 Calendar calendar = new GregorianCalendar(Integer.valueOf(yearNewSpesa),
                         Integer.valueOf(monthNewSpesa)-1, Integer.valueOf(dayNewSpesa)+1);
-                if (calendar.compareTo(calendarNow)>=0)  {
+                if (calendar.compareTo(calendarNow)>=0 || nameNewSpesa.equals("Budget mensile"))  {
                     Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
                             dayNewSpesa);
                     listItems.add(newSpesa);
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(MainActivity.this, LineChartActivity.class));
+            startActivity(new Intent(MainActivity.this, SelectChart.class));
 
         } else if (id == R.id.nav_slideshow) {
 

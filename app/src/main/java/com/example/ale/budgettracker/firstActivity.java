@@ -63,7 +63,7 @@ public class firstActivity extends AppCompatActivity {
             String year = String.valueOf(calendar.get(Calendar.YEAR));
             String month = String.valueOf(calendar.get(Calendar.MONTH)+1);
             String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
-            long code = dbh.insertNewExpense("Budget iniziale", importoSpesa.getText().toString(),
+            long code = dbh.insertNewExpense("Budget mensile", importoSpesa.getText().toString(),
                     year,
                     month,
                     day);
