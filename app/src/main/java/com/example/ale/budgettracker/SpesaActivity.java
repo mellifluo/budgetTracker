@@ -96,6 +96,7 @@ public class SpesaActivity extends AppCompatActivity {
         });
 
         calendar = Calendar.getInstance();
+        int x = Calendar.YEAR;
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -108,7 +109,8 @@ public class SpesaActivity extends AppCompatActivity {
 
         String name = nomeSpesa.getText().toString();
         String amount = importoSpesa.getText().toString();
-
+        amount = String.format("%.2f", Float.valueOf(amount));
+        amount = amount.replace(",", ".");
         boolean cancel = false;
         View focusView = null;
 
@@ -138,7 +140,7 @@ public class SpesaActivity extends AppCompatActivity {
         else {
             DBHelper dbh = new DBHelper(this);
             if (dbh.getExpanse(nomeSpesa.getText().toString()).getCount() == 0) {
-                long code = dbh.insertNewExpense(nomeSpesa.getText().toString(), importoSpesa.getText().toString(),
+                float code = dbh.insertNewExpense(nomeSpesa.getText().toString(), amount,
                         String.valueOf(year), String.valueOf(month+1), String.valueOf(day));
                 if (code != -1)
                     Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
@@ -146,7 +148,7 @@ public class SpesaActivity extends AppCompatActivity {
                 finish();
             }
             else {
-                dbh.modifyExpanse(nomeSpesa.getText().toString(), importoSpesa.getText().toString(),
+                dbh.modifyExpanse(nomeSpesa.getText().toString(), amount,
                         String.valueOf(year), String.valueOf(month+1), String.valueOf(day));
                 finish();
             }

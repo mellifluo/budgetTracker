@@ -1,135 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.ale.budgettracker.firstActivity">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="com.example.ale.budgettracker.firstActivity"
+    >
 
-
-
-    <TextView
-        android:id="@+id/DomandaGrafico"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quale statistica corrente vuoi vedere?"
-        android:padding="20sp"
-        android:textSize="20dp"/>
-
-
-
-    <LinearLayout
-        android:id="@+id/SceltaGrafico"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/DomandaGrafico">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_weight="0.9"
-            android:layout_height="wrap_content"
-            android:text="Annuale"
-            android:layout_margin="2dp"
-            android:id="@+id/annoChart"
-            android:layout_below="@+id/DomandaGrafico"/>
-
-
-        <Button
-            android:layout_weight="0.9"
-            android:layout_margin="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/annoChart"
-            android:id="@+id/meseChart"
-            android:text="Mensile"
-            />
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.9"
-            android:layout_toRightOf="@+id/meseChart"
-            android:text="Settim."
-            android:layout_below="@+id/DomandaGrafico"/>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:paddingTop="20dp"
-        android:id="@+id/SceltaAnnoData"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/SceltaGrafico">
-
+        android:layout_height="match_parent"
+        >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/DomandaGrafico"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Oppure scegli un anno:"
-            android:padding="15sp"
+            android:text="Quale statistica corrente vuoi vedere?"
+            android:padding="20sp"
             android:textSize="20dp"/>
 
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/spinner_anno"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:id="@+id/SceltaGrafico"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:layout_below="@+id/DomandaGrafico">
 
-        </android.support.v7.widget.AppCompatSpinner>
+            <Button
+                android:layout_width="wrap_content"
+                android:background="@color/colorPrimary"
+                android:layout_weight="0.9"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:text="Annuale"
+                android:layout_margin="2dp"
+                android:id="@+id/annoChart"
+                android:layout_below="@+id/DomandaGrafico"/>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:id="@+id/SceltaMeseData"
-        android:paddingTop="20dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/SceltaAnnoData">
+            <Button
+                android:layout_weight="0.9"
+                android:layout_margin="2dp"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:background="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/annoChart"
+                android:id="@+id/meseChart"
+                android:text="Mensile"
+                />
 
 
-        <TextView
+            <Button
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:layout_margin="2dp"
+                android:id="@+id/giornoChart"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:background="@color/colorPrimary"
+                android:layout_toRightOf="@+id/meseChart"
+                android:text="Settim."
+                android:layout_below="@+id/DomandaGrafico"/>
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="wrap_content"
+            android:paddingTop="20dp"
+            android:id="@+id/SceltaAnnoData"
             android:layout_height="wrap_content"
-            android:text="Oppure scegli un mese:"
-            android:padding="15sp"
-            android:textSize="20dp"/>
-
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/spinner_mese"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
-
-        </android.support.v7.widget.AppCompatSpinner>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:id="@+id/SceltaSettData"
-        android:paddingTop="20dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/SceltaMeseData">
+            android:layout_below="@+id/SceltaGrafico">
 
 
-        <TextView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oppure scegli un anno:"
+                android:padding="15sp"
+                android:textSize="20dp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner_anno"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+
+            </android.support.v7.widget.AppCompatSpinner>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
+            android:id="@+id/SceltaMeseData"
+            android:paddingTop="20dp"
             android:layout_height="wrap_content"
-            android:text="O una settimana:"
-            android:padding="15sp"
-            android:textSize="20dp"/>
+            android:layout_below="@+id/SceltaAnnoData">
 
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/spinner_giorno"
-            android:layout_width="fill_parent"
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oppure scegli un mese:"
+                android:padding="15sp"
+                android:textSize="20dp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner_mese"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+
+            </android.support.v7.widget.AppCompatSpinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/SceltaSettData"
+            android:paddingTop="20dp"
             android:layout_height="wrap_content"
-            >
-
-        </android.support.v7.widget.AppCompatSpinner>
-
-    </LinearLayout>
+            android:layout_below="@+id/SceltaMeseData">
 
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="O una settimana:"
+                android:padding="15sp"
+                android:textSize="20dp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner_giorno"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+
+            </android.support.v7.widget.AppCompatSpinner>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:paddingTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/SceltaSettData">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Per una corretta visione si consiglia di ruotare lo schermo"
+                android:padding="15sp"
+                android:textSize="16dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

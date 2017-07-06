@@ -22,8 +22,8 @@ public class LineChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_chart);
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        Toast.makeText(this, "Per una migliore visualizzazione ruotare lo schermo", Toast.LENGTH_LONG);
-
+        chart.getAxisLeft().setStartAtZero(false);
+        chart.getAxisRight().setStartAtZero(false);
         BarData data = new BarData(getXAxisValues(), getDataSet());
         chart.setData(data);
         chart.setDescription("");
@@ -117,12 +117,15 @@ public class LineChartActivity extends AppCompatActivity {
 
         BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Totale");
         barDataSet1.setColor(Color.BLUE);
+        barDataSet1.setDrawValues(false);
 
         BarDataSet barDataSet2 = new BarDataSet(valueSet2, "Perdite");
         barDataSet2.setColor(Color.RED);
+        barDataSet2.setDrawValues(false);
 
         BarDataSet barDataSet3 = new BarDataSet(valueSet3, "Guadagni");
         barDataSet3.setColor(Color.rgb(0, 155, 0));
+        barDataSet3.setDrawValues(false);
 
         dataSets = new ArrayList<>();
         dataSets.add(barDataSet1);

@@ -74,39 +74,37 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
         });
 
 
+        Button thisDay = (Button) findViewById(R.id.giornoChart);
+        thisDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent selected = new Intent(view.getContext(), DaysChartActivity.class);
+                selected.putExtra("day", day);
+                selected.putExtra("month", month);
+                selected.putExtra("year", year);
+                view.getContext().startActivity(selected);
+            }
+        });
+
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         String selectedItem = (String) parent.getItemAtPosition(pos);
         if (!selectedItem.equals("Inserisci")) {
-            if (!selectedItem.matches(".*\\d+.*") || Integer.valueOf(selectedItem)<35) {
-                switch (selectedItem) {
-                    case "Gennaio":
-                        month = "0";
-                    case "Febbraio":
-                        month = "1";
-                    case "Marzo":
-                        month = "2";
-                    case "Aprile":
-                        month = "3";
-                    case "Maggio":
-                        month = "4";
-                    case "Giugno":
-                        month = "5";
-                    case "Luglio":
-                        month = "6";
-                    case "Agosto":
-                        month = "7";
-                    case "Settembre":
-                        month = "8";
-                    case "Ottobre":
-                        month = "9";
-                    case "Novembre":
-                        month = "10";
-                    case "Dicembre":
-                        month = "11";
-                }
+            if (!selectedItem.matches(".*\\d+.*") || Integer.valueOf(selectedItem)>35) {
+                if (selectedItem.equals("Gennaio")) month = "1";
+                if (selectedItem.equals("Febbraio")) month = "2";
+                if (selectedItem.equals("Marzo")) month = "3";
+                if (selectedItem.equals("Aprile")) month = "4";
+                if (selectedItem.equals("Maggio")) month = "5";
+                if (selectedItem.equals("Giugno")) month = "6";
+                if (selectedItem.equals("Luglio")) month = "7";
+                if (selectedItem.equals("Agosto")) month = "8";
+                if (selectedItem.equals("Settembre")) month = "9";
+                if (selectedItem.equals("Ottobre")) month = "10";
+                if (selectedItem.equals("Novembre")) month = "11";
+                if (selectedItem.equals("Dicembre")) month = "12";
                 checkthirtyone();
             } else {
                 day = selectedItem;
@@ -123,23 +121,27 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
 
     public void checkthirtyone() {
         int monthI = Integer.valueOf(month);
-        while (arraySpinner.isEmpty()) arraySpinner.remove(0);
+        arraySpinner = new ArrayList<String>();
         arraySpinner.add("Inserisci");
-        if ( monthI % 2 == 0 && monthI != 10) {
+        if ( monthI % 2 == 1 && monthI != 11) {
             for (int i = 1; i<32; i++) {
                 arraySpinner.add(String.valueOf(i));
             }
         }
-        if (monthI != 28) {
+        else {
             for (int i = 1; i<31; i++) {
                 arraySpinner.add(String.valueOf(i));
             }
         }
-        else {
+        if (monthI == 2) {
             for (int i = 1; i<29; i++) {
                 arraySpinner.add(String.valueOf(i));
             }
         }
+        Spinner s = (Spinner) findViewById(R.id.spinner_giorno);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        s.setAdapter(adapter3);
     }
 
 

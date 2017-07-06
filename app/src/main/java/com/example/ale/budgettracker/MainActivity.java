@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
         cursor.close();
 
-        long totalBudget = dbh.getTotal();
+        float totalBudget = dbh.getTotal();
         String totalBudgetToView = (String.valueOf(totalBudget));
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
