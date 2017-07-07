@@ -33,10 +33,11 @@ public class MonthsChartActivity extends AppCompatActivity {
         dbh = new DBHelper(this);
         Calendar calendar = Calendar.getInstance();
         String year = String.valueOf(calendar.get(Calendar.YEAR));
-        String month = String.valueOf(calendar.get(Calendar.MONTH));
+
         Bundle extras = getIntent().getExtras();
         if (extras != null){
-            month = extras.getString("month");
+            String month = extras.getString("month");
+            calendar.set(Integer.valueOf(year),Integer.valueOf(month),Integer.valueOf(1));
         }
         ArrayList<LineDataSet> dataSets = null;
         ArrayList<Entry> valueSet1 = new ArrayList<>();

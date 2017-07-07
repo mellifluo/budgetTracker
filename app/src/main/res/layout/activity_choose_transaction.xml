@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="com.example.ale.budgettracker.ChooseTransaction">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Che tipo di transazione?"
+            android:textSize="30dp"
+            android:layout_margin="20dp"
+            android:id="@+id/TransazioniTesto"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="Singola"
+            android:layout_below="@+id/TransazioniTesto"
+            android:id="@+id/TransazioneSingola"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="Settimanale"
+            android:id="@+id/TransazioneSettimanale"
+            android:layout_below="@+id/TransazioneSingola"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="Mensile"
+            android:id="@+id/TransazioneMensile"
+            android:layout_below="@+id/TransazioneSettimanale"
+            />
+</RelativeLayout>
+
+</ScrollView>
+

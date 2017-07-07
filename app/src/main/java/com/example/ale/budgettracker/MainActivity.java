@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private List<Spesa> listItems;
-    private RecyclerView rv;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private rvAdapter adapter;
@@ -81,13 +80,12 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addSpesa = new Intent(MainActivity.this, SpesaActivity.class);
+                Intent addSpesa = new Intent(MainActivity.this, ChooseTransaction.class);
                 startActivity(addSpesa);
             }
         });
 
         dbh = new DBHelper(this);
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -126,11 +124,6 @@ public class MainActivity extends AppCompatActivity
 
         float totalBudget = dbh.getTotal();
         String totalBudgetToView = (String.valueOf(totalBudget));
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.textView);
-        totalBudgetToView = totalBudgetToView +"€";
-        navUsername.setText(totalBudgetToView);
 
         TextView asd = (TextView) findViewById(R.id.textView2);
         asd.setText(totalBudgetToView);
@@ -177,12 +170,11 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_gallery) {
             startActivity(new Intent(MainActivity.this, SelectChart.class));
 
         } else if (id == R.id.nav_slideshow) {
+            startActivity(new Intent(MainActivity.this, StoricoActivity.class));
 
         } else if (id == R.id.nav_manage) {
 

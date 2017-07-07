@@ -71,7 +71,10 @@
         <activity android:name=".LineChartActivity" />
         <activity android:name=".SelectChart" />
         <activity android:name=".MonthsChartActivity" />
-        <activity android:name=".DaysChartActivity"></activity>
+        <activity android:name=".DaysChartActivity" />
+        <activity android:name=".ChooseTransaction" />
+        <activity android:name=".SpesaActivityPlanned" />
+        <activity android:name=".StoricoActivity"></activity>
     </application>
 
 </manifest>

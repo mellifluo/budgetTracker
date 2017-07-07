@@ -1,27 +1,12 @@
 package com.example.ale.budgettracker;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,16 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import static android.Manifest.permission.READ_CONTACTS;
-
-/**
- * A login screen that offers login via name/amount.
- */
-public class SpesaActivity extends AppCompatActivity {
+public class SpesaActivityPlanned extends AppCompatActivity {
 
     // UI references.
     private AutoCompleteTextView nomeSpesa;
@@ -53,7 +31,7 @@ public class SpesaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spesa);
+        setContentView(R.layout.activity_spesa_planned);
         // Set up the login form.
         nomeSpesa = (AutoCompleteTextView) findViewById(R.id.nome_spesa);
 
@@ -61,7 +39,7 @@ public class SpesaActivity extends AppCompatActivity {
 
 
         Button mnameRemoveButton = (Button) findViewById(R.id.rimuovi_spesa_button);
-        mnameRemoveButton.setOnClickListener(new OnClickListener() {
+        mnameRemoveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeAttempt();
@@ -80,7 +58,7 @@ public class SpesaActivity extends AppCompatActivity {
         }
 
         Button mnameSignInButton = (Button) findViewById(R.id.aggiungi_spesa_button);
-        mnameSignInButton.setOnClickListener(new OnClickListener() {
+        mnameSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -91,7 +69,7 @@ public class SpesaActivity extends AppCompatActivity {
         buttonPosition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SpesaActivity.this, MapsActivity.class));
+                startActivity(new Intent(SpesaActivityPlanned.this, MapsActivity.class));
             }
         });
 
@@ -141,7 +119,7 @@ public class SpesaActivity extends AppCompatActivity {
             DBHelper dbh = new DBHelper(this);
             if (dbh.getExpanse(nomeSpesa.getText().toString()).getCount() == 0) {
                 float code = dbh.insertNewExpense(nomeSpesa.getText().toString(), amount,
-                        String.valueOf(year), String.valueOf(month+1), String.valueOf(day), "o");
+                        String.valueOf(year), String.valueOf(month+1), String.valueOf(day), "p");
                 if (code != -1)
                     Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
                 else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
@@ -149,7 +127,7 @@ public class SpesaActivity extends AppCompatActivity {
             }
             else {
                 dbh.modifyExpanse(nomeSpesa.getText().toString(), amount,
-                        String.valueOf(year), String.valueOf(month+1), String.valueOf(day), "o");
+                        String.valueOf(year), String.valueOf(month+1), String.valueOf(day), "p");
                 finish();
             }
 
@@ -194,6 +172,4 @@ public class SpesaActivity extends AppCompatActivity {
         dbh.removeExpanse(name);
         finish();
     }
-
 }
-

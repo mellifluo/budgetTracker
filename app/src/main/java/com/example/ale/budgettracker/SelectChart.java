@@ -129,13 +129,15 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
             }
         }
         else {
-            for (int i = 1; i<31; i++) {
-                arraySpinner.add(String.valueOf(i));
+            if (monthI == 2) {
+                for (int i = 1; i<29; i++) {
+                    arraySpinner.add(String.valueOf(i));
+                }
             }
-        }
-        if (monthI == 2) {
-            for (int i = 1; i<29; i++) {
-                arraySpinner.add(String.valueOf(i));
+            else {
+                for (int i = 1; i<31; i++) {
+                    arraySpinner.add(String.valueOf(i));
+                }
             }
         }
         Spinner s = (Spinner) findViewById(R.id.spinner_giorno);
