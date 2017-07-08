@@ -28,7 +28,7 @@ public class ChooseTransaction extends AppCompatActivity {
         mensile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent selected = new Intent(view.getContext(), MonthsChartActivity.class);
+                Intent selected = new Intent(view.getContext(), SpesaActivityPlanned.class);
                 selected.putExtra("month", true);
                 view.getContext().startActivity(selected);
                 finish();
@@ -40,7 +40,7 @@ public class ChooseTransaction extends AppCompatActivity {
         annuale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent selected = new Intent(view.getContext(), DaysChartActivity.class);
+                Intent selected = new Intent(view.getContext(), SpesaActivityPlanned.class);
                 selected.putExtra("month", false);
                 view.getContext().startActivity(selected);
                 finish();

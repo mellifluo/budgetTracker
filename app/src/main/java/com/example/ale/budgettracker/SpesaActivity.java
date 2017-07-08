@@ -46,7 +46,8 @@ public class SpesaActivity extends AppCompatActivity {
     private DatePicker datePicker;
     private Calendar calendar;
     private TextView dateView;
-    private int year, month, day;
+    private String year, month, day;
+    private String id;
 
 
 
@@ -59,6 +60,10 @@ public class SpesaActivity extends AppCompatActivity {
 
         importoSpesa = (EditText) findViewById(R.id.prezzo);
 
+        calendar = Calendar.getInstance();
+        year = String.valueOf(calendar.get(Calendar.YEAR));
+        month = String.valueOf(calendar.get(Calendar.MONTH));
+        day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
 
         Button mnameRemoveButton = (Button) findViewById(R.id.rimuovi_spesa_button);
         mnameRemoveButton.setOnClickListener(new OnClickListener() {
@@ -69,16 +74,6 @@ public class SpesaActivity extends AppCompatActivity {
         });
         mnameRemoveButton.setVisibility(View.INVISIBLE);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null){
-            mnameRemoveButton.setVisibility(View.VISIBLE);
-            String modifiedName = extras.getString("nameSpesa");
-            nomeSpesa.setText(modifiedName);
-            String modifiedAmount = extras.getString("amountSpesa");
-            modifiedAmount = removeLastChar(modifiedAmount);
-            importoSpesa.setText(modifiedAmount);
-        }
-
         Button mnameSignInButton = (Button) findViewById(R.id.aggiungi_spesa_button);
         mnameSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -87,6 +82,23 @@ public class SpesaActivity extends AppCompatActivity {
             }
         });
 
+        Button DataButton = (Button) findViewById(R.id.data_spesa_button);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            DataButton.setVisibility(View.GONE);
+            mnameRemoveButton.setVisibility(View.VISIBLE);
+            String modifiedName = extras.getString("nameSpesa");
+            nomeSpesa.setText(modifiedName);
+            String modifiedAmount = extras.getString("amountSpesa");
+            modifiedAmount = removeLastChar(modifiedAmount);
+            importoSpesa.setText(modifiedAmount);
+            id = extras.getString("id");
+            day = extras.getString("day");
+            month = extras.getString("month");
+            year = extras.getString("year");
+        }
+
         Button buttonPosition = (Button) findViewById(R.id.posizione_spesa_button);
         buttonPosition.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,12 +106,6 @@ public class SpesaActivity extends AppCompatActivity {
                 startActivity(new Intent(SpesaActivity.this, MapsActivity.class));
             }
         });
-
-        calendar = Calendar.getInstance();
-        int x = Calendar.YEAR;
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
     }
     private void attemptLogin() {
 
@@ -116,7 +122,7 @@ public class SpesaActivity extends AppCompatActivity {
 
         // Check for a valid amount, if the user entered one.
         if (!TextUtils.isEmpty(amount) && amount.length() > 10) {
-            importoSpesa.setError("Penso tu abbia esagerato, sborone");
+            importoSpesa.setError("Penso tu abbia esagerato");
             focusView = importoSpesa;
             cancel = true;
         }
@@ -139,9 +145,9 @@ public class SpesaActivity extends AppCompatActivity {
         }
         else {
             DBHelper dbh = new DBHelper(this);
-            if (dbh.getExpanse(nomeSpesa.getText().toString()).getCount() == 0) {
+            if (dbh.getExpanse(nomeSpesa.getText().toString(), year, month, day).getCount() == 0) {
                 float code = dbh.insertNewExpense(nomeSpesa.getText().toString(), amount,
-                        String.valueOf(year), String.valueOf(month+1), String.valueOf(day), "o");
+                        String.valueOf(year), String.valueOf(month), String.valueOf(day), "o");
                 if (code != -1)
                     Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
                 else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
@@ -149,7 +155,7 @@ public class SpesaActivity extends AppCompatActivity {
             }
             else {
                 dbh.modifyExpanse(nomeSpesa.getText().toString(), amount,
-                        String.valueOf(year), String.valueOf(month+1), String.valueOf(day), "o");
+                        String.valueOf(year), String.valueOf(month), String.valueOf(day), "o");
                 finish();
             }
 
@@ -167,7 +173,7 @@ public class SpesaActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
         if (id == 999) {
             return new DatePickerDialog(this,
-                    myDateListener, year, month, day);
+                    myDateListener, Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day));
         }
         return null;
     }
@@ -177,9 +183,9 @@ public class SpesaActivity extends AppCompatActivity {
                 @Override
                 public void onDateSet(DatePicker arg0,
                                       int arg1, int arg2, int arg3) {
-                    year = arg1;
-                    month = arg2;
-                    day = arg3;
+                    year = String.valueOf(arg1);
+                    month = String.valueOf(arg2+1);
+                    day = String.valueOf(arg3);
                 }
             };
 
@@ -191,7 +197,7 @@ public class SpesaActivity extends AppCompatActivity {
     private void removeAttempt(){
         DBHelper dbh = new DBHelper(this);
         String name = nomeSpesa.getText().toString();
-        dbh.removeExpanse(name);
+        dbh.removeOneExpanse(name,id, year, month, day);
         finish();
     }
 

@@ -40,6 +40,8 @@ public class StoricoActivity extends AppCompatActivity {
         rv.setAdapter(adapter);
 
         Cursor cursor = dbh.getOldBudget();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         cursor.moveToFirst();
         listItems.clear();
@@ -48,13 +50,17 @@ public class StoricoActivity extends AppCompatActivity {
             if (!haveToContinue) {
                 String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
                 if (!nameNewSpesa.equals("Budget mensile")){
-                    String amountNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AMOUNT));
-                    String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));
-                    String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
                     String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
-                    Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
-                            dayNewSpesa);
-                    listItems.add(newSpesa);
+                    if (Integer.valueOf(dayNewSpesa) < day) {
+                        String amountNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AMOUNT));
+                        String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));
+                        String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
+                        String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
+                        String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
+                        Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
+                                dayNewSpesa, categoryNewSpesa, idNewSpesa );
+                        listItems.add(newSpesa);
+                    }
                 }
             }
             cursor.moveToNext();

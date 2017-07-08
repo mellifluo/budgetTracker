@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity
                 startActivity(addSpesa);
             }
         });
-
         dbh = new DBHelper(this);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -108,12 +108,14 @@ public class MainActivity extends AppCompatActivity
                 String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));
                 String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
                 String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
+                String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
+                String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
                 Calendar calendarNow = Calendar.getInstance();
                 Calendar calendar = new GregorianCalendar(Integer.valueOf(yearNewSpesa),
                         Integer.valueOf(monthNewSpesa)-1, Integer.valueOf(dayNewSpesa)+1);
                 if (calendar.compareTo(calendarNow)>=0 || nameNewSpesa.equals("Budget mensile"))  {
                     Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
-                            dayNewSpesa);
+                            dayNewSpesa, categoryNewSpesa, idNewSpesa);
                     listItems.add(newSpesa);
                 }
             }
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity
         cursor.close();
 
         float totalBudget = dbh.getTotal();
+
         String totalBudgetToView = (String.valueOf(totalBudget));
 
         TextView asd = (TextView) findViewById(R.id.textView2);
