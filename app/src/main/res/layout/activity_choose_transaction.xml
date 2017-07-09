@@ -19,12 +19,35 @@
             android:layout_margin="20dp"
             android:id="@+id/TransazioniTesto"
             />
+
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:id="@+id/check1"
+            android:text="Guadagno"
+            android:layout_below="@+id/TransazioniTesto"
+            />
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:id="@+id/check2"
+            android:text="Spesa"
+            android:checked="true"
+            android:layout_below="@+id/TransazioniTesto"
+            android:layout_toRightOf="@+id/check1"
+            />
+
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:text="Singola"
-            android:layout_below="@+id/TransazioniTesto"
+            android:layout_below="@+id/check1"
             android:id="@+id/TransazioneSingola"
             />
         <Button

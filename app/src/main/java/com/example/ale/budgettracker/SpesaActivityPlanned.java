@@ -26,7 +26,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
     private Calendar calendar;
     private TextView dateView;
     private boolean monthly;
-    private boolean mod, set;
+    private boolean sign, mod;
     private int year, month, day, count;
     private String id;
     private String Fyear, Fmonth, Fday;
@@ -79,7 +79,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
         Button DataButton = (Button) findViewById(R.id.data_spesa_button2);
 
         Bundle extras = getIntent().getExtras();
-        if (extras.size() > 1){
+        if (extras.size() > 2){
             DataButton.setVisibility(View.GONE);
             mnameSignInButton2.setVisibility(View.VISIBLE);
             mnameRemoveButton.setVisibility(View.VISIBLE);
@@ -96,6 +96,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
             year = Integer.valueOf(extras.getString("year"));
         }
         else {
+            if (extras.getBoolean("sign")) sign = true;
             if (extras.getBoolean("month")) {
                 numeroSpesa.setText("12");
                 monthly = true;
@@ -137,6 +138,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
         }
         amount = String.format("%.2f", Float.valueOf(amount));
         amount = amount.replace(",", ".");
+        if (sign) amount += "-";
         boolean cancel = false;
         View focusView = null;
 
@@ -171,7 +173,6 @@ public class SpesaActivityPlanned extends AppCompatActivity {
         }
         else {
             DBHelper dbh = new DBHelper(this);
-            if (!set) month++;
             if (dbh.getExpanse(nomeSpesa.getText().toString(), String.valueOf(year), String.valueOf(month),
                     String.valueOf(day)).getCount() == 0) {
                 float code = dbh.insertPlannedExpense(nomeSpesa.getText().toString(), amount,
@@ -211,7 +212,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
         if (id == 999) {
-            set = true;
+            month--;
             return new DatePickerDialog(this,
                     myDateListener, year, month, day);
         }

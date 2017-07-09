@@ -48,6 +48,7 @@ public class SpesaActivity extends AppCompatActivity {
     private TextView dateView;
     private String year, month, day;
     private String id;
+    private boolean sign;
 
 
 
@@ -62,7 +63,7 @@ public class SpesaActivity extends AppCompatActivity {
 
         calendar = Calendar.getInstance();
         year = String.valueOf(calendar.get(Calendar.YEAR));
-        month = String.valueOf(calendar.get(Calendar.MONTH));
+        month = String.valueOf(calendar.get(Calendar.MONTH)+1);
         day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
 
         Button mnameRemoveButton = (Button) findViewById(R.id.rimuovi_spesa_button);
@@ -85,7 +86,7 @@ public class SpesaActivity extends AppCompatActivity {
         Button DataButton = (Button) findViewById(R.id.data_spesa_button);
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null){
+        if (extras.size() > 1){
             DataButton.setVisibility(View.GONE);
             mnameRemoveButton.setVisibility(View.VISIBLE);
             String modifiedName = extras.getString("nameSpesa");
@@ -98,6 +99,7 @@ public class SpesaActivity extends AppCompatActivity {
             month = extras.getString("month");
             year = extras.getString("year");
         }
+        sign = extras.getBoolean("sign");
 
         Button buttonPosition = (Button) findViewById(R.id.posizione_spesa_button);
         buttonPosition.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +118,9 @@ public class SpesaActivity extends AppCompatActivity {
         String name = nomeSpesa.getText().toString();
         String amount = importoSpesa.getText().toString();
         amount = String.format("%.2f", Float.valueOf(amount));
+        if (sign) amount = "-" + amount;
         amount = amount.replace(",", ".");
+
         boolean cancel = false;
         View focusView = null;
 
@@ -172,6 +176,9 @@ public class SpesaActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
         if (id == 999) {
+            int amonth = Integer.valueOf(month);
+            amonth--;
+            month = String.valueOf(amonth);
             return new DatePickerDialog(this,
                     myDateListener, Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day));
         }

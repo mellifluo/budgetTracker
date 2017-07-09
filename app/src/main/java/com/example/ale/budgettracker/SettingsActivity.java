@@ -28,6 +28,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -200,6 +202,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
+
+            Preference button =(Preference) findPreference("View_Database");
+
+            button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent dbmanager = new Intent(getActivity(),AndroidDatabaseManager.class);
+                    startActivity(dbmanager);
+                    return true;
+                }
+            });
+
+
+
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
@@ -265,6 +281,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     dbh.removeAll();
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    getActivity().finish();
                     return true;
                 }
             });

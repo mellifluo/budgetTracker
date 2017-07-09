@@ -42,6 +42,8 @@ public class StoricoActivity extends AppCompatActivity {
         Cursor cursor = dbh.getOldBudget();
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
 
         cursor.moveToFirst();
         listItems.clear();
@@ -51,16 +53,14 @@ public class StoricoActivity extends AppCompatActivity {
                 String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
                 if (!nameNewSpesa.equals("Budget mensile")){
                     String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
-                    if (Integer.valueOf(dayNewSpesa) < day) {
-                        String amountNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AMOUNT));
-                        String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));
-                        String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
-                        String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
-                        String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
-                        Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
-                                dayNewSpesa, categoryNewSpesa, idNewSpesa );
-                        listItems.add(newSpesa);
-                    }
+                    String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));
+                    String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
+                    String amountNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AMOUNT));
+                    String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
+                    String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
+                    Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
+                            dayNewSpesa, categoryNewSpesa, idNewSpesa );
+                    listItems.add(newSpesa);
                 }
             }
             cursor.moveToNext();

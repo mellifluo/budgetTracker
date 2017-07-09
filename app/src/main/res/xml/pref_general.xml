@@ -29,5 +29,10 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_add_friends_to_messages" />
+    <Preference
+        android:enabled="true"
+        android:key="View_Database"
+        android:title="Database"
+        />
 
 </PreferenceScreen>

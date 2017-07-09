@@ -123,10 +123,9 @@ public class MainActivity extends AppCompatActivity
         }
         adapter.notifyDataSetChanged();
         cursor.close();
-
         float totalBudget = dbh.getTotal();
 
-        String totalBudgetToView = (String.valueOf(totalBudget));
+        String totalBudgetToView = (String.valueOf(totalBudget)) + "€";
 
         TextView asd = (TextView) findViewById(R.id.textView2);
         asd.setText(totalBudgetToView);

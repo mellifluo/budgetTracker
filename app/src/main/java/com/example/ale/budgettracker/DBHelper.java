@@ -3,10 +3,13 @@ package com.example.ale.budgettracker;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.MatrixCursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -18,7 +21,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_AMOUNT = "importoSpesa";
     private static int id = 0;
     public static final String ID = "ID";
-    public static final String YEAR_EXPANSE = "yearExpanse";
+	public static final String DATE_EXPANSE = "dateExpanse";
+	public static final String YEAR_EXPANSE = "yearExpanse";
     public static final String MONTH_EXPANSE = "monthExpanse";
     public static final String DAY_EXPANSE = "dayExpanse";
     public static final String CATEGORY = "category";
@@ -30,8 +34,9 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_BUDGET + "( "
             + ID + " int, "
-            + CATEGORY + " text, "
-            + YEAR_EXPANSE + " text not null, "
+            + DATE_EXPANSE + " text, "
+			+ CATEGORY + " text, "
+			+ YEAR_EXPANSE + " text not null, "
             + MONTH_EXPANSE + " text not null, "
             + DAY_EXPANSE + " text not null, "
 			+ COLUMN_EXPENSE_NAME	+ " text not null, "
@@ -68,7 +73,11 @@ public class DBHelper extends SQLiteOpenHelper {
 		ContentValues cv = new ContentValues();
         cv.put(ID, id);
         id++;
-        cv.put(CATEGORY, category);
+        if (monthExpanse.length() < 2) monthExpanse = "0" + monthExpanse;
+        if (dayExpanse.length() < 2) dayExpanse = "0" + dayExpanse;
+        String date = yearExpanse + "-" + monthExpanse + "-" + dayExpanse ;
+		cv.put(DATE_EXPANSE, date);
+		cv.put(CATEGORY, category);
         cv.put(YEAR_EXPANSE, yearExpanse);
         cv.put(MONTH_EXPANSE, monthExpanse);
         cv.put(DAY_EXPANSE, dayExpanse);
@@ -89,6 +98,10 @@ public class DBHelper extends SQLiteOpenHelper {
 			for (int i = 0; i<count; i++) {
                 cv.put(ID, id);
                 cv.put(CATEGORY, category);
+                if (monthExpanse.length() < 2) monthExpanse = "0" + monthExpanse;
+                if (dayExpanse.length() < 2) dayExpanse = "0" + dayExpanse;
+                String date = yearExpanse + "-" + monthExpanse + "-" + dayExpanse  ;
+				cv.put(DATE_EXPANSE, date);
 				cv.put(YEAR_EXPANSE, yearExpanse);
 				cv.put(MONTH_EXPANSE, monthExpanse);
 				cv.put(DAY_EXPANSE, dayExpanse);
@@ -105,6 +118,10 @@ public class DBHelper extends SQLiteOpenHelper {
 			for (int i = 0; i<count; i++) {
                 cv.put(ID, id);
                 cv.put(CATEGORY, category);
+                if (monthExpanse.length() < 2) monthExpanse = "0" + monthExpanse;
+                if (dayExpanse.length() < 2) dayExpanse = "0" + dayExpanse;
+                String date = yearExpanse + "-" + monthExpanse + "-" + dayExpanse ;
+				cv.put(DATE_EXPANSE, date);
                 cv.put(YEAR_EXPANSE, yearExpanse);
                 cv.put(MONTH_EXPANSE, monthExpanse);
                 cv.put(DAY_EXPANSE, dayExpanse);
@@ -131,9 +148,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String year = String.valueOf(calendar.get(Calendar.YEAR));
         String month = String.valueOf(calendar.get(Calendar.MONTH)+1);
         String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
-        String selection = "( " + DAY_EXPANSE + " <= " + day + " and " + MONTH_EXPANSE + " <= " + month +
-                " and " + YEAR_EXPANSE + " <= " + year + " ) or ( " + YEAR_EXPANSE + " <= " + year + " and "
-                + MONTH_EXPANSE + " < " + month + " ) or (" + YEAR_EXPANSE + " < " + year + " )";
+        String selection = DATE_EXPANSE +" <= date('now')";
         Cursor amountColumn = getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET
                 + " where " + selection, null);
         return amountColumn;
@@ -155,6 +170,10 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(ID, id);
         id++;
         cv.put(CATEGORY, category);
+        if (monthExpanse.length() < 2) monthExpanse = "0" + monthExpanse;
+        if (dayExpanse.length() < 2) dayExpanse = "0" + dayExpanse;
+		String date = yearExpanse + "-" + monthExpanse + "-" + dayExpanse ;
+		cv.put(DATE_EXPANSE, date);
         cv.put(YEAR_EXPANSE, yearExpanse);
         cv.put(MONTH_EXPANSE, monthExpanse);
         cv.put(DAY_EXPANSE, dayExpanse);
@@ -195,29 +214,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public float getTotal() {
         Calendar calendar = Calendar.getInstance();
-        String year = String.valueOf(calendar.get(Calendar.YEAR));
-        String month = String.valueOf(calendar.get(Calendar.MONTH)+1);
-        String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
-        String selection = "( " + YEAR_EXPANSE + " <= " + year + " or "
-                + MONTH_EXPANSE + " < " + month + " ) or (" + YEAR_EXPANSE + " < " + year + " ) or " +
-                "( " + DAY_EXPANSE + " <= " + day + " and " + MONTH_EXPANSE + " <= " + month +
-                " and " + YEAR_EXPANSE + " <= " + year + " ) ";
-		Cursor cursor = getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+		String selection = DATE_EXPANSE +" <= date('now')";
+		Cursor cursor = getWritableDatabase().rawQuery("select sum( "+ COLUMN_AMOUNT +" ) from " + TABLE_BUDGET
                 + " where " + selection, null);
-        cursor.moveToFirst();
-        float x = 0;
-        while (!cursor.isAfterLast()) {
-            boolean haveToContinue = false;
-            if (!haveToContinue) {
-                String amountNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AMOUNT));
-                String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
-                if (Integer.valueOf(dayNewSpesa) <= Integer.valueOf(day))
-                    x += Float.valueOf(amountNewSpesa);
-                }
-            cursor.moveToNext();
+        if (cursor.moveToFirst()){
+            return cursor.getFloat(0);
         }
-        cursor.close();
-        return x;
+        else return 0;
 	}
 
 	public float getTotalInAYear(String year) {
@@ -267,6 +273,50 @@ public class DBHelper extends SQLiteOpenHelper {
 			return amountColumn.getFloat(0);
 		}
 		else return 0;
+	}
+
+	public ArrayList<Cursor> getData(String Query){
+		//get writable database
+		SQLiteDatabase sqlDB = this.getWritableDatabase();
+		String[] columns = new String[] { "message" };
+		//an array list of cursor to save two cursors one has results from the query
+		//other cursor stores error message if any errors are triggered
+		ArrayList<Cursor> alc = new ArrayList<Cursor>(2);
+		MatrixCursor Cursor2= new MatrixCursor(columns);
+		alc.add(null);
+		alc.add(null);
+
+		try{
+			String maxQuery = Query ;
+			//execute the query results will be save in Cursor c
+			Cursor c = sqlDB.rawQuery(maxQuery, null);
+
+			//add value to cursor2
+			Cursor2.addRow(new Object[] { "Success" });
+
+			alc.set(1,Cursor2);
+			if (null != c && c.getCount() > 0) {
+
+				alc.set(0,c);
+				c.moveToFirst();
+
+				return alc ;
+			}
+			return alc;
+		} catch(SQLException sqlEx){
+			Log.d("printing exception", sqlEx.getMessage());
+			//if any exceptions are triggered save the error message to cursor an return the arraylist
+			Cursor2.addRow(new Object[] { ""+sqlEx.getMessage() });
+			alc.set(1,Cursor2);
+			return alc;
+		} catch(Exception ex){
+			Log.d("printing exception", ex.getMessage());
+
+			//if any exceptions are triggered save the error message to cursor an return the arraylist
+			Cursor2.addRow(new Object[] { ""+ex.getMessage() });
+			alc.set(1,Cursor2);
+			return alc;
+		}
 	}
 
 }
