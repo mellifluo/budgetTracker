@@ -4,6 +4,13 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Reset Data"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/database_view"
+        android:orderInCategory="100"
+        android:title="Database"
+        app:showAsAction="never" />
+
 </menu>

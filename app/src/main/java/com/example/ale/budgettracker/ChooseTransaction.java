@@ -17,6 +17,29 @@ public class ChooseTransaction extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_transaction);
 
+        final CheckBox checkBox1 = (CheckBox) findViewById(R.id.check1);
+        final CheckBox checkBox2 = (CheckBox) findViewById(R.id.check2);
+
+        checkBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                if (isChecked) {
+                    checkBox2.setChecked(false);
+                    sign = false;
+                }
+            }
+        });
+
+        checkBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                if (isChecked) {
+                    checkBox1.setChecked(false);
+                    sign = true;
+                }
+            }
+        });
+
         Button singola = (Button) findViewById(R.id.TransazioneSingola);
         singola.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,28 +64,6 @@ public class ChooseTransaction extends AppCompatActivity {
             }
         });
 
-        final CheckBox checkBox1 = (CheckBox) findViewById(R.id.check1);
-        final CheckBox checkBox2 = (CheckBox) findViewById(R.id.check2);
-
-        checkBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-               @Override
-               public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                   if (isChecked) {
-                       checkBox2.setChecked(false);
-                       sign = true;
-                   }
-               }
-        });
-
-        checkBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                if (isChecked) {
-                    checkBox1.setChecked(false);
-                    sign = false;
-                }
-            }
-        });
 
         Button annuale = (Button) findViewById(R.id.TransazioneSettimanale);
         annuale.setOnClickListener(new View.OnClickListener() {

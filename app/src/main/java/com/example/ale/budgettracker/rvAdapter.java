@@ -92,6 +92,7 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
         SpesaViewHolder.Fyear = Spese.get(i).year;
         SpesaViewHolder.Fmonth = Spese.get(i).month;
         SpesaViewHolder.Fday = Spese.get(i).day;
+        SpesaViewHolder.catExtra = Spese.get(i).category;
         SpesaViewHolder.nameSpesa.setText(nome);
         SpesaViewHolder.amountSpesa.setText(amount);
         SpesaViewHolder.dateSpesa.setText(date);

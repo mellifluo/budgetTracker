@@ -67,7 +67,7 @@ public class firstActivity extends AppCompatActivity {
             float code = dbh.insertNewExpense("Budget mensile", amount,
                     year,
                     month,
-                    day, "m");
+                    day, "m", "");
             if (code != -1)
                 Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
             else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();

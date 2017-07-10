@@ -43,7 +43,7 @@ public class MonthsChartActivity extends AppCompatActivity {
         ArrayList<Entry> valueSet1 = new ArrayList<>();
 
         float value = 0;
-        for (int i=1; i<32; i++) {
+        for (int i=0; i<12; i++) {
             value = dbh.getTotalInAMonth(year, String.valueOf(i)) + value;
             valueSet1.add(new Entry(value, i));
         }
@@ -59,8 +59,9 @@ public class MonthsChartActivity extends AppCompatActivity {
 
     private ArrayList<String> getXAxisValues() {
         ArrayList<String> xAxis = new ArrayList<>();
-        for (int i=1; i<32; i++) {
-            xAxis.add(String.valueOf(i));
+        String[] mesi = getResources().getStringArray(R.array.array_mesi);
+        for (int i=1; i<13; i++) {
+            xAxis.add(String.valueOf(mesi[i].substring(0,3)));
         }
         return xAxis;
     }

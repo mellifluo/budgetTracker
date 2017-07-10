@@ -2,7 +2,9 @@ package com.example.ale.budgettracker;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,10 +27,10 @@ public class SpesaActivityPlanned extends AppCompatActivity {
     private DatePicker datePicker;
     private Calendar calendar;
     private TextView dateView;
-    private boolean monthly;
-    private boolean sign, mod;
+    private boolean monthly, mod, sign;
     private int year, month, day, count;
     private String id;
+    private String address = "";
     private String Fyear, Fmonth, Fday;
 
 
@@ -45,7 +47,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
+        month = calendar.get(Calendar.MONTH)+1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
         Button mnameRemoveButton = (Button) findViewById(R.id.rimuovi_spesa_button2);
@@ -96,7 +98,6 @@ public class SpesaActivityPlanned extends AppCompatActivity {
             year = Integer.valueOf(extras.getString("year"));
         }
         else {
-            if (extras.getBoolean("sign")) sign = true;
             if (extras.getBoolean("month")) {
                 numeroSpesa.setText("12");
                 monthly = true;
@@ -106,6 +107,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
                 numeroSpesa.setText("4");
             }
         }
+        sign = extras.getBoolean("sign");
 
         Button mnameSignInButton = (Button) findViewById(R.id.aggiungi_spesa_button2);
         mnameSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +123,28 @@ public class SpesaActivityPlanned extends AppCompatActivity {
         buttonPosition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SpesaActivityPlanned.this, MapsActivity.class));
+                final AlertDialog.Builder alert = new AlertDialog.Builder(SpesaActivityPlanned.this);
+                final EditText input = new EditText(SpesaActivityPlanned.this);
+                alert.setView(input);
+                alert.setTitle("Inserisci un indirizzo:");
+                input.setHint("Piazza Maggiore, 1 Bologna, 40124 BO");
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString().trim();
+                        address = value;
+                        Toast.makeText(getApplicationContext(), value,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                alert.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                address = "";
+                                dialog.cancel();
+                            }
+                        });
+                alert.show();
             }
         });
     }
@@ -138,7 +161,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
         }
         amount = String.format("%.2f", Float.valueOf(amount));
         amount = amount.replace(",", ".");
-        if (sign) amount += "-";
+        if (sign) amount = "-" + amount;
         boolean cancel = false;
         View focusView = null;
 
@@ -177,7 +200,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
                     String.valueOf(day)).getCount() == 0) {
                 float code = dbh.insertPlannedExpense(nomeSpesa.getText().toString(), amount,
                             String.valueOf(year), String.valueOf(month), String.valueOf(day), monthly,
-                            count, "p");
+                            count, "p", address);
                 if (code != -1)
                     Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
                 else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
@@ -194,7 +217,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
                     Toast.makeText(this, "Nome transazione e data già inserite, modificato l'ammontare",
                             Toast.LENGTH_LONG);
                     dbh.modifyExpanse(nomeSpesa.getText().toString(), amount,
-                            String.valueOf(year), String.valueOf(month), String.valueOf(day), "p");
+                            String.valueOf(year), String.valueOf(month), String.valueOf(day), "p", address);
                     finish();
                 }
             }

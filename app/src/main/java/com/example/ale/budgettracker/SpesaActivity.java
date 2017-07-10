@@ -5,7 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -48,6 +50,7 @@ public class SpesaActivity extends AppCompatActivity {
     private TextView dateView;
     private String year, month, day;
     private String id;
+    private String address = "";
     private boolean sign;
 
 
@@ -105,7 +108,28 @@ public class SpesaActivity extends AppCompatActivity {
         buttonPosition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SpesaActivity.this, MapsActivity.class));
+                final AlertDialog.Builder alert = new AlertDialog.Builder(SpesaActivity.this);
+                final EditText input = new EditText(SpesaActivity.this);
+                alert.setView(input);
+                alert.setTitle("Inserisci un indirizzo:");
+                input.setHint("Piazza Maggiore, 1 Bologna, 40124 BO");
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString().trim();
+                        address = value;
+                        Toast.makeText(getApplicationContext(), value,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                alert.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                address = "";
+                                dialog.cancel();
+                            }
+                        });
+                alert.show();
             }
         });
     }
@@ -123,6 +147,12 @@ public class SpesaActivity extends AppCompatActivity {
 
         boolean cancel = false;
         View focusView = null;
+
+        if (name.equals("Budget mensile")) {
+            nomeSpesa.setError("Non puoi scrivere Budget mensile!");
+            focusView = nomeSpesa;
+            cancel = true;
+        }
 
         // Check for a valid amount, if the user entered one.
         if (!TextUtils.isEmpty(amount) && amount.length() > 10) {
@@ -151,7 +181,7 @@ public class SpesaActivity extends AppCompatActivity {
             DBHelper dbh = new DBHelper(this);
             if (dbh.getExpanse(nomeSpesa.getText().toString(), year, month, day).getCount() == 0) {
                 float code = dbh.insertNewExpense(nomeSpesa.getText().toString(), amount,
-                        String.valueOf(year), String.valueOf(month), String.valueOf(day), "o");
+                        String.valueOf(year), String.valueOf(month), String.valueOf(day), "o", address);
                 if (code != -1)
                     Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
                 else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
@@ -159,7 +189,7 @@ public class SpesaActivity extends AppCompatActivity {
             }
             else {
                 dbh.modifyExpanse(nomeSpesa.getText().toString(), amount,
-                        String.valueOf(year), String.valueOf(month), String.valueOf(day), "o");
+                        String.valueOf(year), String.valueOf(month), String.valueOf(day), "o", address);
                 finish();
             }
 

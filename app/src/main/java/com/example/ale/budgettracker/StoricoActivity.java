@@ -39,12 +39,12 @@ public class StoricoActivity extends AppCompatActivity {
         adapter = new rvAdapter(listItems);
         rv.setAdapter(adapter);
 
-        Cursor cursor = dbh.getOldBudget();
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Cursor cursor = dbh.getOldBudget();
         cursor.moveToFirst();
         listItems.clear();
         while (!cursor.isAfterLast()) {
