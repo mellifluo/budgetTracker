@@ -1,16 +1,17 @@
 package com.example.ale.budgettracker;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -18,19 +19,24 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.Charset;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static com.example.ale.budgettracker.R.id.map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private DBHelper dbh;
+    JSONObject json ;
+    double lat = 0;
+    double lon = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +44,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(map);
         mapFragment.getMapAsync(this);
         dbh = new DBHelper(this);
+        GPSTracker gps = new GPSTracker(getApplicationContext());
+
+        if(gps.canGetLocation()) {
+            gps.getLocation();
+            lat = gps.getLatitude(); // returns latitude
+            lon = gps.getLongitude(); // returns longitude
+        }
 
     }
 
@@ -58,16 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        GPSTracker gps = new GPSTracker(getApplicationContext());
         mMap.setMyLocationEnabled(true);
-
-        double lat = 0;
-        double lon = 0;
-        if(gps.canGetLocation()) {
-            gps.getLocation();
-            lat = gps.getLatitude(); // returns latitude
-            lon = gps.getLongitude(); // returns longitude
-        }
 
         if (lat != 0 && lon != 0) {
             LatLng mylatlng = new LatLng(lat, lon);
@@ -82,20 +86,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .build();                   // Creates a CameraPosition from the builder
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
-/*
+        Bundle extras = getIntent().getExtras();
+        if (!extras.getBoolean("menu")){
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng position) {
+                    mMap.addMarker(new MarkerOptions().position(position).title("Custom location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                    Toast.makeText(getApplicationContext(),position.latitude+" : "+position.longitude,Toast.LENGTH_SHORT).show();
+                    String pos = String.valueOf(position.latitude) + "|" + String.valueOf(position.longitude);
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("position", pos);
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    finish();
+                }
+            });
+        }
+
         Cursor cursor = dbh.getAllAddress();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             String pAddress = cursor.getString(cursor.getColumnIndex(DBHelper.POSITION));
             String nameAddress = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
-            LatLng nlatlng =
-            getLocationFromAddress(getApplicationContext(),pAddress);
-            mMap.addMarker(new MarkerOptions().position(nlatlng).title(nameAddress));
+            if (!pAddress.equals("")) {
+                double nLat = Double.valueOf(pAddress.substring(0,pAddress.indexOf("|")));
+                double nLon = Double.valueOf(pAddress.substring(pAddress.indexOf("|")+1));
+                LatLng nlatlng = new LatLng(nLat,nLon);
+                mMap.addMarker(new MarkerOptions().position(nlatlng).title(nameAddress));
+            }
             cursor.moveToNext();
         }
         cursor.close();
-        */
     }
-//TODO PARSER URL DI MAPS PER PRENDERE LATITUDINE E LONGITUDINE
 
 }

@@ -113,6 +113,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				cv.put(COLUMN_AMOUNT, amountExpanse);
 				code = getWritableDatabase().insert(TABLE_BUDGET, null, cv);
 				calendar.add(Calendar.MONTH,1);
+                //TODO bug finito l'anno torna 00
 				yearExpanse = String.valueOf(calendar.get(Calendar.YEAR));
 				monthExpanse = String.valueOf(calendar.get(Calendar.MONTH));
 				dayExpanse = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
@@ -135,7 +136,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 code = getWritableDatabase().insert(TABLE_BUDGET, null, cv);
                 calendar.add(Calendar.WEEK_OF_MONTH,1);
                 yearExpanse = String.valueOf(calendar.get(Calendar.YEAR));
-                monthExpanse = String.valueOf(calendar.get(Calendar.MONTH));
+                monthExpanse = String.valueOf(calendar.get(Calendar.MONTH)+1);
                 dayExpanse = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
             }
         }
@@ -146,11 +147,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public Cursor getBudget() {
 		return getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET + " order by " +
-                DATE_EXPANSE + " asc ", null);
+                DATE_EXPANSE + " asc limit 10 ", null);
 	}
 
 	public Cursor getOldBudget() {
-        String selection = DATE_EXPANSE +" <= date('now')";
+        String selection = DATE_EXPANSE +" < date('now')";
         Cursor amountColumn = getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET
                 + " where " + selection + " order by " + DATE_EXPANSE + " desc ", null);
         return amountColumn;
@@ -239,7 +240,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public void checkMensile() {
         Cursor cursor = getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET
-                + " where nomeSpesa = 'Budget mensile' and dateExpanse = date('now') ", null);
+                + " where nomeSpesa = 'Budget mensile' and dateExpanse = date('now', '-1 month') ", null);
         if (cursor.moveToFirst()) {
             Calendar calendar = Calendar.getInstance();
             String year = String.valueOf(calendar.get(Calendar.YEAR));

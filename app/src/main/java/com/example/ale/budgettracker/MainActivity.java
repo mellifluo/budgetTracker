@@ -208,7 +208,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-            startActivity(new Intent(MainActivity.this, MapsActivity.class));
+            Intent mapIntent = new Intent(MainActivity.this, MapsActivity.class);
+            mapIntent.putExtra("menu", true);
+            startActivity(mapIntent);
 
         } else if (id == R.id.nav_send) {
 

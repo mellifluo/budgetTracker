@@ -3,6 +3,7 @@ package com.example.ale.budgettracker;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -108,28 +109,9 @@ public class SpesaActivity extends AppCompatActivity {
         buttonPosition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder alert = new AlertDialog.Builder(SpesaActivity.this);
-                final EditText input = new EditText(SpesaActivity.this);
-                alert.setView(input);
-                alert.setTitle("Inserisci un indirizzo:");
-                input.setHint("Piazza Maggiore, 1 Bologna, 40124 BO");
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        String value = input.getText().toString().trim();
-                        address = value;
-                        Toast.makeText(getApplicationContext(), value,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                alert.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                address = "";
-                                dialog.cancel();
-                            }
-                        });
-                alert.show();
+                Intent mapIntent = new Intent(SpesaActivity.this, MapsActivity.class);
+                mapIntent.putExtra("menu", false);
+                startActivityForResult(mapIntent, 5);
             }
         });
     }
@@ -196,6 +178,13 @@ public class SpesaActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == Activity.RESULT_OK && requestCode == 5 && data != null) {
+                address = data.getStringExtra("position");
+            }
+    }
 
     @SuppressWarnings("deprecation")
     public void setDate(View view) {
