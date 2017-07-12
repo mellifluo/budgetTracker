@@ -16,7 +16,10 @@ import java.util.GregorianCalendar;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-	public static final String TABLE_BUDGET = "budget";
+    public static final String TABLE_BUDGET = "budget";
+    public static final String TABLE_PERSON = "person";
+    public static final String NAME_PERSON = "nomePersona";
+    public static final String ALERT = "alert";
     public static final String COLUMN_EXPENSE_NAME = "nomeSpesa";
     public static final String COLUMN_AMOUNT = "importoSpesa";
     private static int id = 0;
@@ -28,7 +31,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DAY_EXPANSE = "dayExpanse";
     public static final String CATEGORY = "category";
 
-	private static final String DATABASE_NAME = "budget.db";
+    private static final String DATABASE_NAME = "budget.db";
+    private static final String PERSON_DNAME = "person.db";
 	private static final int DATABASE_VERSION = 5;
 
 	// Database creation sql statement
@@ -43,6 +47,22 @@ public class DBHelper extends SQLiteOpenHelper {
             + DAY_EXPANSE + " text not null, "
 			+ COLUMN_EXPENSE_NAME	+ " text not null, "
 			+ COLUMN_AMOUNT + " text not null," +
+            "primary key (" + COLUMN_EXPENSE_NAME + ", " +
+            YEAR_EXPANSE + ", " + MONTH_EXPANSE + ", " +
+            DAY_EXPANSE + ") );";
+
+    // Database creation sql statement
+    private static final String PERSON_CREATE = "create table "
+            + PERSON_DNAME + "( "
+            + ID + " int, "
+            + DATE_EXPANSE + " text, "
+            + CATEGORY + " text, "
+            + POSITION + " text, "
+            + YEAR_EXPANSE + " text not null, "
+            + MONTH_EXPANSE + " text not null, "
+            + DAY_EXPANSE + " text not null, "
+            + COLUMN_EXPENSE_NAME	+ " text not null, "
+            + COLUMN_AMOUNT + " text not null," +
             "primary key (" + COLUMN_EXPENSE_NAME + ", " +
             YEAR_EXPANSE + ", " + MONTH_EXPANSE + ", " +
             DAY_EXPANSE + ") );";
@@ -102,21 +122,20 @@ public class DBHelper extends SQLiteOpenHelper {
                 cv.put(ID, id);
                 cv.put(CATEGORY, category);
                 cv.put(POSITION, position);
+                yearExpanse = String.valueOf(calendar.get(Calendar.YEAR));
+                monthExpanse = String.valueOf(calendar.get(Calendar.MONTH)+1);
+                dayExpanse = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
                 if (monthExpanse.length() < 2) monthExpanse = "0" + monthExpanse;
                 if (dayExpanse.length() < 2) dayExpanse = "0" + dayExpanse;
                 String date = yearExpanse + "-" + monthExpanse + "-" + dayExpanse  ;
-				cv.put(DATE_EXPANSE, date);
-				cv.put(YEAR_EXPANSE, yearExpanse);
-				cv.put(MONTH_EXPANSE, monthExpanse);
-				cv.put(DAY_EXPANSE, dayExpanse);
-				cv.put(COLUMN_EXPENSE_NAME, nameExpanse);
-				cv.put(COLUMN_AMOUNT, amountExpanse);
-				code = getWritableDatabase().insert(TABLE_BUDGET, null, cv);
-				calendar.add(Calendar.MONTH,1);
-                //TODO bug finito l'anno torna 00
-				yearExpanse = String.valueOf(calendar.get(Calendar.YEAR));
-				monthExpanse = String.valueOf(calendar.get(Calendar.MONTH));
-				dayExpanse = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+                cv.put(DATE_EXPANSE, date);
+                cv.put(YEAR_EXPANSE, yearExpanse);
+                cv.put(MONTH_EXPANSE, monthExpanse);
+                cv.put(DAY_EXPANSE, dayExpanse);
+                cv.put(COLUMN_EXPENSE_NAME, nameExpanse);
+                cv.put(COLUMN_AMOUNT, amountExpanse);
+                code = getWritableDatabase().insert(TABLE_BUDGET, null, cv);
+                calendar.add(Calendar.MONTH,1);
 			}
 		}
 		else {
@@ -124,10 +143,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 cv.put(ID, id);
                 cv.put(CATEGORY, category);
                 cv.put(POSITION, position);
+                yearExpanse = String.valueOf(calendar.get(Calendar.YEAR));
+                monthExpanse = String.valueOf(calendar.get(Calendar.MONTH)+1);
+                dayExpanse = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
                 if (monthExpanse.length() < 2) monthExpanse = "0" + monthExpanse;
                 if (dayExpanse.length() < 2) dayExpanse = "0" + dayExpanse;
                 String date = yearExpanse + "-" + monthExpanse + "-" + dayExpanse ;
-				cv.put(DATE_EXPANSE, date);
+                cv.put(DATE_EXPANSE, date);
                 cv.put(YEAR_EXPANSE, yearExpanse);
                 cv.put(MONTH_EXPANSE, monthExpanse);
                 cv.put(DAY_EXPANSE, dayExpanse);
@@ -135,9 +157,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 cv.put(COLUMN_AMOUNT, amountExpanse);
                 code = getWritableDatabase().insert(TABLE_BUDGET, null, cv);
                 calendar.add(Calendar.WEEK_OF_MONTH,1);
-                yearExpanse = String.valueOf(calendar.get(Calendar.YEAR));
-                monthExpanse = String.valueOf(calendar.get(Calendar.MONTH)+1);
-                dayExpanse = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
             }
         }
         id++;
@@ -175,9 +194,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 " from " + TABLE_BUDGET + " where not position = '' ", null);
     }
 
-	public Cursor getYear(String year) {
-		return getWritableDatabase().query(TABLE_BUDGET, null, YEAR_EXPANSE + " = ?", new String[] {year}, null, null, null);
-	}
+	public void maxID() {
+        Cursor cursor = getWritableDatabase().rawQuery("select max(ID) from budget",null);
+        if (cursor.moveToFirst()) id = cursor.getInt(0)+1;
+    }
 
     public float modifyExpanse(String exp, String am, String yearExpanse,
                               String monthExpanse, String dayExpanse, String category, String position) {
@@ -229,6 +249,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public float getTotal() {
+        maxID();
         String selection = DATE_EXPANSE +" <= date('now')";
 		Cursor cursor = getWritableDatabase().rawQuery("select sum( "+ COLUMN_AMOUNT +" ) from " + TABLE_BUDGET
                 + " where " + selection, null);

@@ -48,7 +48,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH)+1;
+        month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
         Button mnameRemoveButton = (Button) findViewById(R.id.rimuovi_spesa_button2);
@@ -223,7 +223,6 @@ public class SpesaActivityPlanned extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
         if (id == 999) {
-            month--;
             return new DatePickerDialog(this,
                     myDateListener, year, month, day);
         }
@@ -236,7 +235,7 @@ public class SpesaActivityPlanned extends AppCompatActivity {
                 public void onDateSet(DatePicker arg0,
                                       int arg1, int arg2, int arg3) {
                     year = arg1;
-                    month = arg2+1;
+                    month = arg2;
                     day = arg3;
                 }
             };
