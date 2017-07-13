@@ -13,6 +13,7 @@ import java.util.Calendar;
 public class firstActivity extends AppCompatActivity {
 
     private EditText importoSpesa;
+    private EditText nomePersona;
     private Calendar calendar;
 
 
@@ -21,6 +22,7 @@ public class firstActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
         importoSpesa = (EditText) findViewById(R.id.budgetIniziale);
+        nomePersona = (EditText) findViewById(R.id.inserisci_nome);
 
         Button aggiungiBudget = (Button) findViewById(R.id.aggiungi_budget);
         aggiungiBudget.setOnClickListener(new View.OnClickListener() {
@@ -35,10 +37,13 @@ public class firstActivity extends AppCompatActivity {
 
         // Reset errors.
         importoSpesa.setError(null);
+        nomePersona.setError(null);
 
+        String nome = nomePersona.getText().toString();
         String amount = importoSpesa.getText().toString();
         amount = String.format("%.2f", Float.valueOf(amount));
         amount = amount.replace(",", ".");
+
         boolean cancel = false;
         View focusView = null;
 
@@ -50,7 +55,13 @@ public class firstActivity extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(amount)) {
-            importoSpesa.setError("Metti quanto");
+            importoSpesa.setError("Inserisci quanti soldi hai!");
+            focusView = importoSpesa;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(nome)) {
+            importoSpesa.setError("Inserisci il nome!");
             focusView = importoSpesa;
             cancel = true;
         }
@@ -68,7 +79,8 @@ public class firstActivity extends AppCompatActivity {
                     year,
                     month,
                     day, "m", "");
-            if (code != -1)
+            float code2 = dbh.insertNewPersona(nome,amount);
+            if (code != -1 && code2 != -1)
                 Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
             else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
             finish();

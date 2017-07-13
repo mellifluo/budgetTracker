@@ -14,6 +14,7 @@ import java.util.Calendar;
 
 public class MonthsChartActivity extends AppCompatActivity {
     private static DBHelper dbh;
+    private static String month;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class MonthsChartActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null){
-            String month = extras.getString("month");
+            month = extras.getString("month");
             calendar.set(Integer.valueOf(year),Integer.valueOf(month),Integer.valueOf(1));
         }
         ArrayList<LineDataSet> dataSets = null;
@@ -59,9 +60,26 @@ public class MonthsChartActivity extends AppCompatActivity {
 
     private ArrayList<String> getXAxisValues() {
         ArrayList<String> xAxis = new ArrayList<>();
-        String[] mesi = getResources().getStringArray(R.array.array_mesi);
-        for (int i=1; i<13; i++) {
-            xAxis.add(String.valueOf(mesi[i].substring(0,3)));
+        for (int i=1; i<32; i++) {
+            xAxis.add(String.valueOf(i));
+        }
+        int monthI = Integer.valueOf(month);
+        if ( monthI % 2 == 1 && monthI != 11) {
+            for (int i = 1; i<32; i++) {
+                xAxis.add(String.valueOf(i));
+            }
+        }
+        else {
+            if (monthI == 2) {
+                for (int i = 1; i<29; i++) {
+                    xAxis.add(String.valueOf(i));
+                }
+            }
+            else {
+                for (int i = 1; i<31; i++) {
+                    xAxis.add(String.valueOf(i));
+                }
+            }
         }
         return xAxis;
     }

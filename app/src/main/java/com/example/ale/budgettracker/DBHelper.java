@@ -19,6 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_BUDGET = "budget";
     public static final String TABLE_PERSON = "person";
     public static final String NAME_PERSON = "nomePersona";
+    public static final String INITIAL_BUDGET = "amountPersona";
     public static final String ALERT = "alert";
     public static final String COLUMN_EXPENSE_NAME = "nomeSpesa";
     public static final String COLUMN_AMOUNT = "importoSpesa";
@@ -32,7 +33,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CATEGORY = "category";
 
     private static final String DATABASE_NAME = "budget.db";
-    private static final String PERSON_DNAME = "person.db";
 	private static final int DATABASE_VERSION = 5;
 
 	// Database creation sql statement
@@ -53,19 +53,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // Database creation sql statement
     private static final String PERSON_CREATE = "create table "
-            + PERSON_DNAME + "( "
-            + ID + " int, "
-            + DATE_EXPANSE + " text, "
-            + CATEGORY + " text, "
-            + POSITION + " text, "
-            + YEAR_EXPANSE + " text not null, "
-            + MONTH_EXPANSE + " text not null, "
-            + DAY_EXPANSE + " text not null, "
-            + COLUMN_EXPENSE_NAME	+ " text not null, "
-            + COLUMN_AMOUNT + " text not null," +
-            "primary key (" + COLUMN_EXPENSE_NAME + ", " +
-            YEAR_EXPANSE + ", " + MONTH_EXPANSE + ", " +
-            DAY_EXPANSE + ") );";
+            + TABLE_PERSON + "( "
+            + NAME_PERSON + " text primary key, "
+            + INITIAL_BUDGET + " text , "
+            + ALERT + " int " +
+            ");";
 
 	public DBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -73,7 +65,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		database.execSQL(DATABASE_CREATE);
+        database.execSQL(DATABASE_CREATE);
+        database.execSQL(PERSON_CREATE);
+
 	}
 
 	@Override
@@ -82,12 +76,23 @@ public class DBHelper extends SQLiteOpenHelper {
 				"Upgrading database from version " + oldVersion + " to "
 						+ newVersion + ", which will destroy all old data");
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUDGET);
-		onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PERSON);
+        onCreate(db);
 	}
 
 	public void removeAll() {
         getWritableDatabase().delete(DBHelper.TABLE_BUDGET, null, null);
+        getWritableDatabase().delete(DBHelper.TABLE_PERSON, null, null);
 	}
+
+	public float insertNewPersona (String namePersona, String amountPersona) {
+        ContentValues cv = new ContentValues();
+        cv.put(NAME_PERSON, namePersona);
+        cv.put(INITIAL_BUDGET, amountPersona);
+        cv.put(ALERT, 1);
+        float code = getWritableDatabase().insert(TABLE_PERSON, null, cv);
+        return code;
+    }
 
 
 	public float insertNewExpense(String nameExpanse, String amountExpanse, String yearExpanse,

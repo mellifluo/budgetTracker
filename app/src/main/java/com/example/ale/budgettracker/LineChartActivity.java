@@ -136,18 +136,10 @@ public class LineChartActivity extends AppCompatActivity {
 
     private ArrayList<String> getXAxisValues() {
         ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("GEN");
-        xAxis.add("FEB");
-        xAxis.add("MAR");
-        xAxis.add("APR");
-        xAxis.add("MAG");
-        xAxis.add("GIU");
-        xAxis.add("LUG");
-        xAxis.add("AGO");
-        xAxis.add("SET");
-        xAxis.add("OTT");
-        xAxis.add("NOV");
-        xAxis.add("DIC");
+        String[] mesi = getResources().getStringArray(R.array.array_mesi);
+        for (int i=1; i<13; i++) {
+            xAxis.add(String.valueOf(mesi[i].substring(0,3)));
+        }
         return xAxis;
     }
 }

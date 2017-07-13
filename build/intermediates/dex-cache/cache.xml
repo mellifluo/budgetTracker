@@ -48,6 +48,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/ale/.android/build-cache/0ef508a8079631732e1657baca955b7cfe34ea75/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5f43d6c042ee8eb48fa7606da4d1034d472a43cd">
+        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_5738d98ec80fad03d5f478fc2b7715ff2076af48.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/ale/.android/build-cache/2a5d01c1035348325ba891e4db70d17c5456d5e5/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
