@@ -213,6 +213,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(mapIntent);
 
         } else if (id == R.id.nav_send) {
+            startActivity(new Intent(MainActivity.this, SummaryActivity.class));
             
         }
 

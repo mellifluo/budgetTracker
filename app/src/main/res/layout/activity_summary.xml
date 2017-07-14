@@ -3,85 +3,105 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent">
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context="com.example.ale.budgettracker.SummaryActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:textSize="20dp"
-            android:text="NOME"
-            android:id="@+id/summary_nome"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:textSize="15dp"
-            android:text="NOME"
-            android:id="@+id/summary_totale"
-            android:layout_below="@+id/summary_nome"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:textSize="15dp"
-            android:text="NOME"
-            android:id="@+id/summary_spese"
-            android:layout_below="@+id/summary_totale"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:textSize="15dp"
-            android:text="NOME"
-            android:id="@+id/summary_guadagni"
-            android:layout_below="@+id/summary_spese"
-            />
+<RelativeLayout
+    android:id="@+id/Layout_summary"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:textSize="15dp"
-            android:text="NOME"
-            android:id="@+id/summary_mediaspesa"
-            android:layout_below="@+id/summary_guadagni"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:textSize="15dp"
-            android:text="NOME"
-            android:id="@+id/summary_mediaguadagni"
-            android:layout_below="@+id/summary_mediaspesa"
-            />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:textSize="20dp"
+    android:text="NOME"
+    android:id="@+id/summary_nome"
+    />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:textSize="15dp"
+    android:text="NOME"
+    android:id="@+id/summary_initial"
+    android:layout_below="@+id/summary_nome"
+    />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:textSize="15dp"
+    android:text="NOME"
+    android:id="@+id/summary_totale"
+    android:layout_below="@+id/summary_initial"
+    />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:textSize="15dp"
+    android:text="NOME"
+    android:id="@+id/summary_spese"
+    android:layout_below="@+id/summary_totale"
+    />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:textSize="15dp"
+    android:text="NOME"
+    android:id="@+id/summary_guadagni"
+    android:layout_below="@+id/summary_spese"
+    />
 
-        <TextView
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:textSize="15dp"
+    android:text="NOME"
+    android:id="@+id/summary_mediaspesa"
+    android:layout_below="@+id/summary_guadagni"
+    />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:textSize="15dp"
+    android:text="NOME"
+    android:id="@+id/summary_mediaguadagni"
+    android:layout_below="@+id/summary_mediaspesa"
+    />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:textSize="15dp"
+    android:text="NOME"
+    android:id="@+id/summary_maxspesa"
+    android:layout_below="@+id/summary_mediaguadagni"
+    />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:textSize="15dp"
+    android:text="NOME"
+    android:id="@+id/summary_maxguadagno"
+    android:layout_below="@+id/summary_maxspesa"
+    />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabPDF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:textSize="15dp"
-            android:text="NOME"
-            android:id="@+id/summary_maxspesa"
-            android:layout_below="@+id/summary_mediaguadagni"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:textSize="15dp"
-            android:text="NOME"
-            android:id="@+id/summary_maxguadagno"
-            android:layout_below="@+id/summary_maxspesa"
-            />
+            android:layout_toRightOf="@+id/summary_maxguadagno"
+            android:layout_margin="@dimen/fab_margin"/>
+
 </RelativeLayout>
+
 </ScrollView>
+

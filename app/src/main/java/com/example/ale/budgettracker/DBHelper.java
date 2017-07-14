@@ -168,7 +168,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return code;
 	}
 
-
 	public Cursor getBudget() {
 		return getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET + " order by " +
                 DATE_EXPANSE + " asc limit 10 ", null);
@@ -338,6 +337,65 @@ public class DBHelper extends SQLiteOpenHelper {
 		}
 		else return 0;
 	}
+
+    public float getTotalSummary() {
+        Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
+                + TABLE_BUDGET , null);
+        if (amountColumn.moveToFirst()) return amountColumn.getFloat(0);
+        else return 0;
+    }
+
+    public float getTotalLoss() {
+        String selection = DATE_EXPANSE +" <= date('now')";
+        Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
+                + TABLE_BUDGET + " where " + COLUMN_AMOUNT + " < 0 and " + selection , null);
+        if (amountColumn.moveToFirst()) return amountColumn.getFloat(0);
+        else return 0;
+    }
+
+    public float getTotalEarn() {
+        String selection = DATE_EXPANSE +" <= date('now')";
+        Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
+                + TABLE_BUDGET + " where " + COLUMN_AMOUNT + " > 0 and " + selection , null);
+        if (amountColumn.moveToFirst()) return amountColumn.getFloat(0);
+        else return 0;
+    }
+
+    public float maxLoss() {
+        String selection = DATE_EXPANSE +" <= date('now')";
+        Cursor amountColumn = getWritableDatabase().rawQuery("select min(" + COLUMN_AMOUNT + ") from "
+                + TABLE_BUDGET + " where " + COLUMN_AMOUNT + " < 0 and " + selection , null);
+        if (amountColumn.moveToFirst()) return amountColumn.getFloat(0);
+        else return 0;
+    }
+
+    public float maxEarn() {
+        String selection = DATE_EXPANSE +" <= date('now')";
+        Cursor amountColumn = getWritableDatabase().rawQuery("select max(" + COLUMN_AMOUNT + ") from "
+                + TABLE_BUDGET + " where " + COLUMN_AMOUNT + " > 0 and " + selection, null);
+        if (amountColumn.moveToFirst()) return amountColumn.getFloat(0);
+        else return 0;
+    }
+
+    public float avgLoss() {
+        String selection = DATE_EXPANSE +" <= date('now')";
+        Cursor amountColumn = getWritableDatabase().rawQuery("select avg(" + COLUMN_AMOUNT + ") from "
+                + TABLE_BUDGET + " where " + COLUMN_AMOUNT + " < 0 and " + selection , null);
+        if (amountColumn.moveToFirst()) return amountColumn.getFloat(0);
+        else return 0;
+    }
+
+    public float avgEarn() {
+        String selection = DATE_EXPANSE +" <= date('now')";
+        Cursor amountColumn = getWritableDatabase().rawQuery("select avg(" + COLUMN_AMOUNT + ") from "
+                + TABLE_BUDGET + " where " + COLUMN_AMOUNT + " > 0 and " + selection , null);
+        if (amountColumn.moveToFirst()) return amountColumn.getFloat(0);
+        else return 0;
+    }
+
+	public Cursor getPerson() {
+        return getWritableDatabase().rawQuery("select * from " + TABLE_PERSON, null);
+    }
 
 	public ArrayList<Cursor> getData(String Query){
 		//get writable database

@@ -21,15 +21,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/ale/.android/build-cache/c5414065d090e2516f34d871722633558101d61f/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d410043f93e71bb0179ba86b85726dd080f14b79">
-        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_cf9df68706d2f1642e388335dc68bca182c8d6a9.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/home/ale/.android/build-cache/a2325e16cb9299e000a742d744768bb1394c15c2/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -45,24 +36,6 @@
         revision="25.0.2"
         sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
         <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_677cbd88e976f3e6e22cf71229e2987adec039c3.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/ale/.android/build-cache/0ef508a8079631732e1657baca955b7cfe34ea75/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5f43d6c042ee8eb48fa7606da4d1034d472a43cd">
-        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_5738d98ec80fad03d5f478fc2b7715ff2076af48.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/ale/.android/build-cache/2a5d01c1035348325ba891e4db70d17c5456d5e5/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e72c498ef3e345135b6bfdf7fc83c6b905228ade">
-        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_c12bb94a13833c644cc13e38ea1c454e93fbe977.jar" />
     </item>
     <item
         is-multidex="false"
@@ -101,15 +74,6 @@
         <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_e8c7bc706b8707b777ece8f2f5981be4d1ad7b1d.jar" />
     </item>
     <item
-        is-multidex="false"
-        jar="/home/ale/.android/build-cache/09bc730672137a8038dbf58f82336ff1d05e94b5/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
-        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_c26ed4bdb8c7667e884d18aed8db64336b2c4f8c.jar" />
-    </item>
-    <item
         is-multidex="true"
         jar="/home/ale/informatica/lam/android/code/BudgetTracker/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
@@ -120,30 +84,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/ale/.android/build-cache/eadc20c7519e8fc56b59b70663bc89af3a72282a/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="95519720620b553f63afc789beba9ad582807f7c">
-        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_500ac040d31fba9a7492211a156613e98a977ba3.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/home/ale/.android/build-cache/54b09829bd798ecdcbe0b5652ab454665c44026e/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
         <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_6dce244129f6fb33baffb7fe759a936966c1795a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/ale/.android/build-cache/e54d2454205029cc26b5ae61668b7042fd7a88be/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
-        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_95e8862f619c3d2ac22db7d9e37a6ac3f9d9fad9.jar" />
     </item>
     <item
         is-multidex="false"
@@ -171,6 +117,69 @@
         revision="25.0.2"
         sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
         <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_391804b98138e7a95172eee536fee95def6a8828.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/ale/.android/build-cache/5780d670fbd3f370c13fc57aa3302fe1a47c6896/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d68bbf92de9721b02a31a3833abfdc90144c7e39">
+        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_684f32f39adae70300917eb72dafa010827f2ad3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/ale/.android/build-cache/c5414065d090e2516f34d871722633558101d61f/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d410043f93e71bb0179ba86b85726dd080f14b79">
+        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_cf9df68706d2f1642e388335dc68bca182c8d6a9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/ale/.android/build-cache/0ef508a8079631732e1657baca955b7cfe34ea75/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5f43d6c042ee8eb48fa7606da4d1034d472a43cd">
+        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_5738d98ec80fad03d5f478fc2b7715ff2076af48.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/ale/.android/build-cache/2a5d01c1035348325ba891e4db70d17c5456d5e5/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e72c498ef3e345135b6bfdf7fc83c6b905228ade">
+        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_c12bb94a13833c644cc13e38ea1c454e93fbe977.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/ale/.android/build-cache/09bc730672137a8038dbf58f82336ff1d05e94b5/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_c26ed4bdb8c7667e884d18aed8db64336b2c4f8c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/ale/.android/build-cache/eadc20c7519e8fc56b59b70663bc89af3a72282a/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_500ac040d31fba9a7492211a156613e98a977ba3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/ale/.android/build-cache/e54d2454205029cc26b5ae61668b7042fd7a88be/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_95e8862f619c3d2ac22db7d9e37a6ac3f9d9fad9.jar" />
     </item>
     <item
         is-multidex="false"
@@ -210,12 +219,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/ale/.android/build-cache/5780d670fbd3f370c13fc57aa3302fe1a47c6896/output/jars/classes.jar"
+        jar="/home/ale/.gradle/caches/modules-2/files-2.1/com.itextpdf/itextpdf/5.5.10/6b7f922b3aeb46d5b23a108430042f371616e768/itextpdf-5.5.10.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="d68bbf92de9721b02a31a3833abfdc90144c7e39">
-        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/classes_684f32f39adae70300917eb72dafa010827f2ad3.jar" />
+        sha1="6b7f922b3aeb46d5b23a108430042f371616e768">
+        <dex dex="/home/ale/informatica/lam/budgetTracker/app/build/intermediates/pre-dexed/debug/itextpdf-5.5.10_eae87e636608c9e2d1a25d72fab46482b56b3c25.jar" />
     </item>
 
 </items>
