@@ -92,7 +92,7 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
                                int pos, long id) {
         String selectedItem = (String) parent.getItemAtPosition(pos);
         if (!selectedItem.equals("Inserisci")) {
-            if (!selectedItem.matches(".*\\d+.*") || Integer.valueOf(selectedItem)>35) {
+            if (!selectedItem.matches(".*\\d+.*")) {
                 if (selectedItem.equals("Gennaio")) month = "1";
                 if (selectedItem.equals("Febbraio")) month = "2";
                 if (selectedItem.equals("Marzo")) month = "3";
@@ -106,7 +106,10 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
                 if (selectedItem.equals("Novembre")) month = "11";
                 if (selectedItem.equals("Dicembre")) month = "12";
                 checkthirtyone();
-            } else {
+            } else if (selectedItem.matches(".*\\d+.*") && Integer.valueOf(selectedItem)>1999) {
+                year = selectedItem;
+            }
+            else {
                 day = selectedItem;
             }
         }

@@ -15,6 +15,7 @@ import java.util.Calendar;
 public class MonthsChartActivity extends AppCompatActivity {
     private static DBHelper dbh;
     private static String month;
+    private static String year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,15 @@ public class MonthsChartActivity extends AppCompatActivity {
         LineChart chart = (LineChart) findViewById(R.id.chartMese);
         chart.getAxisLeft().setStartAtZero(false);
         chart.getAxisRight().setStartAtZero(false);
+        Calendar calendar = Calendar.getInstance();
+        year = String.valueOf(calendar.get(Calendar.YEAR));
+        month = String.valueOf(calendar.get(Calendar.MONTH)+1);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            month = extras.getString("month");
+            year = extras.getString("year");
+            calendar.set(Integer.valueOf(year),Integer.valueOf(month),Integer.valueOf(1));
+        }
         LineData data = new LineData(getXAxisValues(), getDataSet());
         chart.setData(data);
         chart.setDescription("");
@@ -32,21 +42,31 @@ public class MonthsChartActivity extends AppCompatActivity {
 
     private ArrayList<LineDataSet> getDataSet() {
         dbh = new DBHelper(this);
-        Calendar calendar = Calendar.getInstance();
-        String year = String.valueOf(calendar.get(Calendar.YEAR));
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null){
-            month = extras.getString("month");
-            calendar.set(Integer.valueOf(year),Integer.valueOf(month),Integer.valueOf(1));
-        }
         ArrayList<LineDataSet> dataSets = null;
         ArrayList<Entry> valueSet1 = new ArrayList<>();
 
         float value = 0;
-        for (int i=0; i<12; i++) {
-            value = dbh.getTotalInAMonth(year, String.valueOf(i)) + value;
-            valueSet1.add(new Entry(value, i));
+        int monthI = Integer.valueOf(month);
+        if ( monthI % 2 == 1 && monthI != 11) {
+            for (int i = 0; i<31; i++) {
+                value = dbh.getAmInADay(year, month, String.valueOf(i)) + value;
+                valueSet1.add(new Entry(value, i));
+            }
+        }
+        else {
+            if (monthI == 2) {
+                for (int i = 0; i<28; i++) {
+                    value = dbh.getAmInADay(year, month, String.valueOf(i)) + value;
+                    valueSet1.add(new Entry(value, i));
+                }
+            }
+            else {
+                for (int i = 0; i<30; i++) {
+                    value = dbh.getAmInADay(year, month, String.valueOf(i)) + value;
+                    valueSet1.add(new Entry(value, i));
+                }
+            }
         }
 
         LineDataSet LineDataSet1 = new LineDataSet(valueSet1, "Totale");
@@ -60,9 +80,6 @@ public class MonthsChartActivity extends AppCompatActivity {
 
     private ArrayList<String> getXAxisValues() {
         ArrayList<String> xAxis = new ArrayList<>();
-        for (int i=1; i<32; i++) {
-            xAxis.add(String.valueOf(i));
-        }
         int monthI = Integer.valueOf(month);
         if ( monthI % 2 == 1 && monthI != 11) {
             for (int i = 1; i<32; i++) {

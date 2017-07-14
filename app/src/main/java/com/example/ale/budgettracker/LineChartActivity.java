@@ -16,6 +16,7 @@ import java.util.Calendar;
 //YEAR CHART ACTIVITY
 public class LineChartActivity extends AppCompatActivity {
     private static DBHelper dbh;
+    private static String year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,12 @@ public class LineChartActivity extends AppCompatActivity {
         BarChart chart = (BarChart) findViewById(R.id.chart);
         chart.getAxisLeft().setStartAtZero(false);
         chart.getAxisRight().setStartAtZero(false);
+        Calendar calendar = Calendar.getInstance();
+        year = String.valueOf(calendar.get(Calendar.YEAR));
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            year = extras.getString("year");
+        }
         BarData data = new BarData(getXAxisValues(), getDataSet());
         chart.setData(data);
         chart.setDescription("");
@@ -33,8 +40,6 @@ public class LineChartActivity extends AppCompatActivity {
 
     private ArrayList<BarDataSet> getDataSet() {
         dbh = new DBHelper(this);
-        Calendar calendar = Calendar.getInstance();
-        String year = String.valueOf(calendar.get(Calendar.YEAR));
         ArrayList<BarDataSet> dataSets = null;
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
         ArrayList<BarEntry> valueSet2 = new ArrayList<>();

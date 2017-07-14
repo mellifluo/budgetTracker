@@ -41,6 +41,7 @@ public class DaysChartActivity extends AppCompatActivity {
         int dayweek = Calendar.DAY_OF_WEEK;
         calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
         if (extras != null){
+            year = extras.getString("year");
             month = extras.getString("month");
             day = extras.getString("day");
             calendar.set(Integer.valueOf(year),Integer.valueOf(month),Integer.valueOf(day));
@@ -97,6 +98,7 @@ public class DaysChartActivity extends AppCompatActivity {
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         Bundle extras = getIntent().getExtras();
         if (extras != null){
+            year = extras.getString("year");
             month = extras.getString("month");
             day = extras.getString("day");
             calendar.set(Integer.valueOf(year),Integer.valueOf(month),Integer.valueOf(day));
