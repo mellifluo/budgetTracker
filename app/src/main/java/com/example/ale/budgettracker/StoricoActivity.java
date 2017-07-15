@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,6 +26,8 @@ public class StoricoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storico);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dbh = new DBHelper(this);
 
@@ -49,6 +53,7 @@ public class StoricoActivity extends AppCompatActivity {
         listItems.clear();
         while (!cursor.isAfterLast()) {
             boolean haveToContinue = false;
+            findViewById(R.id.storico_testo).setVisibility(View.GONE);
             if (!haveToContinue) {
                 String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
                 if (!nameNewSpesa.equals("Budget mensile")){
@@ -67,5 +72,12 @@ public class StoricoActivity extends AppCompatActivity {
         }
         adapter.notifyDataSetChanged();
         cursor.close();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
+
     }
 }

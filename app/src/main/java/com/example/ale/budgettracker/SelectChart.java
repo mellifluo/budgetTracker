@@ -3,6 +3,7 @@ package com.example.ale.budgettracker;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,8 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_chart);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Calendar calendar = Calendar.getInstance();
         year = String.valueOf(calendar.get(Calendar.YEAR));
@@ -149,5 +152,12 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
         s.setAdapter(adapter3);
     }
 
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
+
+    }
 
 }

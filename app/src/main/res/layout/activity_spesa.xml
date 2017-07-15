@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Nome spesa/entrata"
                     android:gravity="center_horizontal"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:nextFocusForward="@+id/prezzo"
                     android:imeOptions="actionNext"
                     android:maxLines="1" />

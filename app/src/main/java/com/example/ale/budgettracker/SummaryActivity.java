@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,9 @@ public class SummaryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         TextView nomeT = (TextView) findViewById(R.id.summary_nome);
         TextView initT = (TextView) findViewById(R.id.summary_initial);
         TextView totT = (TextView) findViewById(R.id.summary_totale);
@@ -113,5 +117,13 @@ public class SummaryActivity extends AppCompatActivity {
         }
 
     }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
+
+    }
+
 
 }

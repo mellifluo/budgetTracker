@@ -1,5 +1,6 @@
 package com.example.ale.budgettracker;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,6 +24,12 @@ public class firstActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first);
         importoSpesa = (EditText) findViewById(R.id.budgetIniziale);
         nomePersona = (EditText) findViewById(R.id.inserisci_nome);
+        DBHelper dbh = new DBHelper(this);
+        Cursor cursor = dbh.getPerson();
+        if (cursor.moveToFirst()) {
+            findViewById(R.id.domanda_nome).setVisibility(View.INVISIBLE);
+            nomePersona.setVisibility(View.INVISIBLE);
+        }
 
         Button aggiungiBudget = (Button) findViewById(R.id.aggiungi_budget);
         aggiungiBudget.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +86,7 @@ public class firstActivity extends AppCompatActivity {
                     year,
                     month,
                     day, "m", "");
-            float code2 = dbh.insertNewPersona(nome,amount);
+            float code2 = dbh.insertNewPersona(nome,amount,true);
             if (code != -1 && code2 != -1)
                 Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
             else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();

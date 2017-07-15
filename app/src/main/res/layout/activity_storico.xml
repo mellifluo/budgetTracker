@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.ale.budgettracker.StoricoActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Non hai ancora inserito nessun profitto o spesa passata"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:id="@+id/storico_testo"
+        />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv2"

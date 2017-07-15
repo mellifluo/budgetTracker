@@ -3,6 +3,7 @@ package com.example.ale.budgettracker;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.PersistableBundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -35,6 +37,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -193,8 +196,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
-    //TODO sistemare settings
-
     /**
      * This fragment shows general preferences only. It is used when the
      * activity is showing a two-pane settings UI.
@@ -219,15 +220,41 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
 
+            Preference changeNameP = findPreference("example_text");
+            changeNameP.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if (dbh.changeName(String.valueOf(newValue))!= -1) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                        alertDialog.setTitle("Modifiche effettuate!");
+                        alertDialog.setMessage("Il nuovo nome è: " + String.valueOf(newValue));
+                        alertDialog.show();
+                        return true;
+                    }
+                    else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                        alertDialog.setTitle("Errore nella modifica");
+                        alertDialog.show();
+                        return false;
+                    }
+                }
+            });
 
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
-
+            Preference goDir = findPreference("go_to_dir");
+            goDir.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Dir", "riassuntoBudget.pdf");
+                    Intent openFile = new Intent(Intent.ACTION_VIEW);
+                    openFile.setDataAndType(Uri.fromFile(file),"application/pdf");
+                    openFile.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    Intent intent1 = Intent.createChooser(openFile, "Open With");
+                    try {
+                        getActivity().startActivity(intent1);
+                    } catch (ActivityNotFoundException e) {}
+                    return true;
+                }
+            });
         }
 
         @Override
@@ -253,11 +280,48 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_notification);
             setHasOptionsMenu(true);
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            Preference changeAlert = findPreference("alert_change");
+            changeAlert.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if (dbh.changeAlert(String.valueOf(newValue))!= -1) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                        alertDialog.setTitle("Modifiche effettuate!");
+                        alertDialog.show();
+
+                        return true;
+                    }
+                    else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                        alertDialog.setTitle("Errore nella modifica");
+                        alertDialog.show();
+                        return false;
+                    }
+                }
+            });
+
+            Preference alertYes = findPreference("alert_switch");
+            alertYes.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if (Boolean.valueOf(String.valueOf(newValue))) {
+                        if (dbh.changeTAlert(true) != -1)
+                            return true;
+                        else {
+                            return false;
+                        }
+                    }
+                    else {
+                        if (dbh.changeTAlert(false)!= -1)
+                            return true;
+                        else {
+                            return false;
+                        }
+                    }
+                }
+            });
+
+
         }
 
         @Override
@@ -292,7 +356,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    dbh.removeAll();
+                                    dbh.removeData();
                                     getActivity().finish();
                                 }
                             });
@@ -308,11 +372,33 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+            Preference resetAll = findPreference("Reset_All");
+            resetAll.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setTitle("Stai per cancellare tutti, ma proprio tutti, i dati");
+                    alertDialog.setMessage("Sei proprio sicuro?");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dbh.removeAll();
+                                    getActivity().finish();
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    alertDialog.show();
+
+                    return true;
+                }
+            });
+
         }
 
         @Override

@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
     private rvAdapter adapter;
     private static DBHelper dbh;
-    public String nomeUtente = "John Smith";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,8 +179,6 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
             startActivity(new Intent(MainActivity.this, StoricoActivity.class));
-
-        } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
             Intent mapIntent = new Intent(MainActivity.this, MapsActivity.class);

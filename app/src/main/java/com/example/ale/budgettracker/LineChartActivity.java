@@ -1,8 +1,10 @@
 package com.example.ale.budgettracker;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -22,6 +24,9 @@ public class LineChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_chart);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         BarChart chart = (BarChart) findViewById(R.id.chart);
         chart.getAxisLeft().setStartAtZero(false);
         chart.getAxisRight().setStartAtZero(false);
@@ -146,5 +151,13 @@ public class LineChartActivity extends AppCompatActivity {
             xAxis.add(String.valueOf(mesi[i].substring(0,3)));
         }
         return xAxis;
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
+
     }
 }

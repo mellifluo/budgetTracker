@@ -21,6 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String NAME_PERSON = "nomePersona";
     public static final String INITIAL_BUDGET = "amountPersona";
     public static final String ALERT = "alert";
+    public static final String TALERT = "talert";
     public static final String COLUMN_EXPENSE_NAME = "nomeSpesa";
     public static final String COLUMN_AMOUNT = "importoSpesa";
     private static int id = 0;
@@ -56,7 +57,8 @@ public class DBHelper extends SQLiteOpenHelper {
             + TABLE_PERSON + "( "
             + NAME_PERSON + " text primary key, "
             + INITIAL_BUDGET + " text , "
-            + ALERT + " int " +
+            + ALERT + " int, "
+            + TALERT + " boolean " +
             ");";
 
 	public DBHelper(Context context) {
@@ -80,16 +82,21 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
 	}
 
-	public void removeAll() {
+    public void removeAll() {
         getWritableDatabase().delete(DBHelper.TABLE_BUDGET, null, null);
         getWritableDatabase().delete(DBHelper.TABLE_PERSON, null, null);
-	}
+    }
 
-	public float insertNewPersona (String namePersona, String amountPersona) {
+    public void removeData() {
+        getWritableDatabase().delete(DBHelper.TABLE_BUDGET, null, null);
+    }
+
+	public float insertNewPersona (String namePersona, String amountPersona, boolean talert) {
         ContentValues cv = new ContentValues();
         cv.put(NAME_PERSON, namePersona);
         cv.put(INITIAL_BUDGET, amountPersona);
         cv.put(ALERT, 1);
+        cv.put(TALERT, talert);
         float code = getWritableDatabase().insert(TABLE_PERSON, null, cv);
         return code;
     }
@@ -395,6 +402,27 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public Cursor getPerson() {
         return getWritableDatabase().rawQuery("select * from " + TABLE_PERSON, null);
+    }
+
+    public int changeName(String newname) {
+        ContentValues cv = new ContentValues();
+        cv.put(NAME_PERSON, newname);
+
+        return getWritableDatabase().update(TABLE_PERSON, cv,null,null);
+    }
+
+    public int changeAlert(String newalert) {
+        ContentValues cv = new ContentValues();
+        cv.put(ALERT, newalert);
+
+        return getWritableDatabase().update(TABLE_PERSON, cv,null,null);
+    }
+
+    public int changeTAlert(Boolean newalert) {
+        ContentValues cv = new ContentValues();
+        cv.put(TALERT, newalert);
+
+        return getWritableDatabase().update(TABLE_PERSON, cv,null,null);
     }
 
     public Cursor checkAlert () {
