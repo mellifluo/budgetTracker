@@ -4,11 +4,11 @@
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.location.gps" />
 
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -97,7 +97,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ale.budgettracker.ItemListActivity" />
         </activity>
-        <activity android:name=".SummaryActivity"></activity>
+        <activity android:name=".SummaryActivity" />
+
+        <service
+            android:name=".ServiceNotif"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

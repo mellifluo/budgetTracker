@@ -397,6 +397,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return getWritableDatabase().rawQuery("select * from " + TABLE_PERSON, null);
     }
 
+    public Cursor checkAlert () {
+        String selection = DATE_EXPANSE +" = date('now', '+1 day')";
+        Cursor cursor = getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET + " where " +
+        selection, null);
+        return cursor;
+    }
+
 	public ArrayList<Cursor> getData(String Query){
 		//get writable database
 		SQLiteDatabase sqlDB = this.getWritableDatabase();

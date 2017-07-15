@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         rv.setHasFixedSize(true);
-
+        startService();
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(mLayoutManager);
@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity
         });
         dbh = new DBHelper(this);
         dbh.checkMensile();
+        startService();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -160,34 +161,9 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         if (id == R.id.action_settings) {
-            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-            alertDialog.setTitle("Stai per cancellare tutti i dati");
-            alertDialog.setMessage("Sei proprio sicuro?");
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dbh.removeAll();
-                            Intent intent = getIntent();
-                            finish();
-                            startActivity(intent);
-                        }
-                    });
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-            alertDialog.show();
-            //Intent goSetting = new Intent(this, SettingsActivity.class);
-            //startActivity(goSetting);
-            return true;
-        }
-
-        if (id == R.id.database_view) {
-            startActivity(new Intent(MainActivity.this, AndroidDatabaseManager.class));
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -220,5 +196,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void startService() {
+        startService(new Intent(this,ServiceNotif.class));
+    }
+
+    public void stopService(View v) {
+        stopService(new Intent(this,ServiceNotif.class));
     }
 }
