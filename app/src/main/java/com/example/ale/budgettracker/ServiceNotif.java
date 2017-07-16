@@ -27,7 +27,7 @@ public class ServiceNotif extends IntentService {
                 String nomeNot = cursor.getString(cursor.getColumnIndex(dbh.COLUMN_EXPENSE_NAME));
                 float amount = cursor.getFloat(cursor.getColumnIndex(dbh.COLUMN_AMOUNT));
                 String sNot;
-                if (amount < 0) sNot = "Ricordati che devi fare cassa!";
+                if (amount > 0) sNot = "Ricordati che devi fare cassa!";
                 else sNot = "Hai una spesa da fare!";
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(this)

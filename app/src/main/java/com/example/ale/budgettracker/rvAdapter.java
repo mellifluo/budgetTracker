@@ -37,28 +37,15 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
                 public void onClick(View v) {
                     String nome = nameSpesa.getText().toString();
                     if (!nome.equals("Budget mensile")) {
-                        if (catExtra.equals("p")){
-                            Intent modifySpesa = new Intent(v.getContext(), SpesaActivityPlanned.class);
-                            modifySpesa.putExtra("day", Fday);
-                            modifySpesa.putExtra("month", Fmonth);
-                            modifySpesa.putExtra("year", Fyear);
-                            modifySpesa.putExtra("id", idExtra);
-                            modifySpesa.putExtra("category", catExtra);
-                            modifySpesa.putExtra("nameSpesa", nome);
-                            modifySpesa.putExtra("amountSpesa", amountSpesa.getText().toString());
-                            v.getContext().startActivity(modifySpesa);
-                        }
-                        else {
-                            Intent modifySpesa = new Intent(v.getContext(), SpesaActivity.class);
-                            modifySpesa.putExtra("day", Fday);
-                            modifySpesa.putExtra("month", Fmonth);
-                            modifySpesa.putExtra("year", Fyear);
-                            modifySpesa.putExtra("id", idExtra);
-                            modifySpesa.putExtra("category", catExtra);
-                            modifySpesa.putExtra("nameSpesa", nome);
-                            modifySpesa.putExtra("amountSpesa", amountSpesa.getText().toString());
-                            v.getContext().startActivity(modifySpesa);
-                        }
+                        Intent modifySpesa = new Intent(v.getContext(), DetailsActivity.class);
+                        modifySpesa.putExtra("day", Fday);
+                        modifySpesa.putExtra("month", Fmonth);
+                        modifySpesa.putExtra("year", Fyear);
+                        modifySpesa.putExtra("id", idExtra);
+                        modifySpesa.putExtra("category", catExtra);
+                        modifySpesa.putExtra("nameSpesa", nome);
+                        modifySpesa.putExtra("amountSpesa", amountSpesa.getText().toString());
+                        v.getContext().startActivity(modifySpesa);
                     }
                 }
             });

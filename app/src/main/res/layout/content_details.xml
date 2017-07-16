@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.ale.budgettracker.DetailsActivity"
+    tools:showIn="@layout/activity_details">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:layout_margin="@dimen/text_margin"
+        android:id="@+id/detail_amount"
+        android:text="AMOUNT"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/detail_date"
+        android:textSize="25dp"
+        android:layout_below="@+id/detail_amount"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="DATE"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/detail_plan"
+        android:textSize="25dp"
+        android:layout_below="@+id/detail_date"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="PLAN"/>
+
+</RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

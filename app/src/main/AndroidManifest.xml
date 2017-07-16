@@ -102,7 +102,17 @@
         <service
             android:name=".ServiceNotif"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity
+            android:name=".DetailsActivity"
+            android:label="@string/title_activity_details"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.ale.budgettracker.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

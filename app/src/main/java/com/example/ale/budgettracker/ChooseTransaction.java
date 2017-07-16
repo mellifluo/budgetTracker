@@ -3,6 +3,7 @@ package com.example.ale.budgettracker;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,6 +17,8 @@ public class ChooseTransaction extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_transaction);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final CheckBox checkBox1 = (CheckBox) findViewById(R.id.check1);
         final CheckBox checkBox2 = (CheckBox) findViewById(R.id.check2);
@@ -76,5 +79,12 @@ public class ChooseTransaction extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        finish();
+        return true;
     }
 }

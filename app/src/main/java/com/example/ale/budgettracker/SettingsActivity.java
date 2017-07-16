@@ -286,14 +286,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     if (dbh.changeAlert(String.valueOf(newValue))!= -1) {
                         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                        alertDialog.setTitle("Modifiche effettuate!");
+                        alertDialog.setMessage("Modifiche effettuate!");
                         alertDialog.show();
-
+                        getActivity().stopService(new Intent(getActivity(),ServiceNotif.class));
+                        getActivity().startService(new Intent(getActivity(),ServiceNotif.class));
                         return true;
                     }
                     else {
                         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                        alertDialog.setTitle("Errore nella modifica");
+                        alertDialog.setMessage("Errore nella modifica");
                         alertDialog.show();
                         return false;
                     }
@@ -305,15 +306,19 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     if (Boolean.valueOf(String.valueOf(newValue))) {
-                        if (dbh.changeTAlert(true) != -1)
+                        if (dbh.changeTAlert(true) != -1) {
+                            getActivity().startService(new Intent(getActivity(),ServiceNotif.class));
                             return true;
+                        }
                         else {
                             return false;
                         }
                     }
                     else {
-                        if (dbh.changeTAlert(false)!= -1)
+                        if (dbh.changeTAlert(false)!= -1) {
+                            getActivity().stopService(new Intent(getActivity(),ServiceNotif.class));
                             return true;
+                        }
                         else {
                             return false;
                         }

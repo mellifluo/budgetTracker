@@ -425,11 +425,18 @@ public class DBHelper extends SQLiteOpenHelper {
         return getWritableDatabase().update(TABLE_PERSON, cv,null,null);
     }
 
-    public Cursor checkAlert () {
-        String selection = DATE_EXPANSE +" = date('now', '+1 day')";
+    public Cursor checkAlert() {
+        int ndays = getAlert();
+        String selection = DATE_EXPANSE +" = date('now', '+" + ndays + " day')";
         Cursor cursor = getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET + " where " +
-        selection, null);
+                selection, null);
         return cursor;
+    }
+
+    public int getAlert() {
+        Cursor Cndays = getWritableDatabase().rawQuery("select alert from person", null);
+        if (Cndays.moveToFirst()) return Cndays.getInt(0);
+        else return 2;
     }
 
 	public ArrayList<Cursor> getData(String Query){

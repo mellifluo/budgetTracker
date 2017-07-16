@@ -14,7 +14,7 @@
         android:dependency="alert_switch"
         android:key="alert_change"
         android:inputType="number"
-        android:hint="Quanti giorni prima vuoi avere la notifica"
+        android:hint="Quanti giorni prima?"
         android:title="Promemoria" />
 
 

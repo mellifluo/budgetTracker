@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Aggiunta di una spesa o guadagno abituale:"
+                android:text="Aggiunta di una spesa o guadagno ricorrente:"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:padding="10dp"/>

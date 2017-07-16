@@ -52,6 +52,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FusedLocationProviderClient mFusedLocationClient;
     Marker marker;
     FloatingActionButton fab;
+    boolean nogps;
+    LatLng lastM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
         }
+        LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            buildAlertMessageNoGps();
+        }
+
         mMap.setMyLocationEnabled(true);
         mFusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -120,6 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 double nLon = Double.valueOf(pAddress.substring(pAddress.indexOf("|")+1));
                 LatLng nlatlng = new LatLng(nLat,nLon);
                 mMap.addMarker(new MarkerOptions().position(nlatlng).title(nameAddress));
+                lastM = nlatlng;
             }
             cursor.moveToNext();
         }
@@ -147,5 +155,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .build();                   // Creates a CameraPosition from the builder
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
+        else if (nogps) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(lastM));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lastM, 13));
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(lastM)      // Sets the center of the map to location user
+                    .zoom(17)                   // Sets the zoom
+                    .bearing(90)                // Sets the orientation of the camera to east
+                    .build();                   // Creates a CameraPosition from the builder
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
+    }
+
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Non hai attivo il tuo GPS, vuoi attivarlo?")
+                .setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        nogps = true;
+                        dialog.cancel();
+                        updateMap();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 }
