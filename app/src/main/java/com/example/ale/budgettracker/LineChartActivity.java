@@ -155,7 +155,7 @@ public class LineChartActivity extends AppCompatActivity {
 
 
     public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent myIntent = new Intent(getApplicationContext(), SelectChart.class);
         startActivityForResult(myIntent, 0);
         finish();
         return true;

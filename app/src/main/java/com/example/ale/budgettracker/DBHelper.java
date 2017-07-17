@@ -285,27 +285,42 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-	public float getTotalInAYear(String year) {
-		Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from" +
-				" " + TABLE_BUDGET + "where " + YEAR_EXPANSE + " = " + year , null);
-		if (amountColumn.moveToFirst()){
-			return amountColumn.getFloat(0);
-		}
-		else return 0;
-	}
+    public float getTotalInAYear(String year) {
+        Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from" +
+                " " + TABLE_BUDGET + "where " + YEAR_EXPANSE + " = " + year , null);
+        if (amountColumn.moveToFirst()){
+            return amountColumn.getFloat(0);
+        }
+        else return 0;
+    }
 
-	public float getTotalInAMonth(String year, String month) {
+    public Cursor getCardsInAYear(String year) {
+        return getWritableDatabase().rawQuery("select * from" +
+                " " + TABLE_BUDGET + "where " + YEAR_EXPANSE + " = " + year + " order by + "
+                + DATE_EXPANSE + " asc " , null);
+    }
+
+    public float getTotalInAMonth(String year, String month) {
         if (month.length() < 2) month = "0" + month;
         year = "'" + year + "'";
         month = "'" + month + "'";
         Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
-				+ TABLE_BUDGET + " where " + YEAR_EXPANSE + " like " + year + " and " + MONTH_EXPANSE +
-				" like " + month, null);
-		if (amountColumn.moveToFirst()){
-			return amountColumn.getFloat(0);
-		}
-		else return 0;
-	}
+                + TABLE_BUDGET + " where " + YEAR_EXPANSE + " like " + year + " and " + MONTH_EXPANSE +
+                " like " + month, null);
+        if (amountColumn.moveToFirst()){
+            return amountColumn.getFloat(0);
+        }
+        else return 0;
+    }
+
+    public Cursor getCardsInAMonth(String year, String month) {
+        if (month.length() < 2) month = "0" + month;
+        year = "'" + year + "'";
+        month = "'" + month + "'";
+        return getWritableDatabase().rawQuery("select * from "
+                + TABLE_BUDGET + " where " + YEAR_EXPANSE + " like " + year + " and " + MONTH_EXPANSE +
+                " like " + month + " order by + " + DATE_EXPANSE + " asc ", null);
+    }
 
     public float getLossInAMonth(String year, String month) {
         if (month.length() < 2) month = "0" + month;
@@ -333,17 +348,27 @@ public class DBHelper extends SQLiteOpenHelper {
 		else return 0;
 	}
 
-	public float getAmInADay(String year, String month, String day) {
+    public float getAmInADay(String year, String month, String day) {
         if (month.length() < 2) month = "0" + month;
         if (day.length() < 2) day = "0" + day;
         String date = "'" + year + "-" + month + "-" + day + "'";
         Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
                 + TABLE_BUDGET + " where " + DATE_EXPANSE + " = " + date, null);
         if (amountColumn.moveToFirst()){
-			return amountColumn.getFloat(0);
-		}
-		else return 0;
-	}
+            return amountColumn.getFloat(0);
+        }
+        else return 0;
+    }
+
+    public Cursor getCardsInADay(String year, String month, String day) {
+        if (month.length() < 2) month = "0" + month;
+        if (day.length() < 2) day = "0" + day;
+        String date = "'" + year + "-" + month + "-" + day + "'";
+        String date2 = "date('" + year + "-" + month + "-" + day + "', '+7 day')";
+        return getWritableDatabase().rawQuery("select * from "
+                + TABLE_BUDGET + " where " + DATE_EXPANSE + " >= " + date + "and " + DATE_EXPANSE +
+                " <= " + date2 + " order by + " + DATE_EXPANSE + " asc ", null);
+    }
 
     public float getTotalSummary() {
         Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "

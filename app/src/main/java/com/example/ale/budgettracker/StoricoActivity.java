@@ -21,6 +21,7 @@ public class StoricoActivity extends AppCompatActivity {
     private rvAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static DBHelper dbh;
+    RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,9 @@ public class StoricoActivity extends AppCompatActivity {
 
         dbh = new DBHelper(this);
 
-        RecyclerView rv = (RecyclerView)findViewById(R.id.rv2);
+        rv = (RecyclerView)findViewById(R.id.rv2);
         rv.setHasFixedSize(true);
+        rv.setVisibility(View.INVISIBLE);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
@@ -48,11 +50,28 @@ public class StoricoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Cursor cursor = dbh.getOldBudget();
+        Bundle extras = getIntent().getExtras();
+        Cursor cursor;
+        if (extras.size() == 1){
+            String year = extras.getString("year");
+            cursor = dbh.getCardsInAYear(year);
+        }
+        else if (extras.size() == 2) {
+            String year = extras.getString("year");
+            String month = extras.getString("month");
+            cursor = dbh.getCardsInAMonth(year, month);
+        }
+        else {
+            String year = extras.getString("year");
+            String month = extras.getString("month");
+            String day = extras.getString("day");
+            cursor = dbh.getCardsInADay(year, month, day);
+        }
         cursor.moveToFirst();
         listItems.clear();
         while (!cursor.isAfterLast()) {
             boolean haveToContinue = false;
+            rv.setVisibility(View.VISIBLE);
             findViewById(R.id.storico_testo).setVisibility(View.GONE);
             if (!haveToContinue) {
                 String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));

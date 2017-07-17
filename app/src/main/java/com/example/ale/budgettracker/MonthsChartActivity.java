@@ -24,8 +24,6 @@ public class MonthsChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_months_chart);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         LineChart chart = (LineChart) findViewById(R.id.chartMese);
         chart.getAxisLeft().setStartAtZero(false);
         chart.getAxisRight().setStartAtZero(false);
@@ -106,12 +104,4 @@ public class MonthsChartActivity extends AppCompatActivity {
         return xAxis;
     }
 
-
-    public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivityForResult(myIntent, 0);
-        finish();
-        return true;
-
-    }
 }

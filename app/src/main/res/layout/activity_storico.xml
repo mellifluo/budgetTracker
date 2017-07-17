@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Non hai ancora inserito nessun profitto o spesa passata"
+        android:text="Non hai inserito nessun profitto o spesa nel periodo scelto"
         android:gravity="center"
         android:includeFontPadding="false"
         android:id="@+id/storico_testo"
@@ -19,6 +19,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv2"
         android:scrollbars="vertical"
+        android:background="@color/colorPrimaryLight"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

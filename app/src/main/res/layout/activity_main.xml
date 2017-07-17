@@ -15,6 +15,7 @@
         android:scrollbars="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryLight"
         android:paddingTop="130dp"/>
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -62,8 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:backgroundTint="@color/colorPrimary"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:backgroundTint="@color/colorAccent"
+            app:srcCompat="@drawable/ic_action_add" />
 
 
 
@@ -75,7 +76,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="#BCC1C3"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 

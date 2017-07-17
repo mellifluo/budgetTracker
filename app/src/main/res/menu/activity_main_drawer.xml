@@ -3,20 +3,20 @@
 
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_action_name"
             android:title="Statistiche" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Storico" />
+            android:icon="@drawable/ic_action_history"
+            android:title="Archivio" />
 
         <item
             android:id="@+id/nav_share"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/ic_action_maps"
             android:title="Mappa" />
         <item
             android:id="@+id/nav_send"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/ic_action_summary"
             android:title="Riassunto" />
 
 </menu>

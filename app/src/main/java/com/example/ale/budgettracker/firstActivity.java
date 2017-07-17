@@ -16,7 +16,7 @@ public class firstActivity extends AppCompatActivity {
     private EditText importoSpesa;
     private EditText nomePersona;
     private Calendar calendar;
-
+    private boolean all = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,9 @@ public class firstActivity extends AppCompatActivity {
         DBHelper dbh = new DBHelper(this);
         Cursor cursor = dbh.getPerson();
         if (cursor.moveToFirst()) {
-            findViewById(R.id.domanda_nome).setVisibility(View.INVISIBLE);
-            nomePersona.setVisibility(View.INVISIBLE);
+            findViewById(R.id.domanda_nome).setVisibility(View.GONE);
+            nomePersona.setVisibility(View.GONE);
+            all = false;
         }
 
         Button aggiungiBudget = (Button) findViewById(R.id.aggiungi_budget);
@@ -67,7 +68,7 @@ public class firstActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(nome)) {
+        if (TextUtils.isEmpty(nome) && all) {
             importoSpesa.setError("Inserisci il nome!");
             focusView = importoSpesa;
             cancel = true;

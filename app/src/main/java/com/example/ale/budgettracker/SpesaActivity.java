@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -98,6 +99,8 @@ public class SpesaActivity extends AppCompatActivity {
             String modifiedAmount = extras.getString("amountSpesa");
             modifiedAmount = removeLastChar(modifiedAmount);
             importoSpesa.setText(modifiedAmount);
+            importoSpesa.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED
+                    | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             id = extras.getString("id");
             day = extras.getString("day");
             month = extras.getString("month");
@@ -140,6 +143,12 @@ public class SpesaActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(amount) && amount.length() > 10) {
             importoSpesa.setError("Penso tu abbia esagerato");
             focusView = importoSpesa;
+            cancel = true;
+        }
+
+        if (name.length() > 15 ) {
+            nomeSpesa.setError("Troppo lunga!");
+            focusView = nomeSpesa;
             cancel = true;
         }
 

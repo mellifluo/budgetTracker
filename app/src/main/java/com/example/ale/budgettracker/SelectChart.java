@@ -9,6 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +22,7 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
     private String month;
     private String day;
     private ArrayList<String> arraySpinner = new ArrayList<String>();
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +58,22 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
         spinner2.setOnItemSelectedListener(this);
         s.setOnItemSelectedListener(this);
 
+        Bundle extras = getIntent().getExtras();
+        history = extras.getBoolean("history");
+
+        if (history){
+            TextView domanda = (TextView) findViewById(R.id.DomandaGrafico);
+            domanda.setText("Quale periodo vuoi vedere?");
+            findViewById(R.id.correttavisione).setVisibility(View.GONE);
+        }
+
         Button thisYear = (Button) findViewById(R.id.annoChart);
         thisYear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent selected = new Intent(view.getContext(), LineChartActivity.class);
+                Intent selected;
+                if (history) selected = new Intent(view.getContext(), StoricoActivity.class);
+                else selected = new Intent(view.getContext(), LineChartActivity.class);
                 selected.putExtra("year", year);
                 view.getContext().startActivity(selected);
             }
@@ -69,7 +84,9 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
         thisMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent selected = new Intent(view.getContext(), MonthsChartActivity.class);
+                Intent selected;
+                if (history) selected = new Intent(view.getContext(), StoricoActivity.class);
+                else selected = new Intent(view.getContext(), MonthsChartActivity.class);
                 selected.putExtra("month", month);
                 selected.putExtra("year", year);
                 view.getContext().startActivity(selected);
@@ -81,7 +98,9 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
         thisDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent selected = new Intent(view.getContext(), DaysChartActivity.class);
+                Intent selected;
+                if (history) selected = new Intent(view.getContext(), StoricoActivity.class);
+                else selected = new Intent(view.getContext(), DaysChartActivity.class);
                 selected.putExtra("day", day);
                 selected.putExtra("month", month);
                 selected.putExtra("year", year);
@@ -156,6 +175,7 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
     public boolean onOptionsItemSelected(MenuItem item){
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);
+        finish();
         return true;
 
     }

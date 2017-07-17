@@ -5,7 +5,7 @@
         android:id="@+id/list_item"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:padding="16dp"
-        android:background="@color/colorPrimary"
+        android:background="#62727b"
     >
 
 
@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cv"
-            xmlns:android="http://schemas.android.com/apk/res/android">
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
 
             <FrameLayout
@@ -28,6 +28,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/name_expanse"
                     android:layout_alignParentTop="true"
+                    android:maxLength="15"
                     android:layout_marginBottom="30sp"
                     android:textSize="30sp"
                     android:layout_gravity="top|left"
@@ -43,6 +44,13 @@
 
                     />
 
+                <ImageView
+                    android:id="@+id/if_spesa"
+                    android:layout_alignLeft="@+id/amount_expanse"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
 
                 <TextView
                     android:id="@+id/date_expanse"

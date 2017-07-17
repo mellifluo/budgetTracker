@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -41,10 +42,10 @@ public class SpesaActivityPlanned extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spesa_planned);
         // Set up the login form.
-        nomeSpesa = (AutoCompleteTextView) findViewById(R.id.nome_spesa2);
 
         importoSpesa = (EditText) findViewById(R.id.prezzo2);
         numeroSpesa = (EditText) findViewById(R.id.repeat);
+        nomeSpesa = (AutoCompleteTextView) findViewById(R.id.nome_spesa2);
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -91,6 +92,8 @@ public class SpesaActivityPlanned extends AppCompatActivity {
             String modifiedName = extras.getString("nameSpesa");
             nomeSpesa.setText(modifiedName);
             String modifiedAmount = extras.getString("amountSpesa");
+            importoSpesa.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED
+                    | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             modifiedAmount = removeLastChar(modifiedAmount);
             importoSpesa.setText(modifiedAmount);
             id = extras.getString("id");
@@ -100,12 +103,12 @@ public class SpesaActivityPlanned extends AppCompatActivity {
         }
         else {
             if (extras.getBoolean("month")) {
-                numeroSpesa.setText("12");
+                numeroSpesa.setHint("Per quanti mesi");
                 monthly = true;
             }
             else {
                 monthly = false;
-                numeroSpesa.setText("4");
+                numeroSpesa.setHint("Per quante settimane");
             }
         }
         sign = extras.getBoolean("sign");
@@ -147,15 +150,21 @@ public class SpesaActivityPlanned extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if (count > 24) {
-            numeroSpesa.setError("Massimo 24 volte!");
+        if (count > 30) {
+            numeroSpesa.setError("Penso tu abbia esagerato!");
             focusView = numeroSpesa;
+            cancel = true;
+        }
+
+        if (name.length() > 15 ) {
+            nomeSpesa.setError("Troppo lunga!");
+            focusView = nomeSpesa;
             cancel = true;
         }
 
         // Check for a valid amount, if the user entered one.
         if (!TextUtils.isEmpty(amount) && amount.length() > 10) {
-            importoSpesa.setError("Penso tu abbia esagerato");
+            importoSpesa.setError("Penso tu abbia esagerato!");
             focusView = importoSpesa;
             cancel = true;
         }

@@ -28,9 +28,8 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorAccent"
                 android:layout_weight="0.9"
-                android:textStyle="bold"
                 android:layout_height="wrap_content"
                 android:text="Annuale"
                 android:layout_margin="2dp"
@@ -42,8 +41,7 @@
                 android:layout_weight="0.9"
                 android:layout_margin="2dp"
                 android:layout_width="wrap_content"
-                android:textStyle="bold"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorAccent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/annoChart"
                 android:id="@+id/meseChart"
@@ -53,12 +51,11 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:textStyle="bold"
                 android:layout_margin="2dp"
                 android:id="@+id/giornoChart"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorAccent"
                 android:layout_toRightOf="@+id/meseChart"
                 android:text="Settim."
                 android:layout_below="@+id/DomandaGrafico"/>
@@ -149,6 +146,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/correttavisione"
                 android:text="Per una corretta visione si consiglia di ruotare lo schermo"
                 android:padding="15sp"
                 android:textSize="16dp"/>

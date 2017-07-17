@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
         dbh = new DBHelper(this);
-        dbh.checkMensile();
         startService();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -101,6 +100,7 @@ public class MainActivity extends AppCompatActivity
         if (cursor.getCount() == 0){
             startActivity(new Intent(MainActivity.this, firstActivity.class));
         }
+        dbh.checkMensile();
         cursor.moveToFirst();
         listItems.clear();
         while (!cursor.isAfterLast()) {
@@ -174,10 +174,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_gallery) {
-            startActivity(new Intent(MainActivity.this, SelectChart.class));
+            Intent ChOrSt = new Intent(MainActivity.this, SelectChart.class);
+            ChOrSt.putExtra("history", false);
+            startActivity(ChOrSt);
 
         } else if (id == R.id.nav_slideshow) {
-            startActivity(new Intent(MainActivity.this, StoricoActivity.class));
+            Intent ChOrSt = new Intent(MainActivity.this, SelectChart.class);
+            ChOrSt.putExtra("history", true);
+            startActivity(ChOrSt);
 
         } else if (id == R.id.nav_share) {
             Intent mapIntent = new Intent(MainActivity.this, MapsActivity.class);

@@ -2,11 +2,13 @@ package com.example.ale.budgettracker;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
         public String Fday;
         public String Fmonth;
         public String Fyear;
+        public ImageView ifSpesa;
 
 
         SpesaViewHolder(View itemView) {
@@ -32,6 +35,7 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
             nameSpesa = (TextView)itemView.findViewById(R.id.name_expanse);
             amountSpesa = (TextView)itemView.findViewById(R.id.amount_expanse);
             dateSpesa = (TextView)itemView.findViewById(R.id.date_expanse);
+            ifSpesa = (ImageView) itemView.findViewById(R.id.if_spesa);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -83,15 +87,18 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
         SpesaViewHolder.nameSpesa.setText(nome);
         SpesaViewHolder.amountSpesa.setText(amount);
         SpesaViewHolder.dateSpesa.setText(date);
-        if (Float.valueOf(Spese.get(i).amount) < 0) {
-            int color = Color.parseColor("#FF4081");
-            SpesaViewHolder.cv.setCardBackgroundColor(color);
-        }
-        else SpesaViewHolder.cv.setCardBackgroundColor(Color.GREEN);
         if (nome.equals("Budget mensile")){
-            int color = Color.parseColor("#3F51B5");
+            int color = Color.parseColor("#62727b");
             SpesaViewHolder.cv.setCardBackgroundColor(color);
             SpesaViewHolder.dateSpesa.setText("");
+        }
+        else {
+            SpesaViewHolder.cv.setCardBackgroundColor(Color.parseColor("#BCC1C3"));
+            if (Float.valueOf(Spese.get(i).amount) < 0) {
+                SpesaViewHolder.ifSpesa.setImageResource(R.drawable.ic_action_minus);
+            }
+            else
+                SpesaViewHolder.ifSpesa.setImageResource(R.drawable.ic_action_plusgreen);
         }
     }
 

@@ -12,10 +12,12 @@ import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -76,6 +78,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         fab.setVisibility(View.INVISIBLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+            checkPermission();
+        }
     }
 
 
@@ -83,56 +88,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        }
-        LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-            buildAlertMessageNoGps();
-        }
-
-        mMap.setMyLocationEnabled(true);
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            lat = location.getLatitude();
-                            lon = location.getLongitude();
-                            updateMap();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+            if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+                buildAlertMessageNoGps();
+            }
+            mMap.setMyLocationEnabled(true);
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                lat = location.getLatitude();
+                                lon = location.getLongitude();
+                                updateMap();
+                            }
                         }
+                    });
+            Bundle extras = getIntent().getExtras();
+            if (!extras.getBoolean("menu")){
+                mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(LatLng position) {
+                        if (marker != null) marker.remove();
+                        marker = mMap.addMarker(new MarkerOptions().position(position).title("Posizione").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                        pos = String.valueOf(position.latitude) + "|" + String.valueOf(position.longitude);
+                        fab.setVisibility(View.VISIBLE);
+
                     }
                 });
-        Bundle extras = getIntent().getExtras();
-        if (!extras.getBoolean("menu")){
-            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(LatLng position) {
-                    if (marker != null) marker.remove();
-                    marker = mMap.addMarker(new MarkerOptions().position(position).title("Posizione").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-                    pos = String.valueOf(position.latitude) + "|" + String.valueOf(position.longitude);
-                    fab.setVisibility(View.VISIBLE);
-
-                }
-            });
-        }
-
-        Cursor cursor = dbh.getAllAddress();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            String pAddress = cursor.getString(cursor.getColumnIndex(DBHelper.POSITION));
-            String nameAddress = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
-            if (!pAddress.equals("")) {
-                double nLat = Double.valueOf(pAddress.substring(0,pAddress.indexOf("|")));
-                double nLon = Double.valueOf(pAddress.substring(pAddress.indexOf("|")+1));
-                LatLng nlatlng = new LatLng(nLat,nLon);
-                mMap.addMarker(new MarkerOptions().position(nlatlng).title(nameAddress));
-                lastM = nlatlng;
             }
-            cursor.moveToNext();
+
+            Cursor cursor = dbh.getAllAddress();
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String pAddress = cursor.getString(cursor.getColumnIndex(DBHelper.POSITION));
+                String nameAddress = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
+                if (!pAddress.equals("")) {
+                    double nLat = Double.valueOf(pAddress.substring(0,pAddress.indexOf("|")));
+                    double nLon = Double.valueOf(pAddress.substring(pAddress.indexOf("|")+1));
+                    LatLng nlatlng = new LatLng(nLat,nLon);
+                    mMap.addMarker(new MarkerOptions().position(nlatlng).title(nameAddress));
+                    lastM = nlatlng;
+                }
+                cursor.moveToNext();
+            }
+            cursor.close();
+            updateMap();
         }
-        cursor.close();
-        updateMap();
     }
 
     private void updateMap() {
@@ -187,5 +191,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 });
         final AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public void checkPermission(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                ){//Can add more as per requirement
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
+                    123);
+            finish();
+        }
     }
 }
