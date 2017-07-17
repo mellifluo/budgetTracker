@@ -160,14 +160,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
         else if (nogps) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(lastM));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lastM, 13));
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(lastM)      // Sets the center of the map to location user
-                    .zoom(17)                   // Sets the zoom
-                    .bearing(90)                // Sets the orientation of the camera to east
-                    .build();                   // Creates a CameraPosition from the builder
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            if (lastM != null) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(lastM));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lastM, 13));
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(lastM)      // Sets the center of the map to location user
+                        .zoom(17)                   // Sets the zoom
+                        .bearing(90)                // Sets the orientation of the camera to east
+                        .build();                   // Creates a CameraPosition from the builder
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
         }
     }
 

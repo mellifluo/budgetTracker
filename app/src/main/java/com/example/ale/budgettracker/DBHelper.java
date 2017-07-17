@@ -285,19 +285,9 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public float getTotalInAYear(String year) {
-        Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from" +
-                " " + TABLE_BUDGET + "where " + YEAR_EXPANSE + " = " + year , null);
-        if (amountColumn.moveToFirst()){
-            return amountColumn.getFloat(0);
-        }
-        else return 0;
-    }
-
     public Cursor getCardsInAYear(String year) {
-        return getWritableDatabase().rawQuery("select * from" +
-                " " + TABLE_BUDGET + "where " + YEAR_EXPANSE + " = " + year + " order by + "
-                + DATE_EXPANSE + " asc " , null);
+        return getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET + " where " + YEAR_EXPANSE
+                + " = " + year + " order by " + DATE_EXPANSE + " asc " , null);
     }
 
     public float getTotalInAMonth(String year, String month) {

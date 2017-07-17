@@ -2,6 +2,7 @@ package com.example.ale.budgettracker;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,8 +28,6 @@ public class StoricoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storico);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dbh = new DBHelper(this);
 
@@ -71,11 +70,12 @@ public class StoricoActivity extends AppCompatActivity {
         listItems.clear();
         while (!cursor.isAfterLast()) {
             boolean haveToContinue = false;
-            rv.setVisibility(View.VISIBLE);
-            findViewById(R.id.storico_testo).setVisibility(View.GONE);
             if (!haveToContinue) {
                 String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
                 if (!nameNewSpesa.equals("Budget mensile")){
+                    rv.setVisibility(View.VISIBLE);
+                    rv.setBackgroundColor(Color.parseColor("#62727b"));
+                    findViewById(R.id.storico_testo).setVisibility(View.GONE);
                     String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
                     String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));
                     String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
@@ -93,11 +93,4 @@ public class StoricoActivity extends AppCompatActivity {
         cursor.close();
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivityForResult(myIntent, 0);
-        finish();
-        return true;
-
-    }
 }
