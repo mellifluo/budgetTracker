@@ -15,9 +15,4 @@
         android:title="Apri riassunto"
         />
 
-    <Preference
-        android:key="View_Database"
-        android:title="Database"
-        />
-
 </PreferenceScreen>

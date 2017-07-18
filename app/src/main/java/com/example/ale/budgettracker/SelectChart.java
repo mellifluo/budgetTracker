@@ -120,7 +120,7 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
             }
         });
         dbh = new DBHelper(this);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_choose_cat);
+        Button fab = (Button) findViewById(R.id.fab_choose_cat);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

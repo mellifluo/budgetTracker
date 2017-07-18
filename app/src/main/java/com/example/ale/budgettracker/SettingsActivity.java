@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.media.Ringtone;
@@ -22,6 +23,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
@@ -38,6 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -208,7 +211,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-
+/*
             Preference button =(Preference) findPreference("View_Database");
 
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -219,7 +222,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
-
+*/
             Preference changeNameP = findPreference("example_text");
             changeNameP.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -255,6 +258,19 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
+
+        /*    final Preference themeS = findPreference("theme_switch");
+            themeS.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if (Boolean.valueOf(String.valueOf(newValue))) {
+                            dbh.modTheme(1);
+                            return true;
+                        }
+                    else dbh.modTheme(0);
+                    return true;
+                }
+            });*/
         }
 
         @Override
@@ -400,6 +416,55 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                     alertDialog.show();
 
+                    return true;
+                }
+            });
+
+            Preference catRemove = findPreference("Categories");
+            catRemove.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    ArrayList<String> cats = new ArrayList<String>();
+                    Cursor cursor = dbh.getCat();
+                    cursor.moveToFirst();
+                    while (!cursor.isAfterLast()) {
+                        cats.add(cursor.getString(0));
+                        cursor.moveToNext();
+                    }
+                    final CharSequence[] items = cats.toArray(new CharSequence[cats.size()]);
+                    final ArrayList seletedItems = new ArrayList();
+
+                    AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                            .setTitle("Selezione le categorie che vuoi eliminare:")
+                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                                    if (isChecked) {
+                                        // If the user checked the item, add it to the selected items
+                                        seletedItems.add(indexSelected);
+                                    } else if (seletedItems.contains(indexSelected)) {
+                                        // Else, if the item is already in the array, remove it
+                                        seletedItems.remove(Integer.valueOf(indexSelected));
+                                    }
+                                }
+                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                        for (int i = 0; i<seletedItems.size();i++) {
+                                            int index = (int)seletedItems.get(i);
+                                            String value = String.valueOf(items[index]);
+                                            if (dbh.remCat(value)==-1)
+                                                Snackbar.make(getView(),"Errore nella rimozione", Snackbar.LENGTH_LONG);
+                                            else
+                                                Snackbar.make(getView(),"Categoria rimossa!", Snackbar.LENGTH_LONG);
+                                        }
+                                }
+                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            }).create();
+                    dialog.show();
                     return true;
                 }
             });

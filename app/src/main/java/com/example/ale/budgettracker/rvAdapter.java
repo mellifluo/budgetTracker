@@ -23,6 +23,7 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
         public TextView dateSpesa;
         public TextView catSpesa;
         public String idExtra;
+        public String pos;
         public String catExtra;
         public String categoria;
         public String Fday;
@@ -49,6 +50,8 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
                         modifySpesa.putExtra("month", Fmonth);
                         modifySpesa.putExtra("year", Fyear);
                         modifySpesa.putExtra("id", idExtra);
+                        modifySpesa.putExtra("cat", categoria);
+                        modifySpesa.putExtra("pos", pos);
                         modifySpesa.putExtra("category", catExtra);
                         modifySpesa.putExtra("nameSpesa", nome);
                         modifySpesa.putExtra("amountSpesa", amountSpesa.getText().toString());
@@ -86,6 +89,7 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
         SpesaViewHolder.Fyear = Spese.get(i).year;
         SpesaViewHolder.Fmonth = Spese.get(i).month;
         SpesaViewHolder.Fday = Spese.get(i).day;
+        SpesaViewHolder.pos = Spese.get(i).pos;
         SpesaViewHolder.catExtra = Spese.get(i).planned;
         SpesaViewHolder.categoria = Spese.get(i).category;
         SpesaViewHolder.nameSpesa.setText(nome);

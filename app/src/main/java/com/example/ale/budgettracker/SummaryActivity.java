@@ -63,16 +63,15 @@ public class SummaryActivity extends AppCompatActivity {
         speseT.setText("Totale speso: " + String.valueOf(dbh.getTotalLoss())+ "€");
         guadT.setText("Totale guadagnato: " + String.valueOf(dbh.getTotalEarn())+ "€");
         medST.setText("Media spesa: " + String.valueOf(dbh.avgLoss())+ "€");
-        medGT.setText("Media spesa: " + String.valueOf(dbh.avgEarn())+ "€");
+        medGT.setText("Media entrata: " + String.valueOf(dbh.avgEarn())+ "€");
         maxST.setText("Massima spesa: " + String.valueOf(dbh.maxLoss())+ "€");
-        maxGT.setText("Massimo guadagno: " + String.valueOf(dbh.maxEarn())+ "€");
+        maxGT.setText("Massima entrata: " + String.valueOf(dbh.maxEarn())+ "€");
         pdfText = namePerson + "\n|Budget iniziale: " + initial_amount +
                 "€\n|Totale: " + String.valueOf(dbh.getTotal()) +
                 "€\n|Totale speso: " + String.valueOf(dbh.getTotalLoss()) +
                 "€\n|Totale guadagnato: " + String.valueOf(dbh.getTotalEarn()) +
                 "€\n|Media spesa: " + String.valueOf(dbh.avgLoss()) +
-                "€\n|Media guadagno: " + String.valueOf(dbh.avgEarn()) +
-                "€\n|Media spesa: " + String.valueOf(dbh.avgEarn()) +
+                "€\n|Media entrata: " + String.valueOf(dbh.avgEarn()) +
                 "€\n|Massima spesa: " + String.valueOf(dbh.maxLoss()) +
                 "€\n|Massimo guadagno: " + String.valueOf(dbh.maxEarn()) + "€";
 

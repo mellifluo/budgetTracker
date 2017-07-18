@@ -24,6 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String INITIAL_BUDGET = "amountPersona";
     public static final String ALERT = "alert";
     public static final String TALERT = "talert";
+    public static final String THEME = "theme";
     public static final String COLUMN_EXPENSE_NAME = "nomeSpesa";
     public static final String COLUMN_AMOUNT = "importoSpesa";
     private static int id = 0;
@@ -62,7 +63,8 @@ public class DBHelper extends SQLiteOpenHelper {
             + NAME_PERSON + " text primary key, "
             + INITIAL_BUDGET + " text , "
             + ALERT + " int, "
-            + TALERT + " boolean " +
+            + TALERT + " boolean, "
+            + THEME + " boolean " +
             ");";
 
     // Database creation sql statement
@@ -103,14 +105,30 @@ public class DBHelper extends SQLiteOpenHelper {
         getWritableDatabase().delete(DBHelper.TABLE_BUDGET, null, null);
     }
 
-    public float insertNewPersona (String namePersona, String amountPersona, boolean talert) {
+    public float insertNewPersona (String namePersona, String amountPersona, boolean talert, boolean th) {
         ContentValues cv = new ContentValues();
         cv.put(NAME_PERSON, namePersona);
         cv.put(INITIAL_BUDGET, amountPersona);
         cv.put(ALERT, 1);
         cv.put(TALERT, talert);
+        cv.put(THEME, th);
         float code = getWritableDatabase().insert(TABLE_PERSON, null, cv);
         return code;
+    }
+
+    public int modTheme(int x) {
+        ContentValues cv = new ContentValues();
+        cv.put(THEME, x);
+        String selection = THEME+ " =? ";
+        String[] selectionArgs = { String.valueOf(x) };
+        return getWritableDatabase().update(TABLE_PERSON, cv, selection, selectionArgs);
+    }
+
+
+    public int getTheme() {
+        Cursor c = getWritableDatabase().rawQuery("select theme from person", null);
+        if (c.moveToFirst()) return c.getInt(0);
+        else return 1;
     }
 
     public float insertNewCat (String cat) {
@@ -123,6 +141,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getCat() {
         return getWritableDatabase().rawQuery("select * from " + TABLE_CATEGORY, null);
     }
+
+    public int remCat(String cat) {
+        return getWritableDatabase().delete(TABLE_CATEGORY, NAME_CATEGORY + "=?"
+                , new String[] {cat});
+    }
+
 
 	public float insertNewExpense(String nameExpanse, String amountExpanse, String yearExpanse,
                                   String monthExpanse, String dayExpanse, String category,

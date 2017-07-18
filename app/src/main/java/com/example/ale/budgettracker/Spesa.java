@@ -14,10 +14,12 @@ class Spesa {
     String month;
     String day;
     String category;
+    String pos;
     String planned;
     String id;
 
-    Spesa(String name, String amount, String year, String month, String day, String planned, String category, String id) {
+    Spesa(String name, String amount, String year, String month, String day, String planned,
+          String category, String id, String pos) {
         this.name = name;
         this.amount = amount;
         this.year = year;
@@ -26,5 +28,6 @@ class Spesa {
         this.category = category;
         this.planned = planned;
         this.id = id;
+        this.pos = pos;
     }
 }

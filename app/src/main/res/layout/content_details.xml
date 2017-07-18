@@ -27,12 +27,42 @@
         android:text="DATE"/>
     <TextView
         android:layout_width="wrap_content"
-        android:id="@+id/detail_plan"
+        android:id="@+id/detail_category"
         android:textSize="25dp"
         android:layout_below="@+id/detail_date"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
+        android:text="CATEG"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/detail_plan"
+        android:textSize="25dp"
+        android:layout_below="@+id/detail_category"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
         android:text="PLAN"/>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_of_detpos"
+        android:layout_below="@+id/detail_plan">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/detail_pos"
+            android:textSize="25dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Posizione:"/>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/detail_posbtn"
+            android:src="@drawable/ic_action_maps"
+            />
+    </android.support.v7.widget.LinearLayoutCompat>
 
 </RelativeLayout>
 

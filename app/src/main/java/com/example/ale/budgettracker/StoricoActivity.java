@@ -97,8 +97,9 @@ public class StoricoActivity extends AppCompatActivity {
                         String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
                         String plNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.PLANNED));
                         String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
+                        String posNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.POSITION));
                         Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
-                                dayNewSpesa, plNewSpesa, categoryNewSpesa, idNewSpesa );
+                                dayNewSpesa, plNewSpesa, categoryNewSpesa, idNewSpesa, posNewSpesa );
                         listItems.add(newSpesa);
                     }
                 }
@@ -151,8 +152,9 @@ public class StoricoActivity extends AppCompatActivity {
             String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
             String plNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.PLANNED));
             String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
+            String posNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.POSITION));
             Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
-                    dayNewSpesa, plNewSpesa, categoryNewSpesa, idNewSpesa );
+                    dayNewSpesa, plNewSpesa, categoryNewSpesa, idNewSpesa, posNewSpesa );
             listItems.add(newSpesa);
             cursor.moveToNext();
         }

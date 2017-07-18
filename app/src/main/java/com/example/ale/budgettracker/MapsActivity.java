@@ -120,6 +120,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 });
             }
 
+            if (extras.getString("det")!=null) {
+                String pAddress = extras.getString("det");
+                String nameAddress = extras.getString("namedet");
+                double nLat = Double.valueOf(pAddress.substring(0,pAddress.indexOf("|")));
+                double nLon = Double.valueOf(pAddress.substring(pAddress.indexOf("|")+1));
+                LatLng nlatlng = new LatLng(nLat,nLon);
+                mMap.addMarker(new MarkerOptions().position(nlatlng).title(nameAddress));
+                lastM = nlatlng;
+                nogps = true;
+            }
+
             Cursor cursor = dbh.getAllAddress();
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {

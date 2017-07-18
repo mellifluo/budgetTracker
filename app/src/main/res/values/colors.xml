@@ -9,5 +9,6 @@
     <color name="colorPrimary2">#2196F3</color>
     <color name="colorPrimaryDark2">#1976D2</color>
     <color name="colorPrimaryLight2">#BBDEFB</color>
+    <color name="colorPrimaryLighter2">#FFFFFF</color>
     <color name="colorAccent2">#FF5722</color>
 </resources>

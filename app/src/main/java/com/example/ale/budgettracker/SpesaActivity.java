@@ -62,7 +62,6 @@ public class SpesaActivity extends AppCompatActivity implements AdapterView.OnIt
     private Spinner spinner;
 
 
-    //TODO aggiungere (non solo qui) gli snackbar al posto dei toast e dei dialog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +115,7 @@ public class SpesaActivity extends AppCompatActivity implements AdapterView.OnIt
             day = extras.getString("day");
             month = extras.getString("month");
             year = extras.getString("year");
+            newCat = extras.getString("cat");
         }
         sign = extras.getBoolean("sign");
 
@@ -212,7 +212,6 @@ public class SpesaActivity extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        // TODO Auto-generated method stub
         if (id == 999) {
             int amonth = Integer.valueOf(month);
             amonth--;

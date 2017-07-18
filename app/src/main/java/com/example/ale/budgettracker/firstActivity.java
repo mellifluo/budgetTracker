@@ -88,7 +88,7 @@ public class firstActivity extends AppCompatActivity {
                     month,
                     day, "", "m", "");
             if (all) {
-                code = dbh.insertNewPersona(nome,amount,true);
+                code = dbh.insertNewPersona(nome,amount,true,true);
                 String[] cats = getResources().getStringArray(R.array.array_category);
                 for (int i = 0; i<cats.length; i++) code = dbh.insertNewCat(cats[i]);
             }

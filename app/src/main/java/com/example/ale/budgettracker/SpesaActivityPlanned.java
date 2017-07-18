@@ -112,6 +112,7 @@ public class SpesaActivityPlanned extends AppCompatActivity implements AdapterVi
             day = Integer.valueOf(extras.getString("day"));
             month = Integer.valueOf(extras.getString("month"));
             year = Integer.valueOf(extras.getString("year"));
+            newCat = extras.getString("cat");
         }
         else {
             if (extras.getBoolean("month")) {
@@ -241,7 +242,6 @@ public class SpesaActivityPlanned extends AppCompatActivity implements AdapterVi
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        // TODO Auto-generated method stub
         if (id == 999) {
             return new DatePickerDialog(this,
                     myDateListener, year, month, day);

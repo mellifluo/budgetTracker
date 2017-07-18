@@ -15,11 +15,12 @@ public class DetailsActivity extends AppCompatActivity {
     String month;
     String day;
     String catExtra;
+    String cat;
+    String pos;
     boolean sign;
     String modifiedAmount;
     String modifiedName;
 
-    //TODO aggiungere qualcosa qui
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,7 @@ public class DetailsActivity extends AppCompatActivity {
         TextView detam = (TextView) findViewById(R.id.detail_amount);
         TextView detdt = (TextView) findViewById(R.id.detail_date);
         TextView detpl = (TextView) findViewById(R.id.detail_plan);
+        TextView detct = (TextView) findViewById(R.id.detail_category);
 
         Bundle extras = getIntent().getExtras();
         modifiedName = extras.getString("nameSpesa");
@@ -49,6 +51,23 @@ public class DetailsActivity extends AppCompatActivity {
         else typeS = "profitto";
         if (catExtra.equals("p")) detpl.setText("Tipo di "+ typeS + ": Ricorrente");
         else detpl.setText("Tipo di " + typeS + ": Occasionale");
+        cat = extras.getString("cat");
+        detct.setText("Categoria: " + cat);
+        pos = extras.getString("pos");
+        if (!pos.equals("")) {
+            FloatingActionButton fabpos = (FloatingActionButton) findViewById(R.id.detail_posbtn);
+            fabpos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent mapIntent = new Intent(DetailsActivity.this, MapsActivity.class);
+                    mapIntent.putExtra("menu", true);
+                    mapIntent.putExtra("det", pos);
+                    mapIntent.putExtra("namedet", modifiedName);
+                    startActivity(mapIntent);
+                }
+            });
+        }
+        else findViewById(R.id.layout_of_detpos).setVisibility(View.GONE);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +80,7 @@ public class DetailsActivity extends AppCompatActivity {
                     modifySpesa.putExtra("year", year);
                     modifySpesa.putExtra("id", id);
                     modifySpesa.putExtra("category", catExtra);
+                    modifySpesa.putExtra("cat", cat);
                     modifySpesa.putExtra("nameSpesa", modifiedName);
                     modifySpesa.putExtra("amountSpesa", modifiedAmount);
                     startActivity(modifySpesa);
@@ -73,6 +93,7 @@ public class DetailsActivity extends AppCompatActivity {
                     modifySpesa.putExtra("year", year);
                     modifySpesa.putExtra("id", id);
                     modifySpesa.putExtra("category", catExtra);
+                    modifySpesa.putExtra("cat", cat);
                     modifySpesa.putExtra("nameSpesa", modifiedName);
                     modifySpesa.putExtra("amountSpesa", modifiedAmount);
                     startActivity(modifySpesa);

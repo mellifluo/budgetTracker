@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO cambiare tema un po' a tutte getTheme().applyStyle(R.style.AppTheme2, true);
+        dbh = new DBHelper(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity
                 startActivity(addSpesa);
             }
         });
-        dbh = new DBHelper(this);
         startService();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -117,12 +116,13 @@ public class MainActivity extends AppCompatActivity
                 String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
                 String plNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.PLANNED));
                 String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
+                String posNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.POSITION));
                 Calendar calendarNow = Calendar.getInstance();
                 Calendar calendar = new GregorianCalendar(Integer.valueOf(yearNewSpesa),
                         Integer.valueOf(monthNewSpesa)-1, Integer.valueOf(dayNewSpesa)+1);
                 if (calendar.compareTo(calendarNow)>=0 || nameNewSpesa.equals("Budget mensile"))  {
                     Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
-                            dayNewSpesa, plNewSpesa, categoryNewSpesa, idNewSpesa);
+                            dayNewSpesa, plNewSpesa, categoryNewSpesa, idNewSpesa, posNewSpesa);
                     listItems.add(newSpesa);
                 }
             }
