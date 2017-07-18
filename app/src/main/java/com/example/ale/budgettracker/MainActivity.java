@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO cambiare tema un po' a tutte getTheme().applyStyle(R.style.AppTheme2, true);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,12 +92,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Cursor cursor = dbh.getBudget();
+
         if (cursor.getCount() == 0){
             startActivity(new Intent(MainActivity.this, firstActivity.class));
         }
@@ -112,13 +115,14 @@ public class MainActivity extends AppCompatActivity
                 String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
                 String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
                 String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
+                String plNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.PLANNED));
                 String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
                 Calendar calendarNow = Calendar.getInstance();
                 Calendar calendar = new GregorianCalendar(Integer.valueOf(yearNewSpesa),
                         Integer.valueOf(monthNewSpesa)-1, Integer.valueOf(dayNewSpesa)+1);
                 if (calendar.compareTo(calendarNow)>=0 || nameNewSpesa.equals("Budget mensile"))  {
                     Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
-                            dayNewSpesa, categoryNewSpesa, idNewSpesa);
+                            dayNewSpesa, plNewSpesa, categoryNewSpesa, idNewSpesa);
                     listItems.add(newSpesa);
                 }
             }

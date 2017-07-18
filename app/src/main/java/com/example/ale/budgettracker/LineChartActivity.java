@@ -11,6 +11,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +20,7 @@ import java.util.Calendar;
 public class LineChartActivity extends AppCompatActivity {
     private static DBHelper dbh;
     private static String year;
+    private ArrayList<BarDataSet> dataSets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class LineChartActivity extends AppCompatActivity {
 
     private ArrayList<BarDataSet> getDataSet() {
         dbh = new DBHelper(this);
-        ArrayList<BarDataSet> dataSets = null;
+        dataSets = null;
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
         ArrayList<BarEntry> valueSet2 = new ArrayList<>();
         ArrayList<BarEntry> valueSet3 = new ArrayList<>();
@@ -141,6 +143,21 @@ public class LineChartActivity extends AppCompatActivity {
         dataSets.add(barDataSet1);
         dataSets.add(barDataSet2);
         dataSets.add(barDataSet3);
+
+        Bundle extras = getIntent().getExtras();
+        ArrayList sc = extras.getCharSequenceArrayList("cat");
+        for (int i = 0; i<sc.size(); i++) {
+            float value = 0;
+            ArrayList<BarEntry> valueSetX = new ArrayList<>();
+            for (int j = 0; j<12; j++) {
+                value = dbh.getTotalInAMonthC(year, String.valueOf(j), String.valueOf(sc.get(i))) + value;
+                valueSetX.add(new BarEntry(value, j));
+            }
+            BarDataSet barDataSetX = new BarDataSet(valueSetX, String.valueOf(sc.get(i)));
+            barDataSetX.setColor(ColorTemplate.JOYFUL_COLORS[i]);
+            dataSets.add(barDataSetX);
+        }
+
         return dataSets;
     }
 

@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,7 +49,7 @@ public class MonthsChartActivity extends AppCompatActivity {
     private ArrayList<LineDataSet> getDataSet() {
         dbh = new DBHelper(this);
 
-        ArrayList<LineDataSet> dataSets = null;
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
         ArrayList<Entry> valueSet1 = new ArrayList<>();
 
         float value = 0;
@@ -72,11 +75,43 @@ public class MonthsChartActivity extends AppCompatActivity {
             }
         }
 
+
+        Bundle extras = getIntent().getExtras();
+        ArrayList sc = extras.getCharSequenceArrayList("cat");
+        for (int i = 0; i<sc.size(); i++) {
+            float v = 0;
+            ArrayList<Entry> valueSetX = new ArrayList<>();
+            if ( monthI % 2 == 1 && monthI != 11) {
+                for (int j = 0; j<31; j++) {
+                    v = dbh.getAmInADayC(year, month, String.valueOf(j), String.valueOf(sc.get(i))) + v;
+                    valueSetX.add(new Entry(v, j));
+                }
+            }
+            else {
+                if (monthI == 2) {
+                    for (int j = 0; j<28; j++) {
+                        v = dbh.getAmInADayC(year, month, String.valueOf(j), String.valueOf(sc.get(i))) + v;
+                        valueSetX.add(new Entry(v, j));
+                    }
+                }
+                else {
+                    for (int j = 0; j<30; j++) {
+                        v = dbh.getAmInADayC(year, month, String.valueOf(j), String.valueOf(sc.get(i))) + v;
+                        valueSetX.add(new Entry(v, j));
+                    }
+                }
+            }
+            LineDataSet lineDataSetX = new LineDataSet(valueSetX, String.valueOf(sc.get(i)));
+            lineDataSetX.setColor(ColorTemplate.JOYFUL_COLORS[i]);
+            lineDataSetX.setDrawValues(false);
+            lineDataSetX.setDrawCircles(false);
+            dataSets.add(lineDataSetX);
+        }
+
         LineDataSet LineDataSet1 = new LineDataSet(valueSet1, "Totale");
         LineDataSet1.setColor(Color.BLUE);
         LineDataSet1.setDrawValues(false);
         LineDataSet1.setDrawCircles(false);
-        dataSets = new ArrayList<>();
         dataSets.add(LineDataSet1);
         return dataSets;
     }

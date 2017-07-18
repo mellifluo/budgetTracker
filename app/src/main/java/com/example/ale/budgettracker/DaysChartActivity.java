@@ -10,6 +10,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,16 +40,17 @@ public class DaysChartActivity extends AppCompatActivity {
         String year = String.valueOf(calendar.get(Calendar.YEAR));
         String month = String.valueOf(calendar.get(Calendar.MONTH));
         String day = String.valueOf(calendar.get(Calendar.DAY_OF_WEEK));
+        String Fday = String.valueOf(calendar.get(Calendar.DAY_OF_WEEK));
         Bundle extras = getIntent().getExtras();
-        int dayweek = Calendar.DAY_OF_WEEK;
-        calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
-        if (extras != null){
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        if (extras != null) {
             year = extras.getString("year");
             month = extras.getString("month");
             day = extras.getString("day");
-            calendar.set(Integer.valueOf(year),Integer.valueOf(month),Integer.valueOf(day));
+            Fday = extras.getString("day");
+            calendar.set(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day));
         }
-        ArrayList<LineDataSet> dataSets = null;
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
         ArrayList<Entry> valueSet1 = new ArrayList<>();
 
         float value = 0;
@@ -84,9 +86,28 @@ public class DaysChartActivity extends AppCompatActivity {
         LineDataSet1.setColor(Color.BLUE);
         LineDataSet1.setDrawValues(false);
         LineDataSet1.setDrawCircles(false);
-
-        dataSets = new ArrayList<>();
         dataSets.add(LineDataSet1);
+
+        calendar.set(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(Fday));
+        ArrayList sc = extras.getCharSequenceArrayList("cat");
+        value = 0;
+        for (int i = 0; i<sc.size(); i++) {
+            value = 0;
+            ArrayList<Entry> valueSetX = new ArrayList<>();
+            for (int j = 0; j<7; j++) {
+                day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+                value = dbh.getAmInADayC(year, month, String.valueOf(day),String.valueOf(sc.get(i))) + value;
+                valueSetX.add(new Entry(value, j));
+                calendar.add(Calendar.DAY_OF_MONTH,1);
+            }
+            LineDataSet lineDataSetX = new LineDataSet(valueSetX, String.valueOf(sc.get(i)));
+            lineDataSetX.setColor(ColorTemplate.JOYFUL_COLORS[i]);
+            lineDataSetX.setDrawValues(false);
+            lineDataSetX.setDrawCircles(false);
+            dataSets.add(lineDataSetX);
+        }
+
+
         return dataSets;
     }
 

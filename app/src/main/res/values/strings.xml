@@ -22,7 +22,7 @@
     <string name="title_activity_settings">Impostazioni</string>
 
     <string-array name="array_anni">
-        <item>Inserisci</item>
+        <item>Questo anno</item>
         <item>2020</item>
         <item>2019</item>
         <item>2018</item>
@@ -48,7 +48,7 @@
     </string-array>
 
     <string-array name="array_mesi">
-        <item>Inserisci</item>
+        <item>Questo mese</item>
         <item>Gennaio</item>
         <item>Febbraio</item>
         <item>Marzo</item>
@@ -61,6 +61,18 @@
         <item>Ottobre</item>
         <item>Novembre</item>
         <item>Dicembre</item>
+    </string-array>
+
+    <string-array name="array_category">
+        <item>Altro</item>
+        <item>Acquisti</item>
+        <item>Amici</item>
+        <item>Casa</item>
+        <item>Cibo</item>
+        <item>Divertimento</item>
+        <item>Famiglia</item>
+        <item>Necessità</item>
+        <item>Trasporto</item>
     </string-array>
 
     <!-- Strings related to Settings -->

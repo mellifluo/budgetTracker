@@ -1,6 +1,10 @@
 package com.example.ale.budgettracker;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,6 +27,8 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
     private String day;
     private ArrayList<String> arraySpinner = new ArrayList<String>();
     private boolean history;
+    private DBHelper dbh;
+    private ArrayList categorie = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +41,7 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
         year = String.valueOf(calendar.get(Calendar.YEAR));
         month = String.valueOf(calendar.get(Calendar.MONTH)+1);
         day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
-        arraySpinner.add("Inserisci");
+        arraySpinner.add("Oggi");
 
         Spinner s = (Spinner) findViewById(R.id.spinner_giorno);
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
@@ -75,7 +81,9 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
                 if (history) selected = new Intent(view.getContext(), StoricoActivity.class);
                 else selected = new Intent(view.getContext(), LineChartActivity.class);
                 selected.putExtra("year", year);
+                selected.putExtra("cat", categorie);
                 view.getContext().startActivity(selected);
+                categorie = new ArrayList();
             }
         });
 
@@ -89,7 +97,9 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
                 else selected = new Intent(view.getContext(), MonthsChartActivity.class);
                 selected.putExtra("month", month);
                 selected.putExtra("year", year);
+                selected.putExtra("cat", categorie);
                 view.getContext().startActivity(selected);
+                categorie = new ArrayList();
             }
         });
 
@@ -104,7 +114,51 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
                 selected.putExtra("day", day);
                 selected.putExtra("month", month);
                 selected.putExtra("year", year);
+                selected.putExtra("cat", categorie);
                 view.getContext().startActivity(selected);
+                categorie = new ArrayList();
+            }
+        });
+        dbh = new DBHelper(this);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_choose_cat);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<String> cats = new ArrayList<String>();
+                Cursor cursor = dbh.getCat();
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    cats.add(cursor.getString(0));
+                    cursor.moveToNext();
+                }
+                final CharSequence[] items = cats.toArray(new CharSequence[cats.size()]);
+                final ArrayList seletedItems=new ArrayList();
+
+                AlertDialog dialog = new AlertDialog.Builder(SelectChart.this)
+                        .setTitle("Selezione le categorie che vuoi vedere:")
+                        .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                                if (isChecked) {
+                                    // If the user checked the item, add it to the selected items
+                                    seletedItems.add(indexSelected);
+                                    categorie.add(items[indexSelected]);
+                                } else if (seletedItems.contains(indexSelected)) {
+                                    // Else, if the item is already in the array, remove it
+                                    seletedItems.remove(Integer.valueOf(indexSelected));
+                                    categorie.remove(items[indexSelected]);
+                                }
+                            }
+                        }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        }).create();
+                dialog.show();
             }
         });
 
@@ -113,7 +167,7 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         String selectedItem = (String) parent.getItemAtPosition(pos);
-        if (!selectedItem.equals("Inserisci")) {
+        if (!selectedItem.equals("Oggi")) {
             if (!selectedItem.matches(".*\\d+.*")) {
                 if (selectedItem.equals("Gennaio")) month = "1";
                 if (selectedItem.equals("Febbraio")) month = "2";
@@ -147,7 +201,7 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
     public void checkthirtyone() {
         int monthI = Integer.valueOf(month);
         arraySpinner = new ArrayList<String>();
-        arraySpinner.add("Inserisci");
+        arraySpinner.add("Oggi");
         if ( monthI % 2 == 1 && monthI != 11) {
             for (int i = 1; i<32; i++) {
                 arraySpinner.add(String.valueOf(i));

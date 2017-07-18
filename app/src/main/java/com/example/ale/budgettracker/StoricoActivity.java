@@ -50,43 +50,110 @@ public class StoricoActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Bundle extras = getIntent().getExtras();
-        Cursor cursor;
-        if (extras.size() == 1){
+        Cursor cursor = null;
+        boolean flag = true;
+        if (extras.size() == 2){
             String year = extras.getString("year");
-            cursor = dbh.getCardsInAYear(year);
+            if (extras.getCharSequenceArrayList("cat").size() != 0) {
+                flag = false;
+                listCards(year, "", "");
+            }
+            else cursor = dbh.getCardsInAYear(year);
         }
-        else if (extras.size() == 2) {
+        else if (extras.size() == 3) {
             String year = extras.getString("year");
             String month = extras.getString("month");
-            cursor = dbh.getCardsInAMonth(year, month);
+            if (extras.getCharSequenceArrayList("cat").size() != 0) {
+                flag = false;
+                listCards(year, month, "");
+            }
+            else cursor = dbh.getCardsInAMonth(year, month);
         }
         else {
             String year = extras.getString("year");
             String month = extras.getString("month");
             String day = extras.getString("day");
-            cursor = dbh.getCardsInADay(year, month, day);
+            if (extras.getCharSequenceArrayList("cat").size() != 0) {
+                flag = false;
+                listCards(year, month, day);
+            }
+            else cursor = dbh.getCardsInADay(year, month,day);
         }
+        if (flag) {
+            cursor.moveToFirst();
+            listItems.clear();
+            while (!cursor.isAfterLast()) {
+                boolean haveToContinue = false;
+                if (!haveToContinue) {
+                    String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
+                    if (!nameNewSpesa.equals("Budget mensile")){
+                        rv.setVisibility(View.VISIBLE);
+                        rv.setBackgroundColor(Color.parseColor("#62727b"));
+                        findViewById(R.id.storico_testo).setVisibility(View.GONE);
+                        String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
+                        String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));
+                        String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
+                        String amountNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AMOUNT));
+                        String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
+                        String plNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.PLANNED));
+                        String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
+                        Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
+                                dayNewSpesa, plNewSpesa, categoryNewSpesa, idNewSpesa );
+                        listItems.add(newSpesa);
+                    }
+                }
+                cursor.moveToNext();
+            }
+            adapter.notifyDataSetChanged();
+            cursor.close();
+        }
+    }
+
+    private void listCards(String year, String month, String day) {
+        if (month.equals("")) {
+            Bundle extras = getIntent().getExtras();
+            ArrayList sc = extras.getCharSequenceArrayList("cat");
+            for (int i = 0; i<sc.size(); i++) {
+                Cursor cursor = dbh.getCardsInAYearC(year,String.valueOf(sc.get(i)));
+                visCards(cursor);
+            }
+        }
+        else if (day.equals("")) {
+            Bundle extras = getIntent().getExtras();
+            ArrayList sc = extras.getCharSequenceArrayList("cat");
+            for (int i = 0; i<sc.size(); i++) {
+                Cursor cursor = dbh.getCardsInAMonthC(year,month,String.valueOf(sc.get(i)));
+                visCards(cursor);
+            }
+        }
+        else {
+            Bundle extras = getIntent().getExtras();
+            ArrayList sc = extras.getCharSequenceArrayList("cat");
+            for (int i = 0; i<sc.size(); i++) {
+                Cursor cursor = dbh.getCardsInADayC(year,month,day,String.valueOf(sc.get(i)));
+                visCards(cursor);
+            }
+        }
+    }
+
+    private void visCards(Cursor cursor) {
         cursor.moveToFirst();
         listItems.clear();
         while (!cursor.isAfterLast()) {
-            boolean haveToContinue = false;
-            if (!haveToContinue) {
-                String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
-                if (!nameNewSpesa.equals("Budget mensile")){
-                    rv.setVisibility(View.VISIBLE);
-                    rv.setBackgroundColor(Color.parseColor("#62727b"));
-                    findViewById(R.id.storico_testo).setVisibility(View.GONE);
-                    String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
-                    String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));
-                    String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
-                    String amountNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AMOUNT));
-                    String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
-                    String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
-                    Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
-                            dayNewSpesa, categoryNewSpesa, idNewSpesa );
-                    listItems.add(newSpesa);
-                }
-            }
+            String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
+            rv.setVisibility(View.VISIBLE);
+            rv.setBackgroundColor(Color.parseColor("#62727b"));
+            findViewById(R.id.storico_testo).setVisibility(View.GONE);
+            String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
+            String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));
+            String monthNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.MONTH_EXPANSE));
+            String amountNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AMOUNT));
+            String categoryNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.CATEGORY));
+            String plNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.PLANNED));
+            String idNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.ID));
+            Spesa newSpesa = new Spesa(nameNewSpesa, amountNewSpesa, yearNewSpesa, monthNewSpesa,
+                    dayNewSpesa, plNewSpesa, categoryNewSpesa, idNewSpesa );
+            listItems.add(newSpesa);
             cursor.moveToNext();
         }
         adapter.notifyDataSetChanged();

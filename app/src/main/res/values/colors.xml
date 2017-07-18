@@ -5,4 +5,9 @@
     <color name="colorPrimaryLight">#62727b</color>
     <color name="colorPrimaryLighter">#BCC1C3</color>
     <color name="colorAccent">#2196f3</color>
+
+    <color name="colorPrimary2">#2196F3</color>
+    <color name="colorPrimaryDark2">#1976D2</color>
+    <color name="colorPrimaryLight2">#BBDEFB</color>
+    <color name="colorAccent2">#FF5722</color>
 </resources>

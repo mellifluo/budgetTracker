@@ -86,9 +86,13 @@ public class firstActivity extends AppCompatActivity {
             float code = dbh.insertNewExpense("Budget mensile", amount,
                     year,
                     month,
-                    day, "m", "");
-            float code2 = dbh.insertNewPersona(nome,amount,true);
-            if (code != -1 && code2 != -1)
+                    day, "", "m", "");
+            if (all) {
+                code = dbh.insertNewPersona(nome,amount,true);
+                String[] cats = getResources().getStringArray(R.array.array_category);
+                for (int i = 0; i<cats.length; i++) code = dbh.insertNewCat(cats[i]);
+            }
+            if (code != -1 )
                 Toast.makeText(this, "Inserimento effettuato", Toast.LENGTH_LONG).show();
             else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
             finish();

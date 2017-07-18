@@ -16,7 +16,7 @@
             android:id="@+id/DomandaGrafico"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quale statistica corrente vuoi vedere?"
+            android:text="Quale tipo di statistica vuoi vedere?"
             android:padding="20sp"
             android:textSize="20dp"/>
 
@@ -138,9 +138,35 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:paddingTop="20dp"
             android:layout_height="wrap_content"
+            android:id="@+id/layout_of_cat"
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/SceltaSettData">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/select_cat_graph"
+                android:text="Seleziona le categorie che vuoi vedere:"
+                android:padding="10sp"
+                android:textSize="16dp"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_add"
+                android:background="@color/colorAccent"
+                android:id="@+id/fab_choose_cat"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:paddingTop="15dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_of_cat">
 
 
             <TextView
@@ -149,7 +175,7 @@
                 android:id="@+id/correttavisione"
                 android:text="Per una corretta visione si consiglia di ruotare lo schermo"
                 android:padding="15sp"
-                android:textSize="16dp"/>
+                android:textSize="14dp"/>
 
         </LinearLayout>
 

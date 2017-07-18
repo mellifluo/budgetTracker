@@ -21,8 +21,10 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
         public TextView nameSpesa;
         public TextView amountSpesa;
         public TextView dateSpesa;
+        public TextView catSpesa;
         public String idExtra;
         public String catExtra;
+        public String categoria;
         public String Fday;
         public String Fmonth;
         public String Fyear;
@@ -35,6 +37,7 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
             nameSpesa = (TextView)itemView.findViewById(R.id.name_expanse);
             amountSpesa = (TextView)itemView.findViewById(R.id.amount_expanse);
             dateSpesa = (TextView)itemView.findViewById(R.id.date_expanse);
+            catSpesa = (TextView)itemView.findViewById(R.id.card_category);
             ifSpesa = (ImageView) itemView.findViewById(R.id.if_spesa);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,9 +86,11 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.SpesaViewHolder> {
         SpesaViewHolder.Fyear = Spese.get(i).year;
         SpesaViewHolder.Fmonth = Spese.get(i).month;
         SpesaViewHolder.Fday = Spese.get(i).day;
-        SpesaViewHolder.catExtra = Spese.get(i).category;
+        SpesaViewHolder.catExtra = Spese.get(i).planned;
+        SpesaViewHolder.categoria = Spese.get(i).category;
         SpesaViewHolder.nameSpesa.setText(nome);
         SpesaViewHolder.amountSpesa.setText(amount);
+        SpesaViewHolder.catSpesa.setText(Spese.get(i).category);
         SpesaViewHolder.dateSpesa.setText(date);
         if (nome.equals("Budget mensile")){
             int color = Color.parseColor("#62727b");

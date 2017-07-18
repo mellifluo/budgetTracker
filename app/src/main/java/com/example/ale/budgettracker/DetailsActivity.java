@@ -19,6 +19,7 @@ public class DetailsActivity extends AppCompatActivity {
     String modifiedAmount;
     String modifiedName;
 
+    //TODO aggiungere qualcosa qui
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

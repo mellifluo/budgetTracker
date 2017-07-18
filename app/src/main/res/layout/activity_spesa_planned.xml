@@ -56,23 +56,35 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+
+            <LinearLayout
+                android:layout_margin="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/prezzo2"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:hint="Importo"
+                    android:layout_marginRight="15dp"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="Aggiungi"
                     android:imeOptions="actionUnspecified"
                     android:inputType="numberDecimal"
+                    android:layout_weight="1.4"
                     android:maxLines="1" />
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spinner_cat2"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
 
-            </android.support.design.widget.TextInputLayout>
+                </android.support.v7.widget.AppCompatSpinner>
+
+            </LinearLayout>
 
 
             <android.support.design.widget.TextInputLayout
@@ -92,37 +104,29 @@
 
             </android.support.design.widget.TextInputLayout>
 
+
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <Button
                     android:id="@+id/data_spesa_button2"
-                    style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:layout_marginTop="16dp"
                     android:text="Data"
-                    android:background="@color/colorAccent"
-                    android:onClick="setDate"
-                    android:shadowColor="#A8A8A8"
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="5"
-                    android:textStyle="bold"/>
+                    android:background="@color/colorAccent"/>
 
                 <Button
                     android:id="@+id/posizione_spesa_button2"
-                    style="?android:textAppearanceSmall"
                     android:background="@color/colorAccent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="2dp"
-                    android:text="Posizione"
-                    android:textStyle="bold" />
+                    android:text="Posizione" />
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -145,15 +149,13 @@
 
                 <Button
                     android:id="@+id/aggiungi_spesa_button3"
-                    style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="2dp"
                     android:background="@color/colorAccent"
-                    android:text="Modifica Tutti"
-                    android:textStyle="bold" />
+                    android:text="Modifica Tutti"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -164,26 +166,22 @@
 
                 <Button
                     android:id="@+id/rimuovi_spesa_button2"
-                    style="?android:textAppearanceSmall"
                     android:background="@color/colorAccent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="2dp"
-                    android:text="Rimuovi"
-                    android:textStyle="bold" />
+                    android:text="Rimuovi" />
                 <Button
                     android:id="@+id/rimuovi_spesa_button3"
-                    style="?android:textAppearanceSmall"
                     android:background="@color/colorAccent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="2dp"
-                    android:text="Rimuovi Tutti"
-                    android:textStyle="bold" />
+                    android:text="Rimuovi Tutti"/>
 
 
             </android.support.v7.widget.LinearLayoutCompat>

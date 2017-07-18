@@ -14,15 +14,17 @@ class Spesa {
     String month;
     String day;
     String category;
+    String planned;
     String id;
 
-    Spesa(String name, String amount, String year, String month, String day, String category, String id) {
+    Spesa(String name, String amount, String year, String month, String day, String planned, String category, String id) {
         this.name = name;
         this.amount = amount;
         this.year = year;
         this.month = month;
         this.day = day;
         this.category = category;
+        this.planned = planned;
         this.id = id;
     }
 }
