@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -33,6 +35,8 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_select_chart);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -119,11 +123,10 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
                 categorie = new ArrayList();
             }
         });
-        dbh = new DBHelper(this);
         Button fab = (Button) findViewById(R.id.fab_choose_cat);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 ArrayList<String> cats = new ArrayList<String>();
                 Cursor cursor = dbh.getCat();
                 cursor.moveToFirst();
@@ -140,9 +143,14 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
                             @Override
                             public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
                                 if (isChecked) {
-                                    // If the user checked the item, add it to the selected items
-                                    seletedItems.add(indexSelected);
-                                    categorie.add(items[indexSelected]);
+                                    if (seletedItems.size()==5){
+                                        dialog.cancel();
+                                        toomuch();
+                                    }
+                                    else {
+                                        seletedItems.add(indexSelected);
+                                        categorie.add(items[indexSelected]);
+                                    }
                                 } else if (seletedItems.contains(indexSelected)) {
                                     // Else, if the item is already in the array, remove it
                                     seletedItems.remove(Integer.valueOf(indexSelected));
@@ -163,6 +171,20 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
         });
 
     }
+
+    public void toomuch() {
+        AlertDialog dialog = new AlertDialog.Builder(SelectChart.this)
+            .setTitle("Non puoi selezionarne più di 5!")
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            }).create();
+        dialog.show();}
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {

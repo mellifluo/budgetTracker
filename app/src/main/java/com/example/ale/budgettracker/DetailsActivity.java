@@ -24,6 +24,8 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DBHelper dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.NoActionBar2);
         setContentView(R.layout.activity_details);
 
         TextView detam = (TextView) findViewById(R.id.detail_amount);

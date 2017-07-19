@@ -47,10 +47,10 @@ public class SpesaActivityPlanned extends AppCompatActivity implements AdapterVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_spesa_planned);
         // Set up the login form.
-
-        dbh = new DBHelper(this);
 
         importoSpesa = (EditText) findViewById(R.id.prezzo2);
         numeroSpesa = (EditText) findViewById(R.id.repeat);
@@ -154,6 +154,7 @@ public class SpesaActivityPlanned extends AppCompatActivity implements AdapterVi
 
         String name = nomeSpesa.getText().toString();
         String amount = importoSpesa.getText().toString();
+        String ncount = numeroSpesa.getText().toString();
         if (!numeroSpesa.getText().toString().equals("")){
             count = Integer.valueOf(numeroSpesa.getText().toString());
         }
@@ -192,6 +193,12 @@ public class SpesaActivityPlanned extends AppCompatActivity implements AdapterVi
         if (TextUtils.isEmpty(amount)) {
             importoSpesa.setError("Metti quanto ti è costata");
             focusView = importoSpesa;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(ncount)) {
+            numeroSpesa.setError("Metti per quante volte");
+            focusView = numeroSpesa;
             cancel = true;
         }
 

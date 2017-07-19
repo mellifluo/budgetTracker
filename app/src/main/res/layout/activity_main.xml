@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:backgroundTint="@color/colorAccent"
+            app:background="@color/colorAccent"
             app:srcCompat="@drawable/ic_action_add" />
 
 
@@ -76,7 +76,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:backgroundTint="#BCC1C3"
+        android:background="#BCC1C3"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 

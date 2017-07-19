@@ -35,6 +35,8 @@ public class SummaryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DBHelper dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_summary);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -50,7 +52,6 @@ public class SummaryActivity extends AppCompatActivity {
         TextView maxST = (TextView) findViewById(R.id.summary_maxspesa);
         TextView maxGT = (TextView) findViewById(R.id.summary_maxguadagno);
 
-        DBHelper dbh = new DBHelper(this);
         Cursor cursor = dbh.getPerson();
         cursor.moveToFirst();
         String namePerson = cursor.getString(cursor.getColumnIndex(DBHelper.NAME_PERSON));

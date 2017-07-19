@@ -18,16 +18,16 @@ import java.util.Calendar;
 
 //YEAR CHART ACTIVITY
 public class LineChartActivity extends AppCompatActivity {
-    private static DBHelper dbh;
+    private DBHelper dbh;
     private static String year;
     private ArrayList<BarDataSet> dataSets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_line_chart);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
         chart.getAxisLeft().setStartAtZero(false);
@@ -46,7 +46,6 @@ public class LineChartActivity extends AppCompatActivity {
     }
 
     private ArrayList<BarDataSet> getDataSet() {
-        dbh = new DBHelper(this);
         dataSets = null;
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
         ArrayList<BarEntry> valueSet2 = new ArrayList<>();
@@ -170,11 +169,4 @@ public class LineChartActivity extends AppCompatActivity {
         return xAxis;
     }
 
-
-    public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), SelectChart.class);
-        startActivityForResult(myIntent, 0);
-        finish();
-        return true;
-    }
 }

@@ -22,6 +22,8 @@ public class DaysChartActivity extends AppCompatActivity {
      private static DBHelper dbh;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_days_chart);
         super.onCreate(savedInstanceState);
         LineChart chart = (LineChart) findViewById(R.id.chartGiorno);
@@ -35,7 +37,6 @@ public class DaysChartActivity extends AppCompatActivity {
     }
 
     private ArrayList<LineDataSet> getDataSet() {
-        dbh = new DBHelper(this);
         Calendar calendar = Calendar.getInstance();
         String year = String.valueOf(calendar.get(Calendar.YEAR));
         String month = String.valueOf(calendar.get(Calendar.MONTH));

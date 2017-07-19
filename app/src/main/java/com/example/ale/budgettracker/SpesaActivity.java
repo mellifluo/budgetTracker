@@ -65,13 +65,13 @@ public class SpesaActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_spesa);
         // Set up the login form.
         nomeSpesa = (AutoCompleteTextView) findViewById(R.id.nome_spesa);
 
         importoSpesa = (EditText) findViewById(R.id.prezzo);
-
-        dbh = new DBHelper(this);
 
         calendar = Calendar.getInstance();
         year = String.valueOf(calendar.get(Calendar.YEAR));

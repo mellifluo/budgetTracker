@@ -116,9 +116,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return code;
     }
 
-    public int modTheme(int x) {
+    public int modTheme(int xmod) {
         ContentValues cv = new ContentValues();
-        cv.put(THEME, x);
+        cv.put(THEME, xmod);
+        int x = (xmod+1) % 2;
         String selection = THEME+ " =? ";
         String[] selectionArgs = { String.valueOf(x) };
         return getWritableDatabase().update(TABLE_PERSON, cv, selection, selectionArgs);

@@ -2,10 +2,14 @@ package com.example.ale.budgettracker;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,14 +55,18 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
     private rvAdapter adapter;
     private static DBHelper dbh;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.NoActionBar2);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
 
@@ -78,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,11 +95,17 @@ public class MainActivity extends AppCompatActivity
                 startActivity(addSpesa);
             }
         });
+        stopService();
         startService();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        if (dbh.getTheme()==0) {
+            View hView =  navigationView.getHeaderView(0);
+            LinearLayout ll = (LinearLayout) hView.findViewById(R.id.nav_linear);
+            ll.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary2));
+            findViewById(R.id.nav_view).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryLight2));
+        }
 
     }
 
@@ -136,6 +151,7 @@ public class MainActivity extends AppCompatActivity
 
         TextView asd = (TextView) findViewById(R.id.textView2);
         asd.setText(totalBudgetToView);
+
     }
 
 
@@ -206,7 +222,9 @@ public class MainActivity extends AppCompatActivity
         startService(new Intent(this,ServiceNotif.class));
     }
 
-    public void stopService(View v) {
+    public void stopService() {
         stopService(new Intent(this,ServiceNotif.class));
     }
+
+
 }

@@ -14,6 +14,7 @@
         android:dependency="alert_switch"
         android:key="alert_change"
         android:inputType="number"
+        android:icon="@drawable/ic_action_clock"
         android:hint="Quanti giorni prima?"
         android:title="Promemoria" />
 

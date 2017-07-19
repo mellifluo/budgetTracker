@@ -25,6 +25,8 @@ public class MonthsChartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_months_chart);
 
         LineChart chart = (LineChart) findViewById(R.id.chartMese);
@@ -47,8 +49,6 @@ public class MonthsChartActivity extends AppCompatActivity {
     }
 
     private ArrayList<LineDataSet> getDataSet() {
-        dbh = new DBHelper(this);
-
         ArrayList<LineDataSet> dataSets = new ArrayList<>();
         ArrayList<Entry> valueSet1 = new ArrayList<>();
 

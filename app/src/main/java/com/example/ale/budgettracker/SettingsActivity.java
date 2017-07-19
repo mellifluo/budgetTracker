@@ -146,6 +146,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
         dbh = new DBHelper(this);
+
     }
 
     /**
@@ -211,7 +212,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-/*
+
             Preference button =(Preference) findPreference("View_Database");
 
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -222,7 +223,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
-*/
+
             Preference changeNameP = findPreference("example_text");
             changeNameP.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -259,7 +260,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
 
-        /*    final Preference themeS = findPreference("theme_switch");
+            final Preference themeS = findPreference("theme_switch");
             themeS.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -270,7 +271,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     else dbh.modTheme(0);
                     return true;
                 }
-            });*/
+            });
         }
 
         @Override

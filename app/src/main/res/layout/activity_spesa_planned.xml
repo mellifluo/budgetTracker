@@ -116,7 +116,8 @@
                     android:layout_weight="0.9"
                     android:layout_marginTop="16dp"
                     android:text="Data"
-                    android:background="@color/colorAccent"/>
+                    android:background="@color/colorAccent"
+                    android:onClick="setDate"/>
 
                 <Button
                     android:id="@+id/posizione_spesa_button2"

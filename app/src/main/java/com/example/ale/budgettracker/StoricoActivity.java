@@ -27,9 +27,9 @@ public class StoricoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DBHelper dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_storico);
-
-        dbh = new DBHelper(this);
 
         rv = (RecyclerView)findViewById(R.id.rv2);
         rv.setHasFixedSize(true);

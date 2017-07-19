@@ -16,6 +16,8 @@ public class ChooseTransaction extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DBHelper dbh = new DBHelper(this);
+        if (dbh.getTheme()==0) setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_choose_transaction);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
