@@ -138,15 +138,13 @@
 
                 <Button
                     android:id="@+id/aggiungi_spesa_button2"
-                    style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="2dp"
                     android:background="@color/colorAccent"
-                    android:text="Aggiungi/modifica"
-                    android:textStyle="bold" />
+                    android:text="Aggiungi/modifica" />
 
                 <Button
                     android:id="@+id/aggiungi_spesa_button3"

@@ -266,9 +266,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     if (Boolean.valueOf(String.valueOf(newValue))) {
                             dbh.modTheme(1);
-                            return true;
+                            Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
                         }
-                    else dbh.modTheme(0);
+                    else {
+                        dbh.modTheme(0);
+                        Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
                     return true;
                 }
             });

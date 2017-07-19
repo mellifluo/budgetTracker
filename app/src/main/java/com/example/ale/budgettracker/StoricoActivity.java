@@ -21,13 +21,13 @@ public class StoricoActivity extends AppCompatActivity {
     private List<Spesa> listItems;
     private rvAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private static DBHelper dbh;
+    private DBHelper dbh;
     RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DBHelper dbh = new DBHelper(this);
+        dbh = new DBHelper(this);
         if (dbh.getTheme()==0) setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_storico);
 
@@ -53,6 +53,7 @@ public class StoricoActivity extends AppCompatActivity {
         Cursor cursor = null;
         boolean flag = true;
         if (extras.size() == 2){
+            setTitle("Archivio annuale");
             String year = extras.getString("year");
             if (extras.getCharSequenceArrayList("cat").size() != 0) {
                 flag = false;
@@ -61,6 +62,7 @@ public class StoricoActivity extends AppCompatActivity {
             else cursor = dbh.getCardsInAYear(year);
         }
         else if (extras.size() == 3) {
+            setTitle("Archivio mensile");
             String year = extras.getString("year");
             String month = extras.getString("month");
             if (extras.getCharSequenceArrayList("cat").size() != 0) {
@@ -70,6 +72,7 @@ public class StoricoActivity extends AppCompatActivity {
             else cursor = dbh.getCardsInAMonth(year, month);
         }
         else {
+            setTitle("Archivio settimanale");
             String year = extras.getString("year");
             String month = extras.getString("month");
             String day = extras.getString("day");

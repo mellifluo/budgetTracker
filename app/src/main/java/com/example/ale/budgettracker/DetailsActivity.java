@@ -54,7 +54,10 @@ public class DetailsActivity extends AppCompatActivity {
         if (catExtra.equals("p")) detpl.setText("Tipo di "+ typeS + ": Ricorrente");
         else detpl.setText("Tipo di " + typeS + ": Occasionale");
         cat = extras.getString("cat");
-        detct.setText("Categoria: " + cat);
+        if (cat.equals("")){
+            detct.setVisibility(View.GONE);
+        }
+        else detct.setText("Categoria: " + cat);
         pos = extras.getString("pos");
         if (!pos.equals("")) {
             FloatingActionButton fabpos = (FloatingActionButton) findViewById(R.id.detail_posbtn);

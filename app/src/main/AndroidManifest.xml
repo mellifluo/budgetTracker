@@ -54,17 +54,23 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".LineChartActivity" />
+        <activity android:name=".LineChartActivity"
+            android:label="Annuale"/>
         <activity android:name=".SelectChart" />
-        <activity android:name=".MonthsChartActivity" />
-        <activity android:name=".DaysChartActivity" />
-        <activity android:name=".ChooseTransaction" />
-        <activity android:name=".SpesaActivityPlanned" />
+        <activity android:name=".MonthsChartActivity"
+            android:label="Mensile"/>
+        <activity android:name=".DaysChartActivity"
+            android:label="Settimanale"/>
+        <activity android:name=".ChooseTransaction"
+            android:label="Scegli transazione"/>
+        <activity android:name=".SpesaActivityPlanned"
+            android:label="Spesa ricorrente"/>
         <activity android:name=".AndroidDatabaseManager" />
-        <activity android:name=".StoricoActivity" />
+        <activity android:name=".StoricoActivity"
+            android:label="Archivio"/>
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
+            android:label="Mappa">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ale.budgettracker.MainActivity" />
@@ -87,7 +93,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ale.budgettracker.ItemListActivity" />
         </activity>
-        <activity android:name=".SummaryActivity" />
+        <activity android:name=".SummaryActivity"
+            android:label="Riassunto"/>
 
         <service
             android:name=".ServiceNotif"

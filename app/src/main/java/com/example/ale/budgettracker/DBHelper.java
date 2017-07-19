@@ -229,7 +229,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public Cursor getBudget() {
 		return getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET + " order by " +
-                DATE_EXPANSE + " asc limit 10 ", null);
+                DATE_EXPANSE + " asc limit 15", null);
 	}
 
 	public Cursor getOldBudget() {

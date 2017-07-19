@@ -153,6 +153,7 @@ public class LineChartActivity extends AppCompatActivity {
                 valueSetX.add(new BarEntry(value, j));
             }
             BarDataSet barDataSetX = new BarDataSet(valueSetX, String.valueOf(sc.get(i)));
+            barDataSetX.setDrawValues(false);
             barDataSetX.setColor(ColorTemplate.JOYFUL_COLORS[i]);
             dataSets.add(barDataSetX);
         }

@@ -70,8 +70,9 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
 
         Bundle extras = getIntent().getExtras();
         history = extras.getBoolean("history");
-
+        setTitle("Statistiche");
         if (history){
+            setTitle("Archivio");
             TextView domanda = (TextView) findViewById(R.id.DomandaGrafico);
             domanda.setText("Quale periodo vuoi vedere?");
             findViewById(R.id.correttavisione).setVisibility(View.GONE);
@@ -184,7 +185,8 @@ public class SelectChart extends AppCompatActivity implements AdapterView.OnItem
                 public void onClick(DialogInterface dialog, int id) {
                 }
             }).create();
-        dialog.show();}
+        dialog.show();
+        categorie = new ArrayList();}
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {

@@ -36,7 +36,8 @@ public class SpesaActivityPlanned extends AppCompatActivity implements AdapterVi
     private Calendar calendar;
     private TextView dateView;
     private boolean monthly, mod, sign;
-    private int year, month, day, count;
+    private int year, month, day;
+    private int count = 1;
     private String id, newCat;
     private String address = "";
     private DBHelper dbh;
@@ -196,7 +197,7 @@ public class SpesaActivityPlanned extends AppCompatActivity implements AdapterVi
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(ncount)) {
+        if (TextUtils.isEmpty(ncount) && !mod) {
             numeroSpesa.setError("Metti per quante volte");
             focusView = numeroSpesa;
             cancel = true;
