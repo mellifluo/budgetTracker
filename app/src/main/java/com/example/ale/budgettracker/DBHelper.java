@@ -232,12 +232,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 DATE_EXPANSE + " asc limit 15", null);
 	}
 
-	public Cursor getOldBudget() {
-        String selection = DATE_EXPANSE +" < date('now')";
-        Cursor amountColumn = getWritableDatabase().rawQuery("select * from " + TABLE_BUDGET
-                + " where " + selection + " order by " + DATE_EXPANSE + " desc ", null);
-        return amountColumn;
-    }
 
 	public Cursor getExpanse(String exp, String year, String month, String day) {
         if (month.length() < 2) month = "0" + month;
@@ -247,10 +241,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 , new String[] {exp, year, month, day}, null, null, null);
     }
 
-    public Cursor getExpanseByName(String exp) {
-        return getWritableDatabase().query(TABLE_BUDGET, null, COLUMN_EXPENSE_NAME + " =?"
-                , new String[] {exp}, null, null, null);
-    }
 
     public Cursor getAllAddress() {
         return getWritableDatabase().rawQuery("select distinct " + COLUMN_EXPENSE_NAME + ", " + POSITION +
@@ -466,13 +456,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 " <= " + date2 + " and '" + cat + "' like " + CATEGORY + " order by + " + DATE_EXPANSE + " asc ", null);
     }
 
-    public float getTotalSummary() {
-        Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
-                + TABLE_BUDGET , null);
-        if (amountColumn.moveToFirst()) return amountColumn.getFloat(0);
-        else return 0;
-    }
-
     public float getTotalLoss() {
         String selection = DATE_EXPANSE +" <= date('now')";
         Cursor amountColumn = getWritableDatabase().rawQuery("select sum(" + COLUMN_AMOUNT + ") from "
@@ -559,49 +542,5 @@ public class DBHelper extends SQLiteOpenHelper {
         if (Cndays.moveToFirst()) return Cndays.getInt(0);
         else return 2;
     }
-
-	public ArrayList<Cursor> getData(String Query){
-		//get writable database
-		SQLiteDatabase sqlDB = this.getWritableDatabase();
-		String[] columns = new String[] { "message" };
-		//an array list of cursor to save two cursors one has results from the query
-		//other cursor stores error message if any errors are triggered
-		ArrayList<Cursor> alc = new ArrayList<Cursor>(2);
-		MatrixCursor Cursor2= new MatrixCursor(columns);
-		alc.add(null);
-		alc.add(null);
-
-		try{
-			String maxQuery = Query ;
-			//execute the query results will be save in Cursor c
-			Cursor c = sqlDB.rawQuery(maxQuery, null);
-
-			//add value to cursor2
-			Cursor2.addRow(new Object[] { "Success" });
-
-			alc.set(1,Cursor2);
-			if (null != c && c.getCount() > 0) {
-
-				alc.set(0,c);
-				c.moveToFirst();
-
-				return alc ;
-			}
-			return alc;
-		} catch(SQLException sqlEx){
-			Log.d("printing exception", sqlEx.getMessage());
-			//if any exceptions are triggered save the error message to cursor an return the arraylist
-			Cursor2.addRow(new Object[] { ""+sqlEx.getMessage() });
-			alc.set(1,Cursor2);
-			return alc;
-		} catch(Exception ex){
-			Log.d("printing exception", ex.getMessage());
-
-			//if any exceptions are triggered save the error message to cursor an return the arraylist
-			Cursor2.addRow(new Object[] { ""+ex.getMessage() });
-			alc.set(1,Cursor2);
-			return alc;
-		}
-	}
 
 }

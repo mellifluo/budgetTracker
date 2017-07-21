@@ -3,6 +3,7 @@ package com.example.ale.budgettracker;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +44,7 @@ public class StoricoActivity extends AppCompatActivity {
 
         adapter = new rvAdapter(listItems);
         rv.setAdapter(adapter);
+
 
     }
 
@@ -91,7 +93,8 @@ public class StoricoActivity extends AppCompatActivity {
                     String nameNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EXPENSE_NAME));
                     if (!nameNewSpesa.equals("Budget mensile")){
                         rv.setVisibility(View.VISIBLE);
-                        rv.setBackgroundColor(Color.parseColor("#62727b"));
+                        if (dbh.getTheme()==0) rv.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryLight2));
+                        else rv.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryLight));
                         findViewById(R.id.storico_testo).setVisibility(View.GONE);
                         String dayNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.DAY_EXPANSE));
                         String yearNewSpesa = cursor.getString(cursor.getColumnIndex(DBHelper.YEAR_EXPANSE));

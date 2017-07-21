@@ -42,9 +42,6 @@ import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-/**
- * A login screen that offers login via name/amount.
- */
 public class SpesaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // UI references.

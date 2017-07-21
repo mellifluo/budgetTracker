@@ -11,14 +11,14 @@
             android:id="@+id/portafoglio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Facciamo prima i conti in tasca:"
+            android:text="@string/tasca"
             android:padding="20dp"
             android:textSize="24sp"/>
     <TextView
             android:id="@+id/domanda_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Intanto, come ti chiami?"
+            android:text="@string/whatsname"
             android:padding="20sp"
             android:textSize="20dp"
             android:layout_below="@+id/portafoglio"/>
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:hint="Nome"
+            android:hint="@string/name"
             android:inputType="textCapWords"
             android:maxLines="1"
             />
@@ -47,7 +47,7 @@
         android:id="@+id/postportafoglio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quanti soldi hai a disposizione?"
+        android:text="@string/pocket"
         android:padding="20sp"
         android:textSize="20dp"
         android:layout_below="@+id/edit_text_per_nome"/>
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:hint="Importo"
+            android:hint="@string/importo"
             android:inputType="numberSigned|numberDecimal"
             android:maxLines="1"
             />
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="Aggiungi"
+            android:text="@string/add"
             android:background="@color/colorAccent"
             android:textStyle="bold" />
 

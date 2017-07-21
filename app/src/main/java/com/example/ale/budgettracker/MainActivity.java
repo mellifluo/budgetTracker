@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity
             LinearLayout ll = (LinearLayout) hView.findViewById(R.id.nav_linear);
             ll.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary2));
             findViewById(R.id.nav_view).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryLight2));
+            findViewById(R.id.rv).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryLight2));
         }
 
     }
@@ -162,6 +163,10 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
     }
 
@@ -225,6 +230,5 @@ public class MainActivity extends AppCompatActivity
     public void stopService() {
         stopService(new Intent(this,ServiceNotif.class));
     }
-
 
 }

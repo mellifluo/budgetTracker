@@ -5,7 +5,7 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="alert_switch"
-        android:title="Notifiche attive" />
+        android:title="@string/acnotify" />
 
     <!-- Allows the user to choose a ringtone in the 'notification' category. -->
     <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
@@ -16,7 +16,7 @@
         android:inputType="number"
         android:icon="@drawable/ic_action_clock"
         android:hint="Quanti giorni prima?"
-        android:title="Promemoria" />
+        android:title="@string/alert" />
 
 
 </PreferenceScreen>

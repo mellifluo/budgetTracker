@@ -65,7 +65,6 @@
             android:label="Scegli transazione"/>
         <activity android:name=".SpesaActivityPlanned"
             android:label="Spesa ricorrente"/>
-        <activity android:name=".AndroidDatabaseManager" />
         <activity android:name=".StoricoActivity"
             android:label="Archivio"/>
         <activity

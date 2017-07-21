@@ -4,19 +4,19 @@
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_action_name"
-            android:title="Statistiche" />
+            android:title="@string/stats" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_action_history"
-            android:title="Archivio" />
+            android:title="@string/archive" />
 
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_action_maps"
-            android:title="Mappa" />
+            android:title="@string/maps" />
         <item
             android:id="@+id/nav_send"
             android:icon="@drawable/ic_action_summary"
-            android:title="Riassunto" />
+            android:title="@string/summary" />
 
 </menu>

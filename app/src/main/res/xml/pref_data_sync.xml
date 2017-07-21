@@ -2,16 +2,18 @@
 
     <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
          design guidelines. -->
-    <Preference android:title="Rimuovi categorie"
+    <Preference android:title="@string/remcat"
         android:icon="@drawable/ic_action_remcat"
         android:key="Categories">
     </Preference>
 
-    <Preference android:title="Ripristina dati"
+    <Preference android:title="@string/resdata"
+        android:icon="@drawable/ic_action_remdata"
     android:key="Reset_Data">
     </Preference>
 
-    <Preference android:title="Ripristina tutto"
+    <Preference android:title="@string/resall"
+        android:icon="@drawable/ic_action_remall"
         android:key="Reset_All">
     </Preference>
 

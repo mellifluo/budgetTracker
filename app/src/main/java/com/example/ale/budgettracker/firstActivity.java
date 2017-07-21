@@ -1,5 +1,6 @@
 package com.example.ale.budgettracker;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -97,5 +98,14 @@ public class firstActivity extends AppCompatActivity {
             else Toast.makeText(this, "Errore nell'inserimento", Toast.LENGTH_LONG).show();
             finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

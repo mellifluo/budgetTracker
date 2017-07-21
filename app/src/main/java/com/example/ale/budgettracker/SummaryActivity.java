@@ -115,7 +115,6 @@ public class SummaryActivity extends AppCompatActivity {
                 Paragraph p1 = new Paragraph(arrayS[i]);
                 p1.setAlignment(Paragraph.ALIGN_LEFT);
                 p1.setFont(font);
-                //add paragraph to document
                 doc.add(p1);
             }
 

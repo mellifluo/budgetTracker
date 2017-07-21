@@ -5,16 +5,16 @@
     <header
         android:fragment="com.example.ale.budgettracker.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_info_black_24dp"
-        android:title="Generale" />
+        android:title="@string/general" />
 
     <header
         android:fragment="com.example.ale.budgettracker.SettingsActivity$NotificationPreferenceFragment"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="Notifiche" />
+        android:title="@string/notify" />
 
     <header
         android:fragment="com.example.ale.budgettracker.SettingsActivity$DataSyncPreferenceFragment"
         android:icon="@drawable/ic_sync_black_24dp"
-        android:title="Dati" />
+        android:title="@string/data" />
 
 </preference-headers>

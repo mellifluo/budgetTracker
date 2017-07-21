@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Aggiunta di una spesa o guadagno occasionale:"
+                android:text="@string/occasionalexp"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:padding="10dp"/>
@@ -47,7 +47,7 @@
                     android:id="@+id/nome_spesa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nome spesa/entrata"
+                    android:hint="@string/name"
                     android:gravity="center_horizontal"
                     android:inputType="textCapWords"
                     android:nextFocusForward="@+id/prezzo"
@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:hint="Importo"
+                    android:hint="@string/importo"
                     android:layout_marginRight="15dp"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="Aggiungi"
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:layout_marginTop="16dp"
-                    android:text="Data"
+                    android:text="@string/date"
                     android:background="@color/colorAccent"
                     android:onClick="setDate"/>
 
@@ -108,7 +108,7 @@
                     android:layout_weight="0.9"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="2dp"
-                    android:text="Posizione" />
+                    android:text="@string/position" />
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -124,7 +124,7 @@
                     android:layout_weight="1"
                     android:layout_marginTop="16dp"
                     android:background="@color/colorAccent"
-                    android:text="Aggiungi/modifica"/>
+                    android:text="@string/addmod"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginTop="16dp"
-                    android:text="Rimuovi" />
+                    android:text="@string/remove" />
 
 
             </android.support.v7.widget.LinearLayoutCompat>

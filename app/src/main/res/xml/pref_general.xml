@@ -8,23 +8,19 @@
         android:icon="@drawable/ic_action_profile"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="Cambia nome"/>
+        android:title="@string/changename"/>
 
 
     <Preference
         android:key="go_to_dir"
         android:icon="@drawable/ic_action_folder"
-        android:title="Apri riassunto"
+        android:title="@string/opensum"
         />
 
     <SwitchPreference
         android:defaultValue="true"
         android:key="theme_switch"
-        android:title="Cambia tema" />
+        android:title="@string/changetheme" />
 
-    <Preference
-            android:key="View_Database"
-            android:title="Database"
-            />
 
 </PreferenceScreen>

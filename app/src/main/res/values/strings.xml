@@ -4,8 +4,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Impostazioni</string>
-    <string name="title_activity_spesa">Aggiungi transazione</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_spesa">Add transaction</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -19,10 +19,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_settings">Impostazioni</string>
+    <string name="title_activity_settings">Settings</string>
 
     <string-array name="array_anni">
-        <item>Questo anno</item>
+        <item>This year</item>
         <item>2020</item>
         <item>2019</item>
         <item>2018</item>
@@ -48,31 +48,30 @@
     </string-array>
 
     <string-array name="array_mesi">
-        <item>Questo mese</item>
-        <item>Gennaio</item>
-        <item>Febbraio</item>
-        <item>Marzo</item>
-        <item>Aprile</item>
-        <item>Maggio</item>
-        <item>Giugno</item>
-        <item>Luglio</item>
-        <item>Agosto</item>
-        <item>Settembre</item>
-        <item>Ottobre</item>
-        <item>Novembre</item>
-        <item>Dicembre</item>
+        <item>This month</item>
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
     </string-array>
 
     <string-array name="array_category">
-        <item>Altro</item>
-        <item>Acquisti</item>
-        <item>Amici</item>
-        <item>Casa</item>
-        <item>Cibo</item>
-        <item>Divertimento</item>
-        <item>Famiglia</item>
-        <item>Necessità</item>
-        <item>Trasporto</item>
+        <item>Other</item>
+        <item>Friends</item>
+        <item>Home</item>
+        <item>Food</item>
+        <item>Fun</item>
+        <item>Family</item>
+        <item>Necessity</item>
+        <item>Travel</item>
     </string-array>
 
     <!-- Strings related to Settings -->
@@ -151,5 +150,43 @@
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
     <string name="title_activity_details">DetailsActivity</string>
+
+    <!-- My strings -->
+    <string name="choosequestion">What kind of transaction?</string>
+    <string name="chooseEarn">Earn</string>
+    <string name="chooseEx">Loss</string>
+    <string name="single">Single</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="tasca">Let\'s check the pocket:</string>
+    <string name="whatsname">But first, what\'s your name?</string>
+    <string name="name">Name</string>
+    <string name="pocket">How much do you have?</string>
+    <string name="importo">Import</string>
+    <string name="add">Add</string>
+    <string name="addmod">Add/Modify</string>
+    <string name="addmodall">Modify all</string>
+    <string name="remove">Remove</string>
+    <string name="removeall">Remove all</string>
+    <string name="position">Position</string>
+    <string name="date">Date</string>
+    <string name="data">Data</string>
+    <string name="occasionalexp">Adding an occasional earn or expense:</string>
+    <string name="recurrentexp">Adding an recurrent earn or expense:</string>
+    <string name="summarynotinsert">You didn\'t inserted any expense or profit in that period</string>
+    <string name="remcat">Remove category</string>
+    <string name="resdata">Reset data</string>
+    <string name="resall">Reset everything</string>
+    <string name="changename">Change name</string>
+    <string name="opensum">Open summary</string>
+    <string name="changetheme">Change theme</string>
+    <string name="general">General</string>
+    <string name="notify">Notifications</string>
+    <string name="acnotify">Active Notifications</string>
+    <string name="alert">Alert</string>
+    <string name="stats">Statistics</string>
+    <string name="maps">Maps</string>
+    <string name="archive">Archive</string>
+    <string name="summary">Summary</string>
 
 </resources>
